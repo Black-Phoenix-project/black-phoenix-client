@@ -112,14 +112,12 @@ function HeroSwiperClient({ slides }: { slides: SwiperSlideType[] }) {
           setSwiperSlideComp(() => swiperReact.SwiperSlide);
           setModules([
             swiperModules.Autoplay,
-            swiperModules.Navigation,
             swiperModules.Pagination,
           ]);
         }
       );
 
       import("swiper/css");
-      import("swiper/css/navigation");
       import("swiper/css/pagination");
     };
 
@@ -152,8 +150,6 @@ function HeroSwiperClient({ slides }: { slides: SwiperSlideType[] }) {
               loop={slides.length > 1}
               autoplay={{ delay: 5000, disableOnInteraction: false }}
               pagination={{ clickable: true }}
-              navigation
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onSlideChange={(swiper: any) => setActiveIndex(swiper.realIndex)}
               style={{ height: "100%", minHeight: "320px" }}
             >
