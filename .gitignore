@@ -8,6 +8,7 @@ out/
 # Runtime / cache
 .turbo/
 .cache/
+.npm-cache/
 
 # Logs
 logs/
