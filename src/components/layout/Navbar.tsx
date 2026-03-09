@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { ShoppingCart, Heart, User, Menu, X, LogOut } from "lucide-react";
@@ -87,7 +88,13 @@ export default function Navbar() {
             className="flex-shrink-0 font-display font-bold text-xl tracking-tight min-h-0 min-w-0 inline-flex items-center gap-2"
             aria-label="Black Phoenix - Bosh sahifa"
           >
-          
+            <Image
+              src="/clothing.svg"
+              alt="Black Phoenix icon"
+              width={24}
+              height={24}
+              priority={false}
+            />
             <span className="text-warning">BLACK</span>
             <span className="text-white">PHOENIX</span>
           </Link>

@@ -27,6 +27,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.placeholder-muted::placeholder {
+  color: rgba(248, 248, 246, 0.56);
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     --toast-bg: #ffffff;
@@ -41,6 +45,10 @@ body {
   body {
     background-color: #fafafa;
     color: #111827;
+  }
+
+  .placeholder-muted::placeholder {
+    color: rgba(17, 24, 39, 0.56);
   }
 }
 

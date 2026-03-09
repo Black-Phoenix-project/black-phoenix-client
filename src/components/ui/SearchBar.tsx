@@ -7,6 +7,9 @@ import Image from "next/image";
 import type { Product } from "@/types";
 import { scoreProductSearch } from "@/lib/searchRank";
 
+let cachedProducts: Product[] | null = null;
+let productsPromise: Promise<Product[]> | null = null;
+
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<Product[]>([]);
@@ -20,17 +23,28 @@ export default function SearchBar() {
 
   const loadProducts = useCallback(async () => {
     if (hasLoaded || isLoading) return;
+    if (cachedProducts) {
+      setAllProducts(cachedProducts);
+      setHasLoaded(true);
+      return;
+    }
 
     setIsLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product`);
-      const data = await res.json();
-      const products = Array.isArray(data)
-        ? data
-        : data.products || data.data || [];
+      if (!productsPromise) {
+        productsPromise = fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product`)
+          .then((res) => res.json())
+          .then((data) =>
+            Array.isArray(data) ? data : data.products || data.data || []
+          );
+      }
+
+      const products = await productsPromise;
+      cachedProducts = products;
       setAllProducts(products);
       setHasLoaded(true);
     } catch {
+      productsPromise = null;
       // fail silently
     } finally {
       setIsLoading(false);
@@ -128,7 +142,7 @@ export default function SearchBar() {
           autoComplete="off"
           aria-label="Mahsulotlarni qidirish"
           aria-autocomplete="list"
-          className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-9 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-warning/50 focus:bg-white/8 transition-all min-h-0"
+          className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-9 py-2 text-sm text-white placeholder-muted focus:outline-none focus:border-warning/50 focus:bg-white/8 transition-all min-h-0"
         />
         {isLoading && (
           <Loader2

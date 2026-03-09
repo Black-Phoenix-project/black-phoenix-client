@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
+import Image from "next/image";
 import ProductCard from "@/components/ui/ProductCard";
 import type { Product } from "@/types";
 import { scoreProductSearch } from "@/lib/searchRank";
@@ -62,10 +63,15 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Page header */}
       <div className="mb-8">
-     
         <h1 className="font-display text-3xl sm:text-4xl font-bold text-white">
           <span className="inline-flex items-center gap-2">
-            
+            <Image
+              src="/clothing.svg"
+              alt="Black Phoenix icon"
+              width={28}
+              height={28}
+              priority={false}
+            />
             Barcha mahsulotlar
           </span>
         </h1>
@@ -80,9 +86,8 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
         <div className="relative flex-1">
           <Search
             size={16}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-base-100 pointer-events-none"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
             aria-hidden="true"
-          
           />
           <label htmlFor="products-search" className="sr-only">
             Mahsulot qidirish
@@ -93,7 +98,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Mahsulot nomi yoki tavsif..."
-            className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-9 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-warning/50 transition-all min-h-[44px]"
+            className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-9 py-2.5 text-sm text-white placeholder-muted focus:outline-none focus:border-warning/50 transition-all min-h-[44px]"
             aria-label="Mahsulotlarni qidirish"
           />
           {query && (

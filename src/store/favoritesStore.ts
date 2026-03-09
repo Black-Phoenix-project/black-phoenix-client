@@ -9,6 +9,7 @@ interface FavoritesStore {
   items: Product[];
   likedIds: Set<string>;
   pendingIds: Set<string>;
+  lastMutationAt: number;
   addFavorite: (product: Product) => void;
   removeFavorite: (productId: string) => void;
   toggleFavorite: (product: Product, userId?: string) => Promise<boolean>;
@@ -23,6 +24,7 @@ export const useFavoritesStore = create<FavoritesStore>()(
       items: [],
       likedIds: new Set<string>(),
       pendingIds: new Set<string>(),
+      lastMutationAt: 0,
 
       addFavorite: (product) => {
         set((state) => {
@@ -32,6 +34,7 @@ export const useFavoritesStore = create<FavoritesStore>()(
           return {
             items: [...state.items, product],
             likedIds: newIds,
+            lastMutationAt: Date.now(),
           };
         });
       },
@@ -43,6 +46,7 @@ export const useFavoritesStore = create<FavoritesStore>()(
           return {
             items: state.items.filter((p) => p._id !== productId),
             likedIds: newIds,
+            lastMutationAt: Date.now(),
           };
         });
       },
@@ -53,11 +57,15 @@ export const useFavoritesStore = create<FavoritesStore>()(
         if (get().pendingIds.has(productId)) {
           return get().likedIds.has(productId);
         }
+        const mutationAtStart = Date.now();
 
         set((state) => {
           const nextPending = new Set(state.pendingIds);
           nextPending.add(productId);
-          return { pendingIds: nextPending };
+          return {
+            pendingIds: nextPending,
+            lastMutationAt: mutationAtStart,
+          };
         });
 
         try {
@@ -101,8 +109,18 @@ export const useFavoritesStore = create<FavoritesStore>()(
       },
 
       syncFromServer: async (userId) => {
+        const syncStartedAt = Date.now();
         try {
           const likes = await likesApi.getUserLikes(userId);
+
+          // Ignore stale sync response when local mutations happened after sync started
+          if (
+            get().lastMutationAt > syncStartedAt ||
+            get().pendingIds.size > 0
+          ) {
+            return;
+          }
+
           const ids = new Set<string>();
           const products: Product[] = [];
 
@@ -135,6 +153,7 @@ export const useFavoritesStore = create<FavoritesStore>()(
           items: p?.items ?? [],
           likedIds: new Set<string>(p?.likedIds ?? []),
           pendingIds: new Set<string>(),
+          lastMutationAt: 0,
         };
       },
     }

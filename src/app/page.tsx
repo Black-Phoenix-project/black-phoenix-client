@@ -5,6 +5,7 @@ import HeroSwiper from "@/components/sections/HeroSwiper";
 import ProductGrid from "@/components/sections/ProductGrid";
 import AboutSection from "@/components/sections/AboutSection";
 
+
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://blackphoenix.uz";
 
@@ -13,6 +14,14 @@ export const metadata: Metadata = {
   description:
     "Black Phoenix — O'zbekistondagi eng ishonchli maxsus kiyim (спецодежда) ishlab chiqaruvchi. Sanoat, xizmat ko'rsatish va himoya kiyimlari. Tezkor yetkazib berish. Blackphoenix спецодежда Ташкент.",
   alternates: { canonical: SITE_URL },
+  icons: {
+    icon: {
+      url: "../../public/clothing.svg",
+      sizes: "192x192",
+      type: "image/png",
+    },
+  
+  }
 };
 
 // ISR: revalidate every 60 seconds

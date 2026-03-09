@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin, Instagram, Send, LogOut, User } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
@@ -31,7 +32,13 @@ export default function Footer() {
             className="inline-flex items-center gap-2 font-display font-bold text-2xl mb-3 min-h-0 min-w-0"
             aria-label="Black Phoenix bosh sahifasi"
           >
-            
+            <Image
+              src="/clothing.svg"
+              alt="Black Phoenix icon"
+              width={28}
+              height={28}
+              priority={false}
+            />
             <span className="text-warning">BLACK</span>
             <span className="text-white">PHOENIX</span>
           </Link>
