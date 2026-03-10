@@ -8,6 +8,7 @@ import Footer from "@/components/layout/Footer";
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://blackphoenix.uz";
 
+// Fonts
 const fontPrimary = DM_Sans({
   subsets: ["latin", "latin-ext"],
   display: "swap",
@@ -22,15 +23,15 @@ const fontDisplay = Playfair_Display({
   preload: true,
 });
 
+// Metadata
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default:
-      "Black Phoenix — Maxsus Kiyim va Himoya Vositalari | Спецодежда Ташкент",
+    default: "Black Phoenix — Maxsus Kiyim va Himoya Vositalari | Спецодежда Ташкент",
     template: "%s | Black Phoenix",
   },
   description:
-    "Black Phoenix — O'zbekistondagi eng ishonchli maxsus kiyim (спецодежда) ishlab chiqaruvchi. Sanoat, xizmat ko'rsatish va himoya kiyimlari. Tezkor yetkazib berish. Blackphoenix спецодежда Ташкент.",
+    "Black Phoenix — O'zbekistondagi eng ishonchli maxsus kiyim (спецодежда) ishlab chiqaruvchi. Sanoat, xizmat ko'rsatish va himoya kiyimlari. Tezkor yetkazib berish.",
   keywords: [
     "спецодежда",
     "спецодежда Ташкент",
@@ -70,7 +71,7 @@ export const metadata: Metadata = {
     title:
       "Black Phoenix — Maxsus Kiyim va Himoya Vositalari | Спецодежда Ташкент",
     description:
-      "O'zbekistondagi eng ishonchli maxsus kiyim ishlab chiqaruvchi. Тезкор yetkazib berish.",
+      "O'zbekistondagi eng ishonchli maxsus kiyim ishlab chiqaruvchi. Tezkor yetkazib berish.",
     images: [
       {
         url: `${SITE_URL}/og-image.jpg`,
@@ -91,12 +92,14 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.ico", // Brauzer tab
+    apple: "/apple-touch-icon.png", // iOS
+    
   },
   manifest: "/site.webmanifest",
 };
 
+// Viewport
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
@@ -107,6 +110,7 @@ export const viewport: Viewport = {
   ],
 };
 
+// JSON-LD Organization
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -128,31 +132,28 @@ const organizationJsonLd = {
   sameAs: [],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="uz" data-theme="blackphoenix" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html: `(function () {
-  var root = document.documentElement;
-  var mq = window.matchMedia("(prefers-color-scheme: dark)");
-  var applyTheme = function (isDark) {
-    root.setAttribute("data-theme", isDark ? "blackphoenix" : "blackphoenixlight");
-  };
-  applyTheme(mq.matches);
-  if (typeof mq.addEventListener === "function") {
-    mq.addEventListener("change", function (e) { applyTheme(e.matches); });
-  } else if (typeof mq.addListener === "function") {
-    mq.addListener(function (e) { applyTheme(e.matches); });
-  }
-})();`,
+              var root = document.documentElement;
+              var mq = window.matchMedia("(prefers-color-scheme: dark)");
+              var applyTheme = function (isDark) {
+                root.setAttribute("data-theme", isDark ? "blackphoenix" : "blackphoenixlight");
+              };
+              applyTheme(mq.matches);
+              if (typeof mq.addEventListener === "function") {
+                mq.addEventListener("change", function (e) { applyTheme(e.matches); });
+              } else if (typeof mq.addListener === "function") {
+                mq.addListener(function (e) { applyTheme(e.matches); });
+              }
+            })();`,
           }}
         />
+        {/* JSON-LD */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -172,12 +173,8 @@ export default function RootLayout({
               border: "1px solid var(--toast-border)",
               fontFamily: "var(--font-primary)",
             },
-            success: {
-              iconTheme: { primary: "#F59E0B", secondary: "#0F0F0F" },
-            },
-            error: {
-              iconTheme: { primary: "#EF4444", secondary: "#F8F8F6" },
-            },
+            success: { iconTheme: { primary: "#F59E0B", secondary: "#0F0F0F" } },
+            error: { iconTheme: { primary: "#EF4444", secondary: "#F8F8F6" } },
           }}
         />
         <Header />

@@ -13,7 +13,9 @@ interface ProductsClientProps {
 
 type SortOption = "default" | "price-asc" | "price-desc" | "newest";
 
-export default function ProductsClient({ initialProducts }: ProductsClientProps) {
+export default function ProductsClient({
+  initialProducts,
+}: ProductsClientProps) {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<SortOption>("default");
   const [onlyInStock, setOnlyInStock] = useState(false);
@@ -35,8 +37,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
     if (onlyInStock) {
       list = list.filter(
         (p) =>
-          p.status !== "out_of_stock" &&
-          (p.stock === undefined || p.stock > 0)
+          p.status !== "out_of_stock" && (p.stock === undefined || p.stock > 0),
       );
     }
 
@@ -51,7 +52,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
         list.sort(
           (a, b) =>
             new Date(b.createdAt ?? 0).getTime() -
-            new Date(a.createdAt ?? 0).getTime()
+            new Date(a.createdAt ?? 0).getTime(),
         );
         break;
     }
@@ -126,7 +127,7 @@ export default function ProductsClient({ initialProducts }: ProductsClientProps)
             id="sort-select"
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
-            className="bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-warning/50 min-h-[44px] appearance-none cursor-pointer"
+            className="w-full sm:w-auto bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-warning/50 min-h-[44px] appearance-none cursor-pointer"
             aria-label="Mahsulotlarni tartiblash"
           >
             <option value="default">Standart tartib</option>

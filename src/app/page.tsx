@@ -12,16 +12,14 @@ const SITE_URL =
 export const metadata: Metadata = {
   title: "Black Phoenix — Maxsus Kiyim va Himoya Vositalari | Спецодежда Ташкент",
   description:
-    "Black Phoenix — O'zbekistondagi eng ishonchli maxsus kiyim (спецодежда) ishlab chiqaruvchi. Sanoat, xizmat ko'rsatish va himoya kiyimlari. Tezkor yetkazib berish. Blackphoenix спецодежда Ташкент.",
+    "Black Phoenix — O'zbekistondagi eng ishonchli maxsus kiyim (спецодежда) ishlab chiqaruvchi.",  
   alternates: { canonical: SITE_URL },
+
   icons: {
-    icon: {
-      url: "../../public/clothing.svg",
-      sizes: "192x192",
-      type: "image/png",
-    },
-  
-  }
+    icon: "/favicon.ico",
+    shortcut: "/clothing.svg",
+    apple: "/clothing.svg",
+  },
 };
 
 // ISR: revalidate every 60 seconds
