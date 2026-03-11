@@ -113,7 +113,6 @@ export default function ProductsClient({
           )}
         </div>
 
-        {/* Sort */}
         <div className="flex items-center gap-2">
           <SlidersHorizontal
             size={15}
