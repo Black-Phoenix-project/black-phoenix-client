@@ -47,6 +47,9 @@ export const metadata: Metadata = {
     "BlackPhoenix спецодежда",
     "корпоративная одежда",
     "рабочая одежда",
+    "рабочая форма",
+"защитная одежда",
+"спец одежда узбекистан"
   ],
   authors: [{ name: "Black Phoenix", url: SITE_URL }],
   creator: "Black Phoenix",
