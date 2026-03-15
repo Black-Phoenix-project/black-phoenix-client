@@ -5,21 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
+
+const SearchBar = dynamic(() => import("@/components/ui/SearchBar"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full max-w-md h-10 rounded-lg border border-white/10 bg-white/5" aria-hidden="true" />
+  ),
+});
 import { ShoppingCart, Heart, User, Menu, X, LogOut } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import clsx from "clsx";
 
-const SearchBar = dynamic(() => import("@/components/ui/SearchBar"), {
-  ssr: false,
-  loading: () => (
-    <div
-      className="w-full max-w-md h-10 rounded-lg border border-white/10 bg-white/5"
-      aria-hidden="true"
-    />
-  ),
-});
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -74,7 +72,7 @@ export default function Navbar() {
   return (
     <nav
       className={clsx(
-        "sticky top-0 z-40 transition-all duration-300",
+        "sticky top-0 z-50 transition-all duration-300",
         scrolled
           ? "bg-brand-dark/95 backdrop-blur-xl border-b border-white/8 shadow-2xl"
           : "bg-brand-dark/80 backdrop-blur-md border-b border-white/5"
@@ -98,6 +96,7 @@ export default function Navbar() {
             <span className="text-warning">BLACK</span>
             <span className="text-white">PHOENIX</span>
           </Link>
+
 
           <div className="flex-1 hidden md:flex justify-center px-4">
             <SearchBar />
@@ -204,6 +203,7 @@ export default function Navbar() {
             </button>
           </div>
         </div>
+
 
         <div className="md:hidden pb-3">
           <SearchBar />

@@ -32,7 +32,8 @@ export default function SearchBar() {
     setIsLoading(true);
     try {
       if (!productsPromise) {
-        productsPromise = fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/product`)
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://black-phoenixx-backend.onrender.com";
+        productsPromise = fetch(`${apiUrl}/api/product`)
           .then((res) => res.json())
           .then((data) =>
             Array.isArray(data) ? data : data.products || data.data || []
