@@ -73,7 +73,7 @@ export default function BasketPage() {
       );
 
       clearCart();
-      toast.success("Buyurtmangiz qabul qilindi! Admin siz bilan bog&apos;lanadi.");
+      toast.success("Buyurtmangiz qabul qilindi! Admin siz bilan bog'lanadi.");
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Xato yuz berdi";
       toast.error(msg);

@@ -1,64 +1,33 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { Search, SlidersHorizontal, X } from "lucide-react";
+import { Search, SlidersHorizontal, X, Loader2 } from "lucide-react";
 import Image from "next/image";
 import ProductCard from "@/components/ui/ProductCard";
 import type { Product } from "@/types";
-import { scoreProductSearch } from "@/lib/searchRank";
+import { useProductSearch } from "@/lib/hooks/useProductSearch";
+import { type SortOption } from "@/lib/api/search";
 
 interface ProductsClientProps {
   initialProducts: Product[];
 }
 
-type SortOption = "default" | "price-asc" | "price-desc" | "newest";
-
 export default function ProductsClient({
   initialProducts,
 }: ProductsClientProps) {
-  const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<SortOption>("default");
-  const [onlyInStock, setOnlyInStock] = useState(false);
+  const {
+    query,
+    setQuery,
+    sort,
+    setSort,
+    onlyInStock,
+    setOnlyInStock,
+    results,
+    isSearching,
+    error,
+    isFiltering,
+  } = useProductSearch({ initialProducts });
 
-  const filtered = useMemo(() => {
-    let list = [...initialProducts];
-
-    if (query.trim()) {
-      list = list
-        .map((product) => ({
-          product,
-          score: scoreProductSearch(product, query),
-        }))
-        .filter((entry) => entry.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .map((entry) => entry.product);
-    }
-
-    if (onlyInStock) {
-      list = list.filter(
-        (p) =>
-          p.status !== "out_of_stock" && (p.stock === undefined || p.stock > 0),
-      );
-    }
-
-    switch (sort) {
-      case "price-asc":
-        list.sort((a, b) => a.price - b.price);
-        break;
-      case "price-desc":
-        list.sort((a, b) => b.price - a.price);
-        break;
-      case "newest":
-        list.sort(
-          (a, b) =>
-            new Date(b.createdAt ?? 0).getTime() -
-            new Date(a.createdAt ?? 0).getTime(),
-        );
-        break;
-    }
-
-    return list;
-  }, [initialProducts, query, sort, onlyInStock]);
+  const filtered = results;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -102,15 +71,19 @@ export default function ProductsClient({
             className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-9 py-2.5 text-sm text-white placeholder-muted focus:outline-none focus:border-warning/50 transition-all min-h-[44px]"
             aria-label="Mahsulotlarni qidirish"
           />
-          {query && (
-            <button
-              onClick={() => setQuery("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors min-h-0 min-w-0 p-1"
-              aria-label="Qidiruvni tozalash"
-            >
-              <X size={14} />
-            </button>
-          )}
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
+            {isSearching ? (
+              <Loader2 size={14} className="animate-spin text-warning/60" />
+            ) : query ? (
+              <button
+                onClick={() => setQuery("")}
+                className="text-white/40 hover:text-white transition-colors p-1"
+                aria-label="Qidiruvni tozalash"
+              >
+                <X size={14} />
+              </button>
+            ) : null}
+          </span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -151,21 +124,37 @@ export default function ProductsClient({
         </label>
       </div>
 
-      {/* Results count */}
-      {query && (
+      {/* Results count / error */}
+      {error ? (
+        <p className="text-sm text-red-400/70 mb-4" role="alert">
+          {error}
+        </p>
+      ) : isFiltering && !isSearching ? (
         <p
           className="text-sm text-white/40 mb-4"
           aria-live="polite"
           aria-atomic="true"
         >
-          &ldquo;{query}&rdquo; bo&apos;yicha{" "}
+          {query && <>&ldquo;{query}&rdquo; bo&apos;yicha </>}
           <span className="text-warning font-medium">{filtered.length}</span> ta
           natija
         </p>
-      )}
+      ) : null}
 
       {/* Grid */}
-      {filtered.length > 0 ? (
+      {isSearching ? (
+        <div
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
+          aria-label="Yuklanmoqda"
+        >
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={i}
+              className="aspect-[3/4] rounded-2xl bg-white/5 animate-pulse"
+            />
+          ))}
+        </div>
+      ) : filtered.length > 0 ? (
         <div
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
           role="list"
@@ -182,9 +171,9 @@ export default function ProductsClient({
           <Search size={48} className="mx-auto mb-4 opacity-20" />
           <p className="text-lg font-medium">Mahsulot topilmadi</p>
           <p className="text-sm mt-1">Boshqa kalit so&apos;z bilan qidiring</p>
-          {query && (
+          {isFiltering && (
             <button
-              onClick={() => setQuery("")}
+              onClick={() => { setQuery(""); setOnlyInStock(false); setSort("default"); }}
               className="mt-4 text-sm text-warning hover:underline min-h-0 min-w-0"
             >
               Filterni tozalash
