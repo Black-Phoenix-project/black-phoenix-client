@@ -9,9 +9,13 @@ export interface SearchParams {
 }
 
 export interface SearchResult {
+  success: boolean;
+  query: string;
   results: Product[];
   total: number;
-  query: string;
+  page: number;
+  pages: number;
+  limit: number;
 }
 
 export async function searchProducts(
