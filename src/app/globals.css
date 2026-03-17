@@ -5,51 +5,30 @@
 :root {
   --warning: #f59e0b;
   --warning-hover: #d97706;
-  --dark: #0f0f0f;
-  --dark-2: #1a1a1a;
-  --dark-3: #252525;
-  --light: #f8f8f6;
-  --toast-bg: #1a1a1a;
-  --toast-text: #f8f8f6;
-  --toast-border: #2a2a2a;
+  --dark: #fafafa;
+  --dark-2: #f3f4f6;
+  --dark-3: #e5e7eb;
+  --light: #111827;
+  --toast-bg: #ffffff;
+  --toast-text: #111827;
+  --toast-border: #d1d5db;
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
   font-family: var(--font-primary);
-  background-color: var(--dark);
-  color: var(--light);
+  background-color: #fafafa;
+  color: #111827;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .placeholder-muted::placeholder {
-  color: rgba(248, 248, 246, 0.56);
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --toast-bg: #ffffff;
-    --toast-text: #111827;
-    --toast-border: #d1d5db;
-  }
-
-  html {
-    color-scheme: light;
-  }
-
-  body {
-    background-color: #fafafa;
-    color: #111827;
-  }
-
-  .placeholder-muted::placeholder {
-    color: rgba(17, 24, 39, 0.56);
-  }
+  color: rgba(17, 24, 39, 0.56);
 }
 
 /* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
@@ -57,10 +36,10 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--dark-2);
+  background: #e5e7eb;
 }
 ::-webkit-scrollbar-thumb {
-  background: #3a3a3a;
+  background: #9ca3af;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -76,12 +55,7 @@ body {
 
 /* ─── Skeleton shimmer ──────────────────────────────────────────────────────── */
 .skeleton-shimmer {
-  background: linear-gradient(
-    90deg,
-    #1a1a1a 25%,
-    #252525 50%,
-    #1a1a1a 75%
-  );
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -103,11 +77,11 @@ body {
 .swiper-button-next,
 .swiper-button-prev {
   color: #f59e0b !important;
-  background: rgba(15, 15, 15, 0.7) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
   width: 44px !important;
   height: 44px !important;
   border-radius: 50% !important;
-  border: 1px solid rgba(245, 158, 11, 0.3) !important;
+  border: 1px solid rgba(217, 119, 6, 0.3) !important;
   backdrop-filter: blur(8px);
 }
 
@@ -124,7 +98,7 @@ body {
 
 .product-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(245, 158, 11, 0.15);
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(217, 119, 6, 0.16);
 }
 
 /* ─── Warning glow ──────────────────────────────────────────────────────────── */
@@ -149,7 +123,7 @@ body {
 /* ─── Section divider ───────────────────────────────────────────────────────── */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, #2a2a2a 20%, #333 50%, #2a2a2a 80%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, #d1d5db 20%, #9ca3af 50%, #d1d5db 80%, transparent 100%);
 }
 
 /* ─── Nav link underline ────────────────────────────────────────────────────── */
@@ -175,120 +149,87 @@ body {
 
 /* ─── Glass card ────────────────────────────────────────────────────────────── */
 .glass-card {
-  background: rgba(26, 26, 26, 0.8);
+  background: rgba(255, 255, 255, 0.86);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(17, 24, 39, 0.1);
 }
 
-@media (prefers-color-scheme: light) {
-  ::-webkit-scrollbar-track {
-    background: #e5e7eb;
-  }
+/* ─── Light mode overrides for dark-named classes ───────────────────────────── */
+.bg-brand-dark,
+.bg-brand-dark\/80,
+.bg-brand-dark\/95 {
+  background-color: #fafafa !important;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: #9ca3af;
-  }
+.bg-brand-dark-2 {
+  background-color: #f3f4f6 !important;
+}
 
-  .skeleton-shimmer {
-    background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
-    background-size: 200% 100%;
-  }
+.bg-brand-dark-3 {
+  background-color: #e5e7eb !important;
+}
 
-  .swiper-button-next,
-  .swiper-button-prev {
-    background: rgba(255, 255, 255, 0.85) !important;
-    border: 1px solid rgba(217, 119, 6, 0.3) !important;
-  }
+.bg-black\/40,
+.bg-black\/60,
+.bg-black\/70 {
+  background-color: rgba(15, 23, 42, 0.08) !important;
+}
 
-  .product-card:hover {
-    box-shadow: 0 16px 28px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(217, 119, 6, 0.16);
-  }
+.bg-white\/5,
+.hover\:bg-white\/5:hover {
+  background-color: rgba(17, 24, 39, 0.04) !important;
+}
 
-  .section-divider {
-    background: linear-gradient(90deg, transparent 0%, #d1d5db 20%, #9ca3af 50%, #d1d5db 80%, transparent 100%);
-  }
+.bg-white\/8,
+.hover\:bg-white\/8:hover {
+  background-color: rgba(17, 24, 39, 0.06) !important;
+}
 
-  .glass-card {
-    background: rgba(255, 255, 255, 0.86);
-    border: 1px solid rgba(17, 24, 39, 0.1);
-  }
+.bg-white\/10,
+.hover\:bg-white\/10:hover {
+  background-color: rgba(17, 24, 39, 0.08) !important;
+}
 
-  .bg-brand-dark,
-  .bg-brand-dark\/80,
-  .bg-brand-dark\/95 {
-    background-color: #fafafa !important;
-  }
+.border-white\/5 {
+  border-color: rgba(17, 24, 39, 0.08) !important;
+}
 
-  .bg-brand-dark-2 {
-    background-color: #f3f4f6 !important;
-  }
+.border-white\/10 {
+  border-color: rgba(17, 24, 39, 0.14) !important;
+}
 
-  .bg-brand-dark-3 {
-    background-color: #e5e7eb !important;
-  }
+.text-white {
+  color: #111827 !important;
+}
 
-  .bg-black\/40,
-  .bg-black\/60,
-  .bg-black\/70 {
-    background-color: rgba(15, 23, 42, 0.08) !important;
-  }
+.text-white\/70 {
+  color: rgba(17, 24, 39, 0.82) !important;
+}
 
-  .bg-white\/5,
-  .hover\:bg-white\/5:hover {
-    background-color: rgba(17, 24, 39, 0.04) !important;
-  }
+.text-white\/60 {
+  color: rgba(17, 24, 39, 0.72) !important;
+}
 
-  .bg-white\/8,
-  .hover\:bg-white\/8:hover {
-    background-color: rgba(17, 24, 39, 0.06) !important;
-  }
+.text-white\/50 {
+  color: rgba(17, 24, 39, 0.6) !important;
+}
 
-  .bg-white\/10,
-  .hover\:bg-white\/10:hover {
-    background-color: rgba(17, 24, 39, 0.08) !important;
-  }
+.text-white\/40 {
+  color: rgba(17, 24, 39, 0.52) !important;
+}
 
-  .border-white\/5 {
-    border-color: rgba(17, 24, 39, 0.08) !important;
-  }
+.text-white\/30 {
+  color: rgba(17, 24, 39, 0.42) !important;
+}
 
-  .border-white\/10 {
-    border-color: rgba(17, 24, 39, 0.14) !important;
-  }
+.text-white\/20,
+.text-white\/10 {
+  color: rgba(17, 24, 39, 0.28) !important;
+}
 
-  .text-white {
-    color: #111827 !important;
-  }
-
-  .text-white\/70 {
-    color: rgba(17, 24, 39, 0.82) !important;
-  }
-
-  .text-white\/60 {
-    color: rgba(17, 24, 39, 0.72) !important;
-  }
-
-  .text-white\/50 {
-    color: rgba(17, 24, 39, 0.6) !important;
-  }
-
-  .text-white\/40 {
-    color: rgba(17, 24, 39, 0.52) !important;
-  }
-
-  .text-white\/30 {
-    color: rgba(17, 24, 39, 0.42) !important;
-  }
-
-  .text-white\/20,
-  .text-white\/10 {
-    color: rgba(17, 24, 39, 0.28) !important;
-  }
-
-  .hover\:text-white:hover {
-    color: #111827 !important;
-  }
+.hover\:text-white:hover {
+  color: #111827 !important;
 }
 
 /* ─── No horizontal overflow ────────────────────────────────────────────────── */

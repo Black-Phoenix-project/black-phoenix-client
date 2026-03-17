@@ -95,7 +95,7 @@ const config: Config = {
         },
       },
     ],
-    darkTheme: "blackphoenix",
+    darkTheme: "blackphoenixlight",
   },
 };
 

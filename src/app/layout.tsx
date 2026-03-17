@@ -137,25 +137,8 @@ const organizationJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uz" data-theme="blackphoenix" suppressHydrationWarning>
+    <html lang="uz" data-theme="blackphoenixlight" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function () {
-              var root = document.documentElement;
-              var mq = window.matchMedia("(prefers-color-scheme: dark)");
-              var applyTheme = function (isDark) {
-                root.setAttribute("data-theme", isDark ? "blackphoenix" : "blackphoenixlight");
-              };
-              applyTheme(mq.matches);
-              if (typeof mq.addEventListener === "function") {
-                mq.addEventListener("change", function (e) { applyTheme(e.matches); });
-              } else if (typeof mq.addListener === "function") {
-                mq.addListener(function (e) { applyTheme(e.matches); });
-              }
-            })();`,
-          }}
-        />
         {/* JSON-LD */}
         <script
           type="application/ld+json"
@@ -165,7 +148,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body
-        className={`${fontPrimary.variable} ${fontDisplay.variable} min-h-screen bg-brand-dark text-brand-light antialiased transition-colors duration-300`}
+        className={`${fontPrimary.variable} ${fontDisplay.variable} min-h-screen bg-[#fafafa] text-[#111827] antialiased`}
       >
         <Toaster
           position="top-right"
