@@ -1,11 +1,15 @@
 "use client";
 
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Search, SlidersHorizontal, X, Loader2 } from "lucide-react";
 import Image from "next/image";
 import ProductCard from "@/components/ui/ProductCard";
 import type { Product } from "@/types";
 import { useProductSearch } from "@/lib/hooks/useProductSearch";
 import { type SortOption } from "@/lib/api/search";
+import { CATALOG_CATEGORIES } from "@/components/layout/CategoryBar";
+
 
 interface ProductsClientProps {
   initialProducts: Product[];
@@ -14,6 +18,15 @@ interface ProductsClientProps {
 export default function ProductsClient({
   initialProducts,
 }: ProductsClientProps) {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [category, setCategory] = useState(searchParams.get("category") ?? "");
+
+  useEffect(() => {
+    const cat = searchParams.get("category") ?? "";
+    setCategory(cat);
+  }, [searchParams]);
+
   const {
     query,
     setQuery,
@@ -27,7 +40,9 @@ export default function ProductsClient({
     isFiltering,
   } = useProductSearch({ initialProducts });
 
-  const filtered = results;
+  const filtered = category
+    ? results.filter((p) => p.category === category)
+    : results;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -42,12 +57,35 @@ export default function ProductsClient({
               height={28}
               priority={false}
             />
-            Barcha mahsulotlar
+            Все товары
           </span>
         </h1>
         <p className="text-white/40 text-sm mt-1">
-          {initialProducts.length} ta mahsulot mavjud
+          {initialProducts.length} товаров в каталоге
         </p>
+      </div>
+
+      {/* Category tabs */}
+      <div className="flex flex-wrap gap-2 mb-5">
+        {[{ value: "", label: "Все" }, ...CATALOG_CATEGORIES.map(c => ({ value: c.slug, label: c.label }))].map((cat) => (
+          <button
+            key={cat.value}
+            onClick={() => {
+              setCategory(cat.value);
+              const params = new URLSearchParams(searchParams.toString());
+              if (cat.value) params.set("category", cat.value);
+              else params.delete("category");
+              router.push(`/products?${params.toString()}`);
+            }}
+            className={`px-4 py-2 rounded-full text-xs font-semibold border transition-all min-h-0 min-w-0 ${
+              category === cat.value
+                ? "bg-amber-400 text-gray-900 border-amber-400"
+                : "bg-white/5 border-white/10 text-white/60 hover:border-amber-400/50 hover:text-white"
+            }`}
+          >
+            {cat.label}
+          </button>
+        ))}
       </div>
 
       {/* Filters */}
@@ -67,9 +105,9 @@ export default function ProductsClient({
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Mahsulot nomi yoki tavsif..."
+            placeholder="Название или описание товара..."
             className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-9 py-2.5 text-sm text-white placeholder-muted focus:outline-none focus:border-warning/50 transition-all min-h-[44px]"
-            aria-label="Mahsulotlarni qidirish"
+            aria-label="Поиск товаров"
           />
           <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
             {isSearching ? (
@@ -78,7 +116,7 @@ export default function ProductsClient({
               <button
                 onClick={() => setQuery("")}
                 className="text-white/40 hover:text-white transition-colors p-1"
-                aria-label="Qidiruvni tozalash"
+                aria-label="Очистить поиск"
               >
                 <X size={14} />
               </button>
@@ -93,19 +131,19 @@ export default function ProductsClient({
             aria-hidden="true"
           />
           <label htmlFor="sort-select" className="sr-only">
-            Tartiblash
+            Сортировка
           </label>
           <select
             id="sort-select"
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
             className="w-full sm:w-auto bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-warning/50 min-h-[44px] appearance-none cursor-pointer"
-            aria-label="Mahsulotlarni tartiblash"
+            aria-label="Сортировка товаров"
           >
-            <option value="default">Standart tartib</option>
-            <option value="price-asc">Narx: arzondan qimmatga</option>
-            <option value="price-desc">Narx: qimmatdan arzonga</option>
-            <option value="newest">Yangilari</option>
+            <option value="default">По умолчанию</option>
+            <option value="price-asc">Цена: от низкой к высокой</option>
+            <option value="price-desc">Цена: от высокой к низкой</option>
+            <option value="newest">Новинки</option>
           </select>
         </div>
 
@@ -116,10 +154,10 @@ export default function ProductsClient({
             checked={onlyInStock}
             onChange={(e) => setOnlyInStock(e.target.checked)}
             className="checkbox checkbox-warning checkbox-sm"
-            aria-label="Faqat mavjud mahsulotlar"
+            aria-label="Только в наличии"
           />
           <span className="text-sm text-white/60 whitespace-nowrap">
-            Faqat mavjud
+            В наличии
           </span>
         </label>
       </div>
@@ -135,9 +173,8 @@ export default function ProductsClient({
           aria-live="polite"
           aria-atomic="true"
         >
-          {query && <>&ldquo;{query}&rdquo; bo&apos;yicha </>}
-          <span className="text-warning font-medium">{filtered.length}</span> ta
-          natija
+          {query && <>&laquo;{query}&raquo;: </>}
+          <span className="text-warning font-medium">{filtered.length}</span> результатов
         </p>
       ) : null}
 
@@ -145,7 +182,7 @@ export default function ProductsClient({
       {isSearching ? (
         <div
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
-          aria-label="Yuklanmoqda"
+          aria-label="Загрузка"
         >
           {Array.from({ length: 8 }).map((_, i) => (
             <div
@@ -158,7 +195,7 @@ export default function ProductsClient({
         <div
           className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4"
           role="list"
-          aria-label="Mahsulotlar ro'yxati"
+          aria-label="Список товаров"
         >
           {filtered.map((product) => (
             <div key={product._id} role="listitem">
@@ -169,14 +206,14 @@ export default function ProductsClient({
       ) : (
         <div className="text-center py-20 text-white/30">
           <Search size={48} className="mx-auto mb-4 opacity-20" />
-          <p className="text-lg font-medium">Mahsulot topilmadi</p>
-          <p className="text-sm mt-1">Boshqa kalit so&apos;z bilan qidiring</p>
+          <p className="text-lg font-medium">Товары не найдены</p>
+          <p className="text-sm mt-1">Попробуйте другой запрос</p>
           {isFiltering && (
             <button
-              onClick={() => { setQuery(""); setOnlyInStock(false); setSort("default"); }}
+              onClick={() => { setQuery(""); setOnlyInStock(false); setSort("default"); setCategory(""); router.push("/products"); }}
               className="mt-4 text-sm text-warning hover:underline min-h-0 min-w-0"
             >
-              Filterni tozalash
+              Сбросить фильтры
             </button>
           )}
         </div>

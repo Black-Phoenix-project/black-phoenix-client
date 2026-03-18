@@ -64,27 +64,27 @@ export default function Navbar() {
   }, [mounted, isAuthenticated, user?.id, syncFavorites]);
 
   const navLinks = [
-    { href: "/", label: "Bosh sahifa" },
-    { href: "/products", label: "Mahsulotlar" },
-    { href: "#about", label: "Biz haqimizda" },
+    { href: "/", label: "Главная" },
+    { href: "/products", label: "Товары" },
+    { href: "#about", label: "О нас" },
   ];
 
   return (
     <nav
       className={clsx(
-        "sticky top-0 z-50 transition-all duration-300",
+        "relative z-50 transition-all duration-300",
         scrolled
-          ? "bg-brand-dark/95 backdrop-blur-xl border-b border-white/8 shadow-2xl"
+          ? "bg-brand-dark/95 backdrop-blur-xl border-b border-white/8"
           : "bg-brand-dark/80 backdrop-blur-md border-b border-white/5"
       )}
-      aria-label="Asosiy navigatsiya"
+      aria-label="Навигация"
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-3 h-16">
           <Link
             href="/"
             className="flex-shrink-0 font-display font-bold text-xl tracking-tight min-h-0 min-w-0 inline-flex items-center gap-2"
-            aria-label="Black Phoenix - Bosh sahifa"
+            aria-label="Black Phoenix - Главная"
           >
             <Image
               src="/clothing.svg"
@@ -109,7 +109,7 @@ export default function Navbar() {
                 "btn-icon-sm relative rounded-lg hover:bg-white/5 transition-colors text-white/70 hover:text-white",
                 pathname === "/favorites" && "text-warning"
               )}
-              aria-label="Sevimlilar"
+              aria-label="Избранное"
             >
               <Heart size={20} />
               {favCount > 0 && (
@@ -128,7 +128,7 @@ export default function Navbar() {
                 "btn-icon-sm relative rounded-lg hover:bg-white/5 transition-colors text-white/70 hover:text-white",
                 pathname === "/basket" && "text-warning"
               )}
-              aria-label="Savat"
+              aria-label="Корзина"
             >
               <ShoppingCart size={20} />
               {cartCount > 0 && (
@@ -146,7 +146,7 @@ export default function Navbar() {
                 <button
                   tabIndex={0}
                   className="btn-icon-sm flex items-center gap-1.5 px-2 rounded-lg hover:bg-white/5 transition-colors text-sm text-white/70 hover:text-white"
-                  aria-label="Foydalanuvchi menyu"
+                  aria-label="Меню пользователя"
                   aria-haspopup="menu"
                 >
                   <User size={18} className="text-warning flex-shrink-0" />
@@ -160,7 +160,7 @@ export default function Navbar() {
                   className="dropdown-content z-50 menu menu-sm shadow-2xl bg-brand-dark-2 border border-white/10 rounded-xl w-48 p-2 mt-1"
                 >
                   <li className="px-3 py-2 border-b border-white/5 mb-1">
-                    <p className="text-xs text-white/40">Telefon</p>
+                    <p className="text-xs text-white/40">Телефон</p>
                     <p className="text-sm font-medium text-white">{user.phoneNumber}</p>
                   </li>
                   <li>
@@ -170,7 +170,7 @@ export default function Navbar() {
                       className="flex items-center gap-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg px-3 py-2 w-full text-left min-h-0"
                     >
                       <LogOut size={14} />
-                      Chiqish
+                      Выйти
                     </button>
                   </li>
                 </ul>
@@ -181,13 +181,13 @@ export default function Navbar() {
                   href="/auth/login"
                   className="text-sm text-white/70 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-white/5 min-h-[44px] flex items-center"
                 >
-                  Kirish
+                  Войти
                 </Link>
                 <Link
                   href="/auth/register"
                   className="text-sm bg-warning text-black font-semibold px-3 py-2 rounded-lg hover:bg-warning/90 transition-colors min-h-[44px] flex items-center"
                 >
-                  Ro&apos;yxatdan o&apos;tish
+                  Регистрация
                 </Link>
               </div>
             ) : null}
@@ -195,7 +195,7 @@ export default function Navbar() {
             <button
               className="btn-icon-sm rounded-lg hover:bg-white/5 transition-colors text-white/70 hover:text-white md:hidden ml-1"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label={mobileOpen ? "Menyuni yopish" : "Menyuni ochish"}
+              aria-label={mobileOpen ? "Закрыть меню" : "Открыть меню"}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
             >
@@ -213,7 +213,7 @@ export default function Navbar() {
       <div
         id="mobile-menu"
         role="navigation"
-        aria-label="Mobil navigatsiya"
+        aria-label="Мобильная навигация"
         className={clsx(
           "md:hidden border-t border-white/5 bg-brand-dark-2 transition-all duration-300 overflow-hidden",
           mobileOpen ? "max-h-screen pb-4" : "max-h-0"
@@ -244,7 +244,7 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-3 rounded-lg text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
                 >
-                  Kirish
+                  Войти
                 </Link>
               </li>
               <li>
@@ -253,7 +253,7 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-3 rounded-lg text-sm bg-warning text-black font-semibold hover:bg-warning/90 transition-colors text-center"
                 >
-                  Ro&apos;yxatdan o&apos;tish
+                  Регистрация
                 </Link>
               </li>
             </>

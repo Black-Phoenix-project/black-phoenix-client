@@ -33,13 +33,13 @@ export default function ProductCard({ product }: ProductCardProps) {
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      toast.error("Sevimlilariga qo'shish uchun tizimga kiring");
+      toast.error("Войдите в систему, чтобы добавить в избранное");
       return;
     }
 
     const finalLiked = await toggleFavorite(product, user?.id);
     toast.success(
-      finalLiked ? "Sevimlilarga qo'shildi" : "Sevimlilardan olib tashlandi"
+      finalLiked ? "Добавлено в избранное" : "Удалено из избранного"
     );
   };
 
@@ -47,7 +47,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     e.preventDefault();
     e.stopPropagation();
     addItem(product);
-    toast.success(`${product.name} savatga qo'shildi`);
+    toast.success(`${product.name} добавлен в корзину`);
   };
 
   const isOutOfStock =
@@ -61,7 +61,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <button
         onClick={handleLike}
         disabled={liking}
-        aria-label={liked ? "Sevimlilardan olib tashlash" : "Sevimlilarga qo'shish"}
+        aria-label={liked ? "Удалить из избранного" : "Добавить в избранное"}
         aria-pressed={liked}
         className={clsx(
           "btn-icon-sm absolute top-3 right-3 z-10 rounded-full border transition-all shadow-lg",
@@ -80,12 +80,12 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       {isOutOfStock && (
         <div className="absolute top-3 left-3 z-10 bg-black/70 backdrop-blur-sm text-red-400 text-[10px] font-semibold px-2 py-1 rounded-full border border-red-400/20">
-          Tugagan
+          Нет в наличии
         </div>
       )}
       {!isOutOfStock && product.status === "active" && (
         <div className="absolute top-3 left-3 z-10 bg-black/70 backdrop-blur-sm text-green-400 text-[10px] font-semibold px-2 py-1 rounded-full border border-green-400/20">
-          Mavjud
+          В наличии
         </div>
       )}
 
@@ -120,24 +120,28 @@ export default function ProductCard({ product }: ProductCardProps) {
           </h3>
         </Link>
 
-        {product.description && (
-          <p className="text-xs text-white/40 line-clamp-2 leading-relaxed flex-1">
-            {product.description}
-          </p>
+        {product.category && (
+          <span className="inline-block text-[10px] px-2 py-0.5 rounded-full bg-warning/10 text-warning border border-warning/20 font-medium w-fit">
+            {product.category.replace(/-/g, " ")}
+          </span>
         )}
 
-        <div className="flex items-center justify-between gap-2 mt-auto pt-2 border-t border-white/5">
+        <p className="text-xs text-white/40 line-clamp-2 leading-relaxed flex-1 min-h-[2rem]">
+          {product.description ?? ""}
+        </p>
+
+        <div className="flex items-center justify-between gap-2 pt-2 border-t border-white/5">
           <div>
             <p className="text-base sm:text-lg font-bold text-warning price-tag">
               {formatPrice(product.price)}
             </p>
-            <p className="text-[10px] text-white/30">so&apos;m</p>
+            <p className="text-[10px] text-white/30">сум</p>
           </div>
 
           <button
             onClick={handleAddToCart}
             disabled={isOutOfStock}
-            aria-label={`${product.name} savatga qo'shish`}
+            aria-label={`Добавить ${product.name} в корзину`}
             className={clsx(
               "btn-icon-sm flex items-center gap-1.5 px-3 rounded-lg text-xs font-semibold transition-all",
               isOutOfStock
@@ -146,7 +150,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             )}
           >
             <ShoppingCart size={14} aria-hidden="true" />
-            <span className="hidden sm:inline">Savat</span>
+            <span className="hidden sm:inline">Корзина</span>
           </button>
         </div>
       </div>
