@@ -23,12 +23,8 @@ coverage/
 *.lcov
 
 # Environment variables (keep template file)
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-!.env.example
+
+
 
 # TypeScript
 *.tsbuildinfo
