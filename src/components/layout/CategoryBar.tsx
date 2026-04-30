@@ -264,6 +264,7 @@ export default function CategoryBar() {
 
       {/* ─── Mobile ──────────────────────────────────────────────────────── */}
       <div className="md:hidden bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4">
         <button
           onClick={() => setMobileOpen((v) => !v)}
           className="w-full flex items-center gap-3 px-4 py-3 bg-amber-600 text-white font-bold text-sm"
@@ -319,6 +320,7 @@ export default function CategoryBar() {
             ))}
           </div>
         )}
+        </div>
       </div>
     </>
   );

@@ -40,7 +40,7 @@ export function useProductSearch({ initialProducts }: UseProductSearchOptions) {
         .then((data) => setResults(data.results))
         .catch((err: Error) => {
           if (err.name !== "AbortError") {
-            setError("Qidiruv xatosi yuz berdi");
+            setError("Произошла ошибка поиска");
             setResults(initialProducts);
           }
         })

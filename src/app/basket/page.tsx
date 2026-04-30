@@ -47,7 +47,7 @@ export default function BasketPage() {
 
   const handleOrder = async () => {
     if (!resolvedPhone) {
-      toast.error("Telefon raqamingizni kiriting");
+      toast.error("Введите номер телефона");
       return;
     }
     if (items.length === 0) return;
@@ -73,9 +73,9 @@ export default function BasketPage() {
       );
 
       clearCart();
-      toast.success("Buyurtmangiz qabul qilindi! Admin siz bilan bog'lanadi.");
+      toast.success("Ваш заказ принят! Администратор свяжется с вами.");
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Xato yuz berdi";
+      const msg = err instanceof Error ? err.message : "Произошла ошибка";
       toast.error(msg);
     } finally {
       setIsOrdering(false);
@@ -90,13 +90,13 @@ export default function BasketPage() {
           className="mx-auto mb-4 text-white/10"
           aria-hidden="true"
         />
-        <h1 className="text-2xl font-bold text-white mb-2">Savat bo&apos;sh</h1>
-        <p className="text-white/40 mb-6">Mahsulotlarni savatga qo&apos;shing</p>
+        <h1 className="text-2xl font-bold text-white mb-2">Корзина пуста</h1>
+        <p className="text-white/40 mb-6">Добавьте товары в корзину</p>
         <Link
           href="/products"
           className="inline-flex items-center gap-2 bg-yellow-400 text-black font-bold px-6 py-3 rounded-xl hover:bg-yellow-300 transition"
         >
-          Mahsulotlarga o&apos;tish
+          Перейти к товарам
           <ArrowRight size={18} />
         </Link>
       </div>
@@ -106,8 +106,8 @@ export default function BasketPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-white">Savat</h1>
-        <p className="text-white/40 text-sm mt-1">{count} ta mahsulot</p>
+        <h1 className="text-3xl font-bold text-white">Корзина</h1>
+        <p className="text-white/40 text-sm mt-1">{count} товаров</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -138,10 +138,10 @@ export default function BasketPage() {
               <div className="flex-1">
                 <h3 className="text-white font-medium">{product.name}</h3>
                 <p className="text-yellow-400 font-bold mt-1">
-                  {(product.price * quantity).toLocaleString("uz-UZ")} so&apos;m
+                  {(product.price * quantity).toLocaleString("ru-RU")} сум
                 </p>
                 <p className="text-xs text-white/40">
-                  {product.price.toLocaleString("uz-UZ")} x {quantity}
+                  {product.price.toLocaleString("ru-RU")} x {quantity}
                 </p>
               </div>
 
@@ -175,11 +175,11 @@ export default function BasketPage() {
         </div>
 
         <div className="bg-white/5 rounded-2xl p-5 h-fit sticky top-20">
-          <h2 className="text-xl font-bold text-white mb-4">Buyurtma</h2>
+          <h2 className="text-xl font-bold text-white mb-4">Заказ</h2>
 
           {isLoggedIn ? (
             <div className="space-y-2 rounded-xl bg-white/5 border border-white/10 p-3 mb-1">
-              <p className="text-xs text-white/40">Hisobdan buyurtma</p>
+              <p className="text-xs text-white/40">Заказ из аккаунта</p>
               <p className="text-sm font-medium text-white">{resolvedName}</p>
               <p className="text-sm text-white/70">{resolvedPhone}</p>
             </div>
@@ -196,7 +196,7 @@ export default function BasketPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Ismingiz (ixtiyoriy)"
+                placeholder="Ваше имя (необязательно)"
                 className="w-full bg-white/10 rounded-xl px-3 py-2 text-white"
               />
             </div>
@@ -204,17 +204,17 @@ export default function BasketPage() {
 
           <div className="border-t border-white/10 mt-4 pt-4 space-y-2">
             <div className="flex justify-between text-white/50">
-              <span>{count} ta mahsulot</span>
-              <span>{totalAmount.toLocaleString("uz-UZ")} so&apos;m</span>
+              <span>{count} товаров</span>
+              <span>{totalAmount.toLocaleString("ru-RU")} сум</span>
             </div>
             <div className="flex justify-between text-white/50">
-              <span>Yetkazib berish</span>
-              <span className="text-green-400">Bepul</span>
+              <span>Доставка</span>
+              <span className="text-green-400">Бесплатно</span>
             </div>
             <div className="flex justify-between text-white font-bold">
-              <span>Jami</span>
+              <span>Итого</span>
               <span className="text-yellow-400">
-                {totalAmount.toLocaleString("uz-UZ")} so&apos;m
+                {totalAmount.toLocaleString("ru-RU")} сум
               </span>
             </div>
           </div>
@@ -227,11 +227,11 @@ export default function BasketPage() {
             {isOrdering ? (
               <>
                 <Loader2 size={18} className="animate-spin" />
-                Yuklanmoqda...
+                Загрузка...
               </>
             ) : (
               <>
-                Buyurtma berish
+                Оформить заказ
                 <ArrowRight size={18} />
               </>
             )}

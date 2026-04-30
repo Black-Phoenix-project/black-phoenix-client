@@ -1,11 +1,8 @@
 import axios from "axios";
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://black-phoenixx-backend.onrender.com";
+import { PUBLIC_API_URL } from "./baseUrl";
 
 export const apiClient = axios.create({
-  baseURL: API_URL,
+  baseURL: PUBLIC_API_URL,
   timeout: 15000,
   headers: {
     "Content-Type": "application/json",
@@ -31,7 +28,7 @@ apiClient.interceptors.response.use(
       error.response?.data?.message ||
       error.response?.data?.error ||
       error.message ||
-      "Xato yuz berdi";
+      "Произошла ошибка";
     return Promise.reject(new Error(message));
   }
 );

@@ -4,39 +4,39 @@ export default function AboutSection() {
   const advantages = [
     {
       icon: Truck,
-      title: "Tezkor yetkazib berish",
-      desc: "Katta ombor zahiralari bizga har qanday hajmdagi buyurtmalarni 1–3 ish kuni ichida bajarishga imkon beradi.",
+      title: "Быстрая доставка",
+      desc: "Большие складские запасы позволяют нам выполнять заказы любого объема за 1-3 рабочих дня.",
     },
     {
       icon: UserCheck,
-      title: "Individual yondashuv",
-      desc: "Menejer mato namunalari bilan korxonangizga kelib ko'rishi mumkin.",
+      title: "Индивидуальный подход",
+      desc: "Менеджер может приехать на ваше предприятие с образцами тканей.",
     },
     {
       icon: ShieldCheck,
-      title: "Sifat kafolatlari",
-      desc: "Maxsus kiyimlarimiz e'lon qilingan xususiyatlarga mos keladi. Mustahkam, yirtilishga chidamli va parvarishda qulay. Sertifikatlar taqdim etiladi.",
+      title: "Гарантия качества",
+      desc: "Наша спецодежда соответствует заявленным характеристикам: прочная, устойчивая к разрывам и удобная в уходе. Предоставляем сертификаты.",
     },
     {
       icon: Package2,
-      title: "Minimal buyurtma yo'q",
-      desc: "Siz bitta mahsulot ham, katta partiya ham xarid qilishingiz mumkin.",
+      title: "Нет минимального заказа",
+      desc: "Вы можете купить как один товар, так и крупную партию.",
     },
   ];
 
   const categories = [
-    "Yozgi, qishki va mavsumiy maxsus kiyimlar",
-    "Signal forma va inventar (yorug'lik qaytaruvchi elementlar bilan)",
-    "Himoya vositalari: qo'lqop, ko'zoynak, niqob, dubulg'a, tizzalik",
-    "Maxsus poyabzal va tegishli tovarlar",
+    "Летняя, зимняя и сезонная спецодежда",
+    "Сигнальная форма и инвентарь со светоотражающими элементами",
+    "Средства защиты: перчатки, очки, маски, каски, наколенники",
+    "Спецобувь и сопутствующие товары",
   ];
 
   const services = [
-    "Innovatsion matolar, pigmentlar va singdirgichlarni ishlab chiqish",
-    "Soha, gavda tuzilishi va moda tendensiyalarini hisobga olib forma loyihalash",
-    "Ishlab chiqarish",
-    "Himoya to'plamlarini ishlab chiqish",
-    "Himoya vositalariga logotip bosish va individuallashtirish",
+    "Разработка инновационных тканей, пигментов и пропиток",
+    "Проектирование формы с учетом отрасли, посадки и современных требований",
+    "Производство",
+    "Разработка защитных комплектов",
+    "Нанесение логотипа и индивидуализация средств защиты",
   ];
 
   return (
@@ -46,35 +46,32 @@ export default function AboutSection() {
       aria-labelledby="about-heading"
     >
       <div className="max-w-7xl mx-auto px-4">
-        {/* Header */}
         <div className="text-center mb-12">
           <p className="text-xs text-warning/60 uppercase tracking-widest font-medium mb-2">
-            Kompaniya
+            Компания
           </p>
           <h2
             id="about-heading"
             className="font-display text-3xl sm:text-4xl font-bold text-white"
           >
-            Biz haqimizda
+            О нас
           </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-14">
-          {/* Description */}
           <div>
             <div className="glass-card rounded-2xl p-6 sm:p-8 h-full">
               <p className="text-white/70 leading-relaxed text-base mb-6">
                 <span className="text-warning font-semibold">
                   &ldquo;Blackphoenix&rdquo;
                 </span>{" "}
-                turli soha korxonalari uchun ishonchli ishchi kiyimlar va
-                individual himoya vositalarini ishlab chiqaruvchi hamda
-                yetkazib beruvchi kompaniya.
+                производит и поставляет надежную рабочую одежду и средства
+                индивидуальной защиты для предприятий разных отраслей.
               </p>
               <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-3">
-                Bizning xizmatlar
+                Наши услуги
               </h3>
-              <ul className="space-y-2.5" aria-label="Xizmatlar ro'yxati">
+              <ul className="space-y-2.5" aria-label="Список услуг">
                 {services.map((service, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span
@@ -88,23 +85,21 @@ export default function AboutSection() {
             </div>
           </div>
 
-          {/* Assortiment */}
           <div>
             <div className="glass-card rounded-2xl p-6 sm:p-8 h-full">
               <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-1">
-                Bizning assortiment
+                Наш ассортимент
               </h3>
               <p className="text-sm text-white/50 mb-4">
-                Biz xizmat ko&apos;rsatish sohasidagi korxonalar xodimlariga
-                chiroyli va qulay kiyimlar taklif etamiz. Shuningdek,
-                assortimentimizda kimyoviy moddalar bilan ishlashda, iflos
-                havoda yoki yuqori xavfli sharoitlarda himoya qiluvchi maxsus
-                kiyimlar ham mavjud.
+                Мы предлагаем красивую и удобную форму для сотрудников сферы
+                обслуживания. Также в ассортименте есть спецодежда для работы с
+                химическими веществами, в загрязненной среде и в условиях
+                повышенного риска.
               </p>
               <p className="text-xs text-white/30 uppercase tracking-wider mb-3">
-                Bizda siz quyidagilarni buyurtma qilishingiz mumkin:
+                У нас можно заказать:
               </p>
-              <ul className="space-y-2.5" aria-label="Assortiment ro'yxati">
+              <ul className="space-y-2.5" aria-label="Список ассортимента">
                 {categories.map((cat, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span
@@ -119,15 +114,14 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* Advantages */}
         <div>
           <h3 className="text-center font-display text-xl sm:text-2xl font-bold text-white mb-6">
-            Bizning afzalliklarimiz
+            Наши преимущества
           </h3>
           <div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
             role="list"
-            aria-label="Afzalliklar"
+            aria-label="Преимущества"
           >
             {advantages.map((adv, i) => (
               <div
@@ -153,7 +147,6 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* Order CTA */}
         <div className="mt-12 glass-card rounded-2xl p-6 sm:p-8 border border-warning/10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-warning/10 flex items-center justify-center flex-shrink-0">
@@ -161,17 +154,17 @@ export default function AboutSection() {
             </div>
             <div className="flex-1">
               <h3 className="font-semibold text-white text-base mb-1">
-                Buyurtma berish
+                Оформление заказа
               </h3>
               <p className="text-sm text-white/50 leading-relaxed">
-                Saytda mahsulotni tanlang va telefon raqamingizni to&apos;g&apos;ri
-                kiriting. Buyurtma ma&apos;lumotlari adminlarga tushadi va ular siz
-                bilan tez orada bog&apos;lanadi.
+                Выберите товар на сайте и правильно укажите номер телефона.
+                Данные заказа поступят администраторам, и они скоро свяжутся с
+                вами.
               </p>
               <p className="text-xs text-warning/70 mt-2 flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-warning inline-block" />
-                Muhim: Telefon raqamingizni to&apos;g&apos;ri kiriting — adminlar aynan shu
-                raqam orqali bog&apos;lanadi.
+                Важно: укажите корректный номер телефона - администраторы
+                свяжутся именно по нему.
               </p>
             </div>
           </div>

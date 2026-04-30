@@ -98,7 +98,7 @@ export default function ProductsClient({
             aria-hidden="true"
           />
           <label htmlFor="products-search" className="sr-only">
-            Mahsulot qidirish
+            Поиск товаров
           </label>
           <input
             id="products-search"

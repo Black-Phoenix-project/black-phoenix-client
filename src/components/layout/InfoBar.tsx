@@ -10,7 +10,7 @@ export default function InfoBar() {
           <a
             href="tel:+998901234567"
             className="flex items-center gap-1.5 hover:text-warning transition-colors min-h-0 min-w-0"
-            aria-label="Telefon raqam"
+            aria-label="Номер телефона"
           >
             <Phone size={11} />
             <span>+998 90 123-45-67</span>
@@ -18,7 +18,7 @@ export default function InfoBar() {
           <a
             href="mailto:info@blackphoenix.uz"
             className="flex items-center gap-1.5 hover:text-warning transition-colors min-h-0 min-w-0"
-            aria-label="Email manzil"
+            aria-label="Email адрес"
           >
             <Mail size={11} />
             <span>info@blackphoenix.uz</span>
@@ -26,7 +26,7 @@ export default function InfoBar() {
         </div>
         <div className="flex items-center gap-1.5">
           <Clock size={11} />
-          <span>Dush–Shan: 09:00–18:00</span>
+          <span>Пн-Сб: 09:00-18:00</span>
         </div>
       </div>
     </div>

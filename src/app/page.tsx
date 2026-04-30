@@ -10,9 +10,9 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://blackphoenix.uz";
 
 export const metadata: Metadata = {
-  title: "Black Phoenix — Maxsus Kiyim va Himoya Vositalari | Спецодежда Ташкент",
+  title: "Black Phoenix — спецодежда и средства защиты | Спецодежда Ташкент",
   description:
-    "Black Phoenix — O'zbekistondagi eng ishonchli maxsus kiyim (спецодежда) ishlab chiqaruvchi.",  
+    "Black Phoenix — надежный производитель спецодежды и средств защиты в Узбекистане.",
   alternates: { canonical: SITE_URL },
 
   icons: {
@@ -50,7 +50,7 @@ export default async function HomePage() {
   const productListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "Black Phoenix mahsulotlar",
+    name: "Товары Black Phoenix",
     itemListElement: featuredProducts.map((p, i) => ({
       "@type": "ListItem",
       position: i + 1,
@@ -88,7 +88,7 @@ export default async function HomePage() {
       <HeroSwiper slides={slides} />
 
       {/* Product section */}
-      <ProductGrid products={featuredProducts} title="Ommabop mahsulotlar" />
+      <ProductGrid products={featuredProducts} title="Популярные товары" />
 
       {/* About */}
       <AboutSection />

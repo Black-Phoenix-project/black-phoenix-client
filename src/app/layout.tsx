@@ -27,20 +27,20 @@ const fontDisplay = Playfair_Display({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Black Phoenix — Maxsus Kiyim va Himoya Vositalari | Спецодежда Ташкент",
+    default: "Black Phoenix — спецодежда и средства защиты | Спецодежда Ташкент",
     template: "%s | Black Phoenix",
   },
   description:
-    "Black Phoenix — O'zbekistondagi eng ishonchli maxsus kiyim (спецодежда) ishlab chiqaruvchi. Sanoat, xizmat ko'rsatish va himoya kiyimlari. Tezkor yetkazib berish.",
+    "Black Phoenix — надежный производитель спецодежды и средств защиты в Узбекистане. Одежда для промышленности, сервиса и безопасности. Быстрая доставка.",
   keywords: [
     "спецодежда",
     "спецодежда Ташкент",
     "blackphoenix",
     "black phoenix",
-    "maxsus kiyim",
-    "himoya vositalari",
-    "ish kiyimi",
-    "forma kiyim",
+    "спецодежда",
+    "средства защиты",
+    "рабочая одежда",
+    "форма",
     "сигнальная одежда",
     "спецодежда Узбекистан",
     "iş kıyafeti",
@@ -72,9 +72,9 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Black Phoenix",
     title:
-      "Black Phoenix — Maxsus Kiyim va Himoya Vositalari | Спецодежда Ташкент",
+      "Black Phoenix — спецодежда и средства защиты | Спецодежда Ташкент",
     description:
-      "O'zbekistondagi eng ishonchli maxsus kiyim ishlab chiqaruvchi. Tezkor yetkazib berish.",
+      "Надежный производитель спецодежды в Узбекистане. Быстрая доставка.",
     images: [
       {
         url: `${SITE_URL}/og-image.jpg`,
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Black Phoenix — Спецодежда Ташкент",
     description:
-      "O'zbekistondagi eng ishonchli maxsus kiyim va himoya vositalari.",
+      "Надежная спецодежда и средства защиты в Узбекистане.",
     images: [`${SITE_URL}/og-image.jpg`],
   },
   alternates: {
@@ -130,7 +130,7 @@ const organizationJsonLd = {
   address: {
     "@type": "PostalAddress",
     addressCountry: "UZ",
-    addressLocality: "Toshkent",
+    addressLocality: "Ташкент",
   },
   sameAs: [],
 };

@@ -10,7 +10,7 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const product = await getProduct(id);
-  if (!product) return { title: "Mahsulot topilmadi" };
+  if (!product) return { title: "Товар не найден" };
 
   const SITE_URL =
     process.env.NEXT_PUBLIC_SITE_URL || "https://blackphoenix.uz";

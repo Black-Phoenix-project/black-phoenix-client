@@ -120,7 +120,7 @@ export default function SearchBar() {
   return (
     <div ref={wrapperRef} className="relative w-full max-w-md" role="search">
       <label htmlFor="product-search" className="sr-only">
-        Mahsulot qidirish
+        Поиск товаров
       </label>
       <div className="relative flex items-center">
         <Search
@@ -139,9 +139,9 @@ export default function SearchBar() {
             void loadProducts();
             if (query) setIsOpen(true);
           }}
-          placeholder="Mahsulot qidirish..."
+          placeholder="Поиск товаров..."
           autoComplete="off"
-          aria-label="Mahsulotlarni qidirish"
+          aria-label="Поиск товаров"
           aria-autocomplete="list"
           className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-9 py-2 text-sm text-white placeholder-muted focus:outline-none focus:border-warning/50 focus:bg-white/8 transition-all min-h-0"
         />
@@ -160,7 +160,7 @@ export default function SearchBar() {
               inputRef.current?.focus();
             }}
             className="absolute right-2 p-1 text-white/40 hover:text-white transition-colors rounded min-h-0 min-w-0"
-            aria-label="Qidiruvni tozalash"
+            aria-label="Очистить поиск"
           >
             <X size={14} />
           </button>
@@ -171,7 +171,7 @@ export default function SearchBar() {
       {isOpen && (
         <div
           role="listbox"
-          aria-label="Qidiruv natijalari"
+          aria-label="Результаты поиска"
           className="absolute top-full left-0 right-0 mt-2 bg-brand-dark-2 border border-white/10 rounded-xl shadow-2xl z-50 overflow-hidden animate-slide-up"
         >
           {results.length > 0 ? (
@@ -202,7 +202,7 @@ export default function SearchBar() {
                       {product.name}
                     </p>
                     <p className="text-xs text-warning font-semibold price-tag">
-                      {product.price.toLocaleString("uz-UZ")} so&apos;m
+                      {product.price.toLocaleString("ru-RU")} сум
                     </p>
                   </div>
                 </button>
@@ -215,14 +215,14 @@ export default function SearchBar() {
                   }}
                   className="text-xs text-warning hover:underline min-h-0 min-w-0"
                 >
-                  Barcha natijalarni ko&apos;rish →
+                  Смотреть все результаты →
                 </button>
               </div>
             </>
           ) : (
             <div className="px-4 py-6 text-center text-sm text-white/40">
               <Search size={24} className="mx-auto mb-2 opacity-30" />
-              <p>Mahsulot topilmadi</p>
+              <p>Товар не найден</p>
             </div>
           )}
         </div>

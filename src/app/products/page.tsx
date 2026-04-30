@@ -3,9 +3,9 @@ import { getProducts } from "@/lib/api/products";
 import ProductsClient from "./ProductsClient";
 
 export const metadata: Metadata = {
-  title: "Barcha mahsulotlar — Спецодежда Black Phoenix",
+  title: "Все товары — Спецодежда Black Phoenix",
   description:
-    "Black Phoenix toʻliq assortimenti: maxsus kiyimlar, himoya vositalari, signal forma, poyabzal va boshqalar. Спецодежда в Ташкенте.",
+    "Полный ассортимент Black Phoenix: спецодежда, средства защиты, сигнальная форма, обувь и другие товары. Спецодежда в Ташкенте.",
   alternates: {
     canonical: `${process.env.NEXT_PUBLIC_SITE_URL || "https://blackphoenix.uz"}/products`,
   },

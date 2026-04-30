@@ -1,12 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import type { Product } from "@/types";
 import { scoreProductSearch } from "@/lib/searchRank";
+import { SERVER_API_URL } from "@/lib/api/baseUrl";
 
 type SortOption = "default" | "price-asc" | "price-desc" | "newest";
 
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://black-phoenixx-backend.onrender.com";
+const BACKEND_URL = SERVER_API_URL;
 
 // ─── Try backend /api/search ───────────────────────────────────────────────────
 

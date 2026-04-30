@@ -1,12 +1,9 @@
 import type { SwiperSlide } from "@/types";
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://black-phoenixx-backend.onrender.com";
+import { SERVER_API_URL } from "./baseUrl";
 
 export async function getSwiperSlides(): Promise<SwiperSlide[]> {
   try {
-    const res = await fetch(`${API_URL}/api/swiper`, {
+    const res = await fetch(`${SERVER_API_URL}/api/swiper`, {
       next: { revalidate: 300 },
     });
     if (!res.ok) return [];

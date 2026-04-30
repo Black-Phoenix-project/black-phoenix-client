@@ -3,7 +3,7 @@ import { ArrowLeft, Search } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sahifa topilmadi — Black Phoenix",
+  title: "Страница не найдена — Black Phoenix",
   robots: { index: false },
 };
 
@@ -15,10 +15,10 @@ export default function NotFound() {
           404
         </p>
         <h1 className="font-display text-2xl font-bold text-white mb-2">
-          Sahifa topilmadi
+          Страница не найдена
         </h1>
         <p className="text-white/40 text-sm mb-8 max-w-xs mx-auto">
-          Siz izlayotgan sahifa mavjud emas yoki o&apos;chirib yuborilgan.
+          Страница, которую вы ищете, не существует или была удалена.
         </p>
         <div className="flex flex-wrap gap-3 justify-center">
           <Link
@@ -26,14 +26,14 @@ export default function NotFound() {
             className="inline-flex items-center gap-2 bg-white/5 text-white font-medium px-5 py-2.5 rounded-xl hover:bg-white/10 transition-colors min-h-[44px] text-sm border border-white/10"
           >
             <ArrowLeft size={16} />
-            Bosh sahifaga
+            На главную
           </Link>
           <Link
             href="/products"
             className="inline-flex items-center gap-2 bg-warning text-black font-bold px-5 py-2.5 rounded-xl hover:bg-warning/90 transition-colors min-h-[44px] text-sm"
           >
             <Search size={16} />
-            Mahsulotlar
+            Товары
           </Link>
         </div>
       </div>

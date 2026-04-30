@@ -22,11 +22,11 @@ export default function FavoritesPage() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
         <p className="text-xs text-warning/60 uppercase tracking-widest font-medium mb-1">
-          Mening
+          Мои
         </p>
 
         <h1 className="font-display text-3xl font-bold text-white flex items-center gap-3">
-          Sevimlilar
+          Избранное
           {items.length > 0 && (
             <span className="text-lg font-normal text-white/40">
               ({items.length})
@@ -43,18 +43,18 @@ export default function FavoritesPage() {
           </div>
 
           <h2 className="font-display text-xl font-bold text-white mb-2">
-            Sevimlilar bo&apos;sh
+            Избранное пусто
           </h2>
 
           <p className="text-white/40 text-sm mb-6">
-            Mahsulot kartochkasidagi yurak belgisini bosib sevimlilaringizga qo&apos;shing
+            Нажмите на сердечко в карточке товара, чтобы добавить его в избранное
           </p>
 
           <Link
             href="/products"
             className="inline-flex items-center gap-2 bg-warning text-black font-bold px-6 py-3 rounded-xl hover:bg-warning/90 transition-colors"
           >
-            Mahsulotlarga o&apos;tish
+            Перейти к товарам
             <ArrowRight size={18} />
           </Link>
 

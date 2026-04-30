@@ -13,7 +13,7 @@ export default function Footer() {
 
   const handleLogout = () => {
     logout();
-    toast.success("Tizimdan chiqdingiz");
+    toast.success("Вы вышли из системы");
     router.push("/");
   };
 
@@ -23,14 +23,14 @@ export default function Footer() {
     <footer
       className="bg-brand-dark-2 border-t border-white/5 mt-20"
       role="contentinfo"
-      aria-label="Sayt pastki qismi"
+      aria-label="Подвал сайта"
     >
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-1">
           <Link
             href="/"
             className="inline-flex items-center gap-2 font-display font-bold text-2xl mb-3 min-h-0 min-w-0"
-            aria-label="Black Phoenix bosh sahifasi"
+            aria-label="Black Phoenix главная"
           >
             <Image
               src="/clothing.svg"
@@ -43,16 +43,15 @@ export default function Footer() {
             <span className="text-white">PHOENIX</span>
           </Link>
           <p className="text-sm text-white/40 leading-relaxed max-w-xs">
-            Ishonchli ishchi kiyimlar va himoya vositalarini ishlab chiqaruvchi
-            hamda yetkazib beruvchi kompaniya.
+            Производитель и поставщик надежной рабочей одежды и средств защиты.
           </p>
         </div>
 
         <div>
           <h3 className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-4">
-            Aloqa
+            Контакты
           </h3>
-          <ul className="space-y-3" aria-label="Aloqa ma'lumotlari">
+          <ul className="space-y-3" aria-label="Контактная информация">
             <li>
               <a
                 href="tel:+998901234567"
@@ -86,7 +85,7 @@ export default function Footer() {
                   className="text-warning/60 flex-shrink-0 mt-0.5"
                   aria-hidden="true"
                 />
-                <span>Toshkent, O&apos;zbekiston</span>
+                <span>Ташкент, Узбекистан</span>
               </address>
             </li>
           </ul>
@@ -94,16 +93,16 @@ export default function Footer() {
 
         <div>
           <h3 className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-4">
-            Ijtimoiy tarmoqlar
+            Социальные сети
           </h3>
-          <ul className="space-y-3" aria-label="Ijtimoiy tarmoqlar">
+          <ul className="space-y-3" aria-label="Социальные сети">
             <li>
               <a
                 href="https://instagram.com/blackphoenix.uz"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-sm text-white/60 hover:text-warning transition-colors group min-h-0 min-w-0"
-                aria-label="Instagram sahifasi (yangi tabda ochiladi)"
+                aria-label="Страница Instagram (откроется в новой вкладке)"
               >
                 <Instagram
                   size={15}
@@ -118,7 +117,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-sm text-white/60 hover:text-warning transition-colors group min-h-0 min-w-0"
-                aria-label="Telegram kanali (yangi tabda ochiladi)"
+                aria-label="Канал Telegram (откроется в новой вкладке)"
               >
                 <Send
                   size={15}
@@ -130,13 +129,13 @@ export default function Footer() {
           </ul>
 
           <h3 className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-3 mt-6">
-            Sahifalar
+            Страницы
           </h3>
           <ul className="space-y-2">
             {[
-              { href: "/products", label: "Mahsulotlar" },
-              { href: "/basket", label: "Savat" },
-              { href: "/favorites", label: "Sevimlilar" },
+              { href: "/products", label: "Товары" },
+              { href: "/basket", label: "Корзина" },
+              { href: "/favorites", label: "Избранное" },
             ].map((link) => (
               <li key={link.href}>
                 <Link
@@ -152,11 +151,11 @@ export default function Footer() {
 
         <div>
           <h3 className="text-xs font-semibold text-white/30 uppercase tracking-widest mb-4">
-            Shaxsiy kabinet
+            Личный кабинет
           </h3>
           <div
             className="glass-card rounded-xl p-4"
-            aria-label="Shaxsiy kabinet"
+            aria-label="Личный кабинет"
           >
             {isAuthenticated && user ? (
               <div className="space-y-3">
@@ -176,28 +175,28 @@ export default function Footer() {
                 <button
                   onClick={handleLogout}
                   className="w-full flex items-center justify-center gap-2 py-2 text-xs text-red-400 hover:text-red-300 bg-red-400/5 hover:bg-red-400/10 rounded-lg transition-colors border border-red-400/10 min-h-[44px]"
-                  aria-label="Tizimdan chiqish"
+                  aria-label="Выйти"
                 >
                   <LogOut size={13} />
-                  Chiqish
+                  Выйти
                 </button>
               </div>
             ) : (
               <div className="space-y-2">
                 <p className="text-xs text-white/40 mb-3">
-                  Kirish uchun tizimga kiring
+                  Войдите в систему, чтобы открыть кабинет
                 </p>
                 <Link
                   href="/auth/login"
                   className="block w-full text-center py-2 text-sm font-medium bg-warning/10 hover:bg-warning/20 text-warning border border-warning/20 rounded-lg transition-colors min-h-[44px] flex items-center justify-center"
                 >
-                  Kirish
+                  Войти
                 </Link>
                 <Link
                   href="/auth/register"
                   className="block w-full text-center py-2 text-sm font-medium bg-warning text-black hover:bg-warning/90 rounded-lg transition-colors min-h-[44px] flex items-center justify-center"
                 >
-                  Ro&apos;yxatdan o&apos;tish
+                  Зарегистрироваться
                 </Link>
               </div>
             )}
@@ -207,20 +206,20 @@ export default function Footer() {
 
       <div className="border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/30">
-          <p>© {year} Black Phoenix. Barcha huquqlar himoyalangan.</p>
+          <p>© {year} Black Phoenix. Все права защищены.</p>
           <div className="flex items-center gap-4">
             <Link
               href="/privacy"
               className="hover:text-warning transition-colors min-h-0 min-w-0"
             >
-              Maxfiylik siyosati
+              Политика конфиденциальности
             </Link>
             <span aria-hidden="true">·</span>
             <Link
               href="/oferta"
               className="hover:text-warning transition-colors min-h-0 min-w-0"
             >
-              Ommaviy oferta
+              Публичная оферта
             </Link>
           </div>
         </div>

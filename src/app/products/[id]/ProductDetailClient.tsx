@@ -38,18 +38,18 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
   const handleLike = async () => {
     if (!isAuthenticated) {
-      toast.error("Sevimlilariga qo'shish uchun tizimga kiring");
+      toast.error("Войдите в систему, чтобы добавить товар в избранное");
       return;
     }
     const finalLiked = await toggleFavorite(product, user?.id);
     toast.success(
-      finalLiked ? "Sevimlilarga qo'shildi" : "Sevimlilardan olib tashlandi"
+      finalLiked ? "Добавлено в избранное" : "Удалено из избранного"
     );
   };
 
   const handleAddToCart = () => {
     for (let i = 0; i < qty; i++) addItem(product);
-    toast.success(`${qty} ta ${product.name} savatga qo'shildi`);
+    toast.success(`${qty} шт. ${product.name} добавлено в корзину`);
   };
 
   return (
@@ -58,7 +58,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
         <ol className="flex items-center gap-2 text-sm text-white/40">
           <li>
             <Link href="/" className="hover:text-warning transition-colors min-h-0 min-w-0">
-              Bosh sahifa
+              Главная
             </Link>
           </li>
           <li aria-hidden="true">/</li>
@@ -67,7 +67,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               href="/products"
               className="hover:text-warning transition-colors min-h-0 min-w-0"
             >
-              Mahsulotlar
+              Товары
             </Link>
           </li>
           <li aria-hidden="true">/</li>
@@ -78,22 +78,22 @@ export default function ProductDetailClient({ product }: { product: Product }) {
       <Link
         href="/products"
         className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-warning transition-colors mb-6 min-h-[44px]"
-        aria-label="Mahsulotlar ro'yxatiga qaytish"
+        aria-label="Вернуться к списку товаров"
       >
         <ChevronLeft size={16} />
-        Orqaga
+        Назад
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-12">
         <div>
           <div
             className="relative aspect-square bg-brand-dark-3 rounded-2xl overflow-hidden mb-3"
-            aria-label="Mahsulot rasmi"
+            aria-label="Изображение товара"
           >
             {product.image?.[activeImg] ? (
               <Image
                 src={product.image[activeImg]}
-                alt={`${product.name} - rasm ${activeImg + 1}`}
+                alt={`${product.name} - изображение ${activeImg + 1}`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
@@ -108,12 +108,12 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </div>
 
           {product.image && product.image.length > 1 && (
-            <div className="flex gap-2" role="list" aria-label="Mahsulot rasmlari">
+            <div className="flex gap-2" role="list" aria-label="Изображения товара">
               {product.image.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveImg(i)}
-                  aria-label={`Rasm ${i + 1}`}
+                  aria-label={`Изображение ${i + 1}`}
                   aria-pressed={activeImg === i}
                   className={clsx(
                     "relative w-16 h-16 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0",
@@ -143,7 +143,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             <button
               onClick={handleLike}
               disabled={liking}
-              aria-label={liked ? "Sevimlilardan olib tashlash" : "Sevimlilarga qo'shish"}
+              aria-label={liked ? "Удалить из избранного" : "Добавить в избранное"}
               aria-pressed={liked}
               className={clsx(
                 "btn-icon-sm rounded-xl border transition-all flex-shrink-0",
@@ -165,12 +165,12 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             {isOutOfStock ? (
               <span className="inline-flex items-center gap-1.5 text-sm text-red-400">
                 <XCircle size={15} aria-hidden="true" />
-                Tugagan
+                Нет в наличии
               </span>
             ) : (
               <span className="inline-flex items-center gap-1.5 text-sm text-green-400">
                 <CheckCircle size={15} aria-hidden="true" />
-                Mavjud
+                В наличии
               </span>
             )}
           </div>
@@ -178,11 +178,11 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <div className="mb-5 pb-5 border-b border-white/5">
             <p
               className="text-3xl sm:text-4xl font-bold text-warning price-tag"
-              aria-label={`Narx: ${product.price.toLocaleString("uz-UZ")} so'm`}
+              aria-label={`Цена: ${product.price.toLocaleString("ru-RU")} сум`}
             >
-              {product.price.toLocaleString("uz-UZ")}
+              {product.price.toLocaleString("ru-RU")}
               <span className="text-base font-normal text-white/40 ml-1">
-                so&apos;m
+                сум
               </span>
             </p>
           </div>
@@ -190,7 +190,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           {product.description && (
             <div className="mb-6">
               <h2 className="text-xs text-white/30 uppercase tracking-wider mb-2">
-                Tavsif
+                Описание
               </h2>
               <p className="text-white/60 leading-relaxed text-sm">{product.description}</p>
             </div>
@@ -202,20 +202,20 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 <button
                   onClick={() => setQty(Math.max(1, qty - 1))}
                   className="btn-icon-sm px-3 text-white/60 hover:text-white hover:bg-white/5 transition-colors"
-                  aria-label="Miqdorni kamaytirish"
+                  aria-label="Уменьшить количество"
                 >
                   -
                 </button>
                 <span
                   className="px-4 py-2 text-sm font-medium text-white min-w-[40px] text-center"
-                  aria-label={`Miqdor: ${qty}`}
+                  aria-label={`Количество: ${qty}`}
                 >
                   {qty}
                 </span>
                 <button
                   onClick={() => setQty(qty + 1)}
                   className="btn-icon-sm px-3 text-white/60 hover:text-white hover:bg-white/5 transition-colors"
-                  aria-label="Miqdorni oshirish"
+                  aria-label="Увеличить количество"
                 >
                   +
                 </button>
@@ -224,24 +224,24 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               <button
                 onClick={handleAddToCart}
                 className="flex-1 flex items-center justify-center gap-2 bg-warning text-black font-bold py-3 rounded-xl hover:bg-warning/90 transition-colors text-sm min-h-[44px]"
-                aria-label={`Savatga qo'shish - ${qty} ta`}
+                aria-label={`Добавить в корзину - ${qty} шт.`}
               >
                 <ShoppingCart size={18} aria-hidden="true" />
-                Savatga qo&apos;shish
+                Добавить в корзину
               </button>
             </div>
           )}
 
           {isOutOfStock && (
             <div className="p-4 bg-red-400/5 border border-red-400/10 rounded-xl text-sm text-red-400/80 mb-4">
-              Bu mahsulot hozirda mavjud emas.
+              Этот товар сейчас недоступен.
             </div>
           )}
 
           <div className="glass-card rounded-xl p-4 text-xs text-white/40 space-y-1.5">
-            <p>1-3 ish kuni ichida yetkazib beriladi</p>
-            <p>Sifat kafolati mavjud</p>
-            <p>Minimal buyurtma chegarasi yo&apos;q</p>
+            <p>Доставка в течение 1-3 рабочих дней</p>
+            <p>Есть гарантия качества</p>
+            <p>Минимального заказа нет</p>
           </div>
         </div>
       </div>

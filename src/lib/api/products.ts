@@ -1,13 +1,10 @@
 import type { Product } from "@/types";
-
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ||
-  "https://black-phoenixx-backend.onrender.com";
+import { SERVER_API_URL } from "./baseUrl";
 
 // Server-side fetch (for SSR/ISR) — no axios to keep it edge-compatible
 export async function getProducts(): Promise<Product[]> {
   try {
-    const res = await fetch(`${API_URL}/api/product`, {
+    const res = await fetch(`${SERVER_API_URL}/api/product`, {
       next: { revalidate: 60 },
     });
     if (!res.ok) return [];
@@ -24,7 +21,7 @@ export async function getProducts(): Promise<Product[]> {
 
 export async function getProduct(id: string): Promise<Product | null> {
   try {
-    const res = await fetch(`${API_URL}/api/product/${id}`, {
+    const res = await fetch(`${SERVER_API_URL}/api/product/${id}`, {
       next: { revalidate: 120 },
     });
     if (!res.ok) return null;

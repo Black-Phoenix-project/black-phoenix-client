@@ -28,6 +28,6 @@ export async function searchProducts(
   if (params.inStock) qs.set("inStock", "1");
 
   const res = await fetch(`/api/search?${qs}`, { signal });
-  if (!res.ok) throw new Error("Qidiruv xatosi");
+  if (!res.ok) throw new Error("Ошибка поиска");
   return res.json();
 }

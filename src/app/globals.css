@@ -120,6 +120,14 @@ body {
   background-clip: text;
 }
 
+.hero-swiper-title {
+  color: #ffffff !important;
+}
+
+.hero-swiper-description {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
 /* ─── Section divider ───────────────────────────────────────────────────────── */
 .section-divider {
   height: 1px;

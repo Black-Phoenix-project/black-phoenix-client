@@ -23,15 +23,15 @@ export default function RegisterPage() {
     const phoneDigits = phone.replace(/\D/g, "");
 
     if (!phoneDigits || !password.trim()) {
-      toast.error("Telefon va parol majburiy");
+      toast.error("Телефон и пароль обязательны");
       return;
     }
     if (phoneDigits.length < 9 || phoneDigits.length > 15) {
-      toast.error("Telefon raqam noto'g'ri formatda");
+      toast.error("Неверный формат номера телефона");
       return;
     }
     if (password.trim().length < 6) {
-      toast.error("Parol kamida 6 ta belgidan iborat bo'lsin");
+      toast.error("Пароль должен быть не короче 6 символов");
       return;
     }
 
@@ -48,10 +48,10 @@ export default function RegisterPage() {
       // Agar muvaffaqiyatli bo‘lsa, user va token store ga yoziladi
       setAuth(result.user, result.token);
 
-      toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
-      router.push("/"); // Asosiy sahifaga yo‘naltirish
+      toast.success("Вы успешно зарегистрировались!");
+      router.push("/");
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Xato yuz berdi";
+      const msg = err instanceof Error ? err.message : "Произошла ошибка";
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -70,9 +70,9 @@ export default function RegisterPage() {
             <span className="text-white">PHOENIX</span>
           </Link>
           <h1 className="font-display text-2xl font-bold text-white mb-1">
-            Ro&apos;yxatdan o&apos;tish
+            Регистрация
           </h1>
-          <p className="text-white/40 text-sm">Yangi hisob yarating</p>
+          <p className="text-white/40 text-sm">Создайте новый аккаунт</p>
         </div>
 
         <form
@@ -86,7 +86,7 @@ export default function RegisterPage() {
               htmlFor="reg-name"
               className="block text-sm font-medium text-white/70 mb-1.5"
             >
-              Ism (ixtiyoriy)
+              Имя (необязательно)
             </label>
             <div className="relative">
               <User
@@ -99,7 +99,7 @@ export default function RegisterPage() {
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="To'liq ismingiz"
+                placeholder="Ваше полное имя"
                 autoComplete="name"
                 className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-warning/50 transition-all min-h-[48px]"
               />
@@ -112,7 +112,7 @@ export default function RegisterPage() {
               htmlFor="reg-phone"
               className="block text-sm font-medium text-white/70 mb-1.5"
             >
-              Telefon raqam <span className="text-warning">*</span>
+              Номер телефона <span className="text-warning">*</span>
             </label>
             <div className="relative">
               <Phone
@@ -134,7 +134,7 @@ export default function RegisterPage() {
               />
             </div>
             <p className="text-[10px] text-warning/60 mt-1">
-              Adminlar buyurtma uchun shu raqamga qo&apos;ng&apos;iroq qiladi
+              Администраторы позвонят на этот номер по заказу
             </p>
           </div>
 
@@ -144,7 +144,7 @@ export default function RegisterPage() {
               htmlFor="reg-password"
               className="block text-sm font-medium text-white/70 mb-1.5"
             >
-              Parol <span className="text-warning">*</span>
+              Пароль <span className="text-warning">*</span>
             </label>
             <div className="relative">
               <Lock
@@ -157,7 +157,7 @@ export default function RegisterPage() {
                 type={showPass ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Kuchli parol kiriting"
+                placeholder="Введите надежный пароль"
                 required
                 aria-required="true"
                 autoComplete="new-password"
@@ -168,7 +168,7 @@ export default function RegisterPage() {
                 type="button"
                 onClick={() => setShowPass(!showPass)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors min-h-0 min-w-0 p-1"
-                aria-label={showPass ? "Parolni yashirish" : "Parolni ko'rsatish"}
+                aria-label={showPass ? "Скрыть пароль" : "Показать пароль"}
               >
                 {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -183,18 +183,18 @@ export default function RegisterPage() {
             {loading ? (
               <>
                 <Loader2 size={18} className="animate-spin" />
-                Yuklanmoqda...
+                Загрузка...
               </>
             ) : (
-              "Ro'yxatdan o'tish"
+              "Зарегистрироваться"
             )}
           </button>
         </form>
 
         <p className="text-center text-sm text-white/40 mt-4">
-          Hisobingiz bormi?{" "}
+          Уже есть аккаунт?{" "}
           <Link href="/auth/login" className="text-warning hover:underline">
-            Kirish
+            Войти
           </Link>
         </p>
       </div>
