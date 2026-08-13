@@ -1,5 +1,6 @@
 import axios from "axios";
 import { PUBLIC_API_URL } from "./baseUrl";
+import { useAuthStore } from "@/store/authStore";
 
 export const apiClient = axios.create({
   baseURL: PUBLIC_API_URL,
@@ -20,10 +21,18 @@ apiClient.interceptors.request.use((config) => {
   return config;
 });
 
-// Response error normalizer
+// Response error normalizer + stale-token cleanup
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (
+      error.response?.status === 401 &&
+      typeof window !== "undefined"
+    ) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      useAuthStore.getState().logout();
+    }
     const message =
       error.response?.data?.message ||
       error.response?.data?.error ||

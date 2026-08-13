@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Menu, ChevronRight, X, Tag } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 /* ─── Категории ──────────────────────────────────────────────────────────── */
 export const CATALOG_CATEGORIES = [
@@ -103,6 +104,7 @@ const QUICK_LINKS = [
 
 /* ─── Компонент ──────────────────────────────────────────────────────────── */
 export default function CategoryBar() {
+  const { t } = useTranslation();
   const [catalogOpen, setCatalogOpen] = useState(false);
   const [hoveredCat, setHoveredCat] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -157,7 +159,7 @@ export default function CategoryBar() {
             <div ref={catalogRef} className="relative flex-shrink-0">
               <button
                 onClick={() => setCatalogOpen((v) => !v)}
-                className="h-full flex items-center gap-2 px-4 bg-amber-700 hover:bg-amber-600 text-white font-bold text-sm transition-colors select-none"
+                className="h-full flex items-center gap-2 px-4 bg-warning hover:bg-warning/90 text-black font-bold text-sm transition-colors select-none"
                 aria-expanded={catalogOpen}
                 aria-haspopup="true"
               >
@@ -166,7 +168,7 @@ export default function CategoryBar() {
                 ) : (
                   <Menu size={16} strokeWidth={2.5} />
                 )}
-                Каталог
+                {t("catalog.catalog")}
               </button>
 
               {/* Мегадропдаун */}
@@ -175,7 +177,7 @@ export default function CategoryBar() {
                   className="absolute top-full left-0 z-50 flex bg-white border border-gray-200 shadow-2xl"
                   style={{ minWidth: 680 }}
                   role="dialog"
-                  aria-label="Каталог"
+                  aria-label={t("catalog.aria")}
                 >
                   {/* Левая панель */}
                   <ul className="w-56 border-r border-gray-100 py-1 flex-shrink-0">
@@ -186,14 +188,14 @@ export default function CategoryBar() {
                           onClick={() => goToCategory(cat.slug)}
                           className={`w-full flex items-center justify-between px-4 py-2.5 text-sm text-left transition-colors ${
                             hoveredCat === i
-                              ? "bg-amber-50 text-amber-700 font-semibold"
+                              ? "bg-yellow-50 text-warning font-semibold"
                               : "text-gray-700 hover:bg-gray-50"
                           }`}
                         >
-                          <span>{cat.label}</span>
+                          <span>{t(`catalog.categories.${cat.slug}`)}</span>
                           <ChevronRight
                             size={14}
-                            className={hoveredCat === i ? "text-amber-500" : "text-gray-300"}
+                            className={hoveredCat === i ? "text-warning" : "text-gray-300"}
                           />
                         </button>
                       </li>
@@ -202,8 +204,8 @@ export default function CategoryBar() {
 
                   {/* Правая панель */}
                   <div className="flex-1 p-5">
-                    <h3 className="text-sm font-bold text-amber-600 mb-3 uppercase tracking-wide">
-                      {CATALOG_CATEGORIES[hoveredCat]?.label}
+                    <h3 className="text-sm font-bold text-warning mb-3 uppercase tracking-wide">
+                      {t(`catalog.categories.${CATALOG_CATEGORIES[hoveredCat].slug}`)}
                     </h3>
                     {CATALOG_CATEGORIES[hoveredCat]?.sub.length > 0 ? (
                       <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5">
@@ -213,23 +215,23 @@ export default function CategoryBar() {
                               onClick={() =>
                                 goToCategory(CATALOG_CATEGORIES[hoveredCat].slug)
                               }
-                              className="text-sm text-gray-600 hover:text-amber-600 transition-colors text-left w-full"
+                              className="text-sm text-gray-600 hover:text-warning transition-colors text-left w-full"
                             >
-                              {item}
+                              {t(`catalog.sub.${item}`)}
                             </button>
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <p className="text-sm text-gray-400">Новые поступления</p>
+                      <p className="text-sm text-gray-400">{t("catalog.newArrivals")}</p>
                     )}
                     <button
                       onClick={() =>
                         goToCategory(CATALOG_CATEGORIES[hoveredCat].slug)
                       }
-                      className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 hover:text-amber-700 border border-amber-400 hover:border-amber-500 px-3 py-1.5 rounded transition-colors"
+                      className="mt-5 inline-flex items-center gap-1.5 text-xs font-semibold text-warning hover:text-warning border border-yellow-400 hover:border-yellow-500 px-3 py-1.5 rounded transition-colors"
                     >
-                      Смотреть все
+                      {t("catalog.viewAll")}
                       <ChevronRight size={12} />
                     </button>
                   </div>
@@ -243,9 +245,9 @@ export default function CategoryBar() {
                 <button
                   key={link.label}
                   onClick={() => goToCategory(link.slug)}
-                  className="flex-shrink-0 h-full flex items-center px-3.5 text-sm font-medium text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-colors whitespace-nowrap border-r border-gray-100 last:border-r-0"
+                  className="flex-shrink-0 h-full flex items-center px-3.5 text-sm font-medium text-gray-700 hover:text-warning hover:bg-yellow-50 transition-colors whitespace-nowrap border-r border-gray-100 last:border-r-0"
                 >
-                  {link.label}
+                  {t(`catalog.categories.${link.slug}`)}
                 </button>
               ))}
             </nav>
@@ -253,10 +255,10 @@ export default function CategoryBar() {
             {/* Распродажа */}
             <button
               onClick={() => router.push("/products")}
-              className="flex-shrink-0 flex items-center gap-1.5 px-4 bg-red-500 hover:bg-red-600 text-white font-bold text-sm transition-colors whitespace-nowrap"
+              className="flex-shrink-0 flex items-center gap-1.5 px-4 bg-red-500 hover:bg-red-600 text-base-content font-bold text-sm transition-colors whitespace-nowrap"
             >
               <Tag size={14} />
-              Распродажа
+              {t("catalog.sale")}
             </button>
           </div>
         </div>
@@ -267,10 +269,10 @@ export default function CategoryBar() {
         <div className="max-w-7xl mx-auto px-4">
         <button
           onClick={() => setMobileOpen((v) => !v)}
-          className="w-full flex items-center gap-3 px-4 py-3 bg-amber-600 text-white font-bold text-sm"
+          className="w-full flex items-center gap-3 px-4 py-3 bg-warning text-black font-bold text-sm"
         >
           <Menu size={18} />
-          Каталог
+          {t("catalog.catalog")}
           <ChevronRight
             size={16}
             className={`ml-auto transition-transform ${mobileOpen ? "rotate-90" : ""}`}
@@ -289,7 +291,7 @@ export default function CategoryBar() {
                     )
                   }
                 >
-                  <span>{cat.label}</span>
+                  <span>{t(`catalog.categories.${cat.slug}`)}</span>
                   <ChevronRight
                     size={14}
                     className={`transition-transform text-gray-400 ${
@@ -301,17 +303,17 @@ export default function CategoryBar() {
                   <div className="pb-2 bg-gray-50">
                     <button
                       onClick={() => goToCategory(cat.slug)}
-                      className="block w-full text-left px-6 py-1.5 text-sm font-semibold text-amber-600"
+                      className="block w-full text-left px-6 py-1.5 text-sm font-semibold text-warning"
                     >
-                      Смотреть все →
+                      {t("catalog.viewAll")} →
                     </button>
                     {cat.sub.map((item) => (
                       <button
                         key={item}
                         onClick={() => goToCategory(cat.slug)}
-                        className="block w-full text-left px-6 py-1.5 text-sm text-gray-600 hover:text-amber-600"
+                        className="block w-full text-left px-6 py-1.5 text-sm text-gray-600 hover:text-warning"
                       >
-                        {item}
+                        {t(`catalog.sub.${item}`)}
                       </button>
                     ))}
                   </div>

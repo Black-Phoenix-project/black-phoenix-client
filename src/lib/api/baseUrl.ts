@@ -1,4 +1,4 @@
-const DEFAULT_API_URL = "https://black-phoenixx-backend.onrender.com";
+const DEFAULT_API_URL = "https://specodejdauz-backend.onrender.com";
 
 export const PUBLIC_API_URL =
   process.env.NEXT_PUBLIC_API_URL || DEFAULT_API_URL;

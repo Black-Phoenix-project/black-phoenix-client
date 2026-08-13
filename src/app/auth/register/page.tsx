@@ -4,11 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Phone, Lock, User, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { authApi } from "@/lib/api/auth";
 import { useAuthStore } from "@/store/authStore";
 import toast from "react-hot-toast";
 
 export default function RegisterPage() {
+  const { t } = useTranslation();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -23,15 +25,15 @@ export default function RegisterPage() {
     const phoneDigits = phone.replace(/\D/g, "");
 
     if (!phoneDigits || !password.trim()) {
-      toast.error("Телефон и пароль обязательны");
+      toast.error(t("auth.phoneRequired"));
       return;
     }
     if (phoneDigits.length < 9 || phoneDigits.length > 15) {
-      toast.error("Неверный формат номера телефона");
+      toast.error(t("auth.invalidPhone"));
       return;
     }
     if (password.trim().length < 6) {
-      toast.error("Пароль должен быть не короче 6 символов");
+      toast.error(t("auth.shortPassword"));
       return;
     }
 
@@ -48,10 +50,10 @@ export default function RegisterPage() {
       // Agar muvaffaqiyatli bo‘lsa, user va token store ga yoziladi
       setAuth(result.user, result.token);
 
-      toast.success("Вы успешно зарегистрировались!");
+      toast.success(t("auth.registerSuccess"));
       router.push("/");
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Произошла ошибка";
+      const msg = err instanceof Error ? err.message : t("basket.error");
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -66,32 +68,33 @@ export default function RegisterPage() {
             href="/"
             className="inline-block font-display font-bold text-2xl mb-6"
           >
-            <span className="text-warning">BLACK</span>
-            <span className="text-white">PHOENIX</span>
+            <span className="text-primary">BLACK</span>
+            <span className="text-base-content">PHOENIX</span>
           </Link>
-          <h1 className="font-display text-2xl font-bold text-white mb-1">
-            Регистрация
+          <h1 className="font-display text-2xl font-bold text-base-content mb-1">
+            {t("auth.register")}
           </h1>
-          <p className="text-white/40 text-sm">Создайте новый аккаунт</p>
+          <p className="text-base-content/40 text-sm">{t("auth.registerTitle")}</p>
         </div>
 
         <form
           onSubmit={handleSubmit}
           className="glass-card rounded-2xl p-6 sm:p-8 space-y-4"
           noValidate
+          aria-label={t("auth.register")}
         >
           {/* Full Name */}
           <div>
             <label
               htmlFor="reg-name"
-              className="block text-sm font-medium text-white/70 mb-1.5"
+              className="block text-sm font-medium text-base-content/70 mb-1.5"
             >
-              Имя (необязательно)
+              {t("auth.name")}
             </label>
             <div className="relative">
               <User
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/30 pointer-events-none"
                 aria-hidden="true"
               />
               <input
@@ -99,9 +102,9 @@ export default function RegisterPage() {
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="Ваше полное имя"
+                placeholder={t("auth.namePlaceholder")}
                 autoComplete="name"
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-warning/50 transition-all min-h-[48px]"
+                className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-4 py-3 text-sm text-gray-900 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-[48px]"
               />
             </div>
           </div>
@@ -110,14 +113,14 @@ export default function RegisterPage() {
           <div>
             <label
               htmlFor="reg-phone"
-              className="block text-sm font-medium text-white/70 mb-1.5"
+              className="block text-sm font-medium text-base-content/70 mb-1.5"
             >
-              Номер телефона <span className="text-warning">*</span>
+              {t("auth.phone")} <span className="text-primary">*</span>
             </label>
             <div className="relative">
               <Phone
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/30 pointer-events-none"
                 aria-hidden="true"
               />
               <input
@@ -130,11 +133,11 @@ export default function RegisterPage() {
                 required
                 aria-required="true"
                 autoComplete="tel"
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-warning/50 transition-all min-h-[48px]"
+                className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-4 py-3 text-sm text-gray-900 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-[48px]"
               />
             </div>
-            <p className="text-[10px] text-warning/60 mt-1">
-              Администраторы позвонят на этот номер по заказу
+            <p className="text-[10px] text-primary/60 mt-1">
+              {t("auth.phoneNote")}
             </p>
           </div>
 
@@ -142,14 +145,14 @@ export default function RegisterPage() {
           <div>
             <label
               htmlFor="reg-password"
-              className="block text-sm font-medium text-white/70 mb-1.5"
+              className="block text-sm font-medium text-base-content/70 mb-1.5"
             >
-              Пароль <span className="text-warning">*</span>
+              {t("auth.password")} <span className="text-primary">*</span>
             </label>
             <div className="relative">
               <Lock
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/30 pointer-events-none"
                 aria-hidden="true"
               />
               <input
@@ -157,18 +160,18 @@ export default function RegisterPage() {
                 type={showPass ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Введите надежный пароль"
+                placeholder={t("auth.strongPasswordPlaceholder")}
                 required
                 aria-required="true"
                 autoComplete="new-password"
                 minLength={6}
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-10 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-warning/50 transition-all min-h-[48px]"
+                className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-10 py-3 text-sm text-gray-900 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-[48px]"
               />
               <button
                 type="button"
                 onClick={() => setShowPass(!showPass)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors min-h-0 min-w-0 p-1"
-                aria-label={showPass ? "Скрыть пароль" : "Показать пароль"}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/30 hover:text-base-content transition-colors min-h-0 min-w-0 p-1"
+                aria-label={showPass ? t("auth.hidePassword") : t("auth.showPassword")}
               >
                 {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -183,18 +186,18 @@ export default function RegisterPage() {
             {loading ? (
               <>
                 <Loader2 size={18} className="animate-spin" />
-                Загрузка...
+                {t("common.loading")}
               </>
             ) : (
-              "Зарегистрироваться"
+              t("auth.submitRegister")
             )}
           </button>
         </form>
 
-        <p className="text-center text-sm text-white/40 mt-4">
-          Уже есть аккаунт?{" "}
-          <Link href="/auth/login" className="text-warning hover:underline">
-            Войти
+        <p className="text-center text-sm text-base-content/40 mt-4">
+          {t("auth.hasAccount")}{" "}
+          <Link href="/auth/login" className="text-primary hover:underline">
+            {t("auth.goLogin")}
           </Link>
         </p>
       </div>

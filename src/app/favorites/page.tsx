@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Heart, ArrowRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import ProductCard from "@/components/ui/ProductCard";
 
 export default function FavoritesPage() {
-
+  const { t } = useTranslation();
   const { items } = useFavoritesStore();
 
   const [mounted, setMounted] = useState(false);
@@ -21,14 +22,14 @@ export default function FavoritesPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
-        <p className="text-xs text-warning/60 uppercase tracking-widest font-medium mb-1">
-          Мои
+        <p className="text-xs text-primary/60 uppercase tracking-widest font-medium mb-1">
+          {t("favorites.my")}
         </p>
 
-        <h1 className="font-display text-3xl font-bold text-white flex items-center gap-3">
-          Избранное
+        <h1 className="font-display text-3xl font-bold text-base-content flex items-center gap-3">
+          {t("favorites.title")}
           {items.length > 0 && (
-            <span className="text-lg font-normal text-white/40">
+            <span className="text-lg font-normal text-base-content/40">
               ({items.length})
             </span>
           )}
@@ -38,23 +39,23 @@ export default function FavoritesPage() {
       {items.length === 0 ? (
         <div className="text-center py-20">
 
-          <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4">
-            <Heart size={36} className="text-white/20" />
+          <div className="w-20 h-20 rounded-full bg-base-200 flex items-center justify-center mx-auto mb-4">
+            <Heart size={36} className="text-base-content/20" />
           </div>
 
-          <h2 className="font-display text-xl font-bold text-white mb-2">
-            Избранное пусто
+          <h2 className="font-display text-xl font-bold text-base-content mb-2">
+            {t("favorites.emptyTitle")}
           </h2>
 
-          <p className="text-white/40 text-sm mb-6">
-            Нажмите на сердечко в карточке товара, чтобы добавить его в избранное
+          <p className="text-base-content/40 text-sm mb-6">
+            {t("favorites.emptyDesc")}
           </p>
 
           <Link
             href="/products"
             className="inline-flex items-center gap-2 bg-warning text-black font-bold px-6 py-3 rounded-xl hover:bg-warning/90 transition-colors"
           >
-            Перейти к товарам
+            {t("favorites.goToProducts")}
             <ArrowRight size={18} />
           </Link>
 

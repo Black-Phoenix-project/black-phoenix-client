@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import LanguageProvider from "@/components/i18n/LanguageProvider";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://blackphoenix.uz";
@@ -35,21 +36,15 @@ export const metadata: Metadata = {
   keywords: [
     "спецодежда",
     "спецодежда Ташкент",
-    "blackphoenix",
+    "спецодежда Узбекистан",
     "black phoenix",
-    "спецодежда",
     "средства защиты",
     "рабочая одежда",
-    "форма",
-    "сигнальная одежда",
-    "спецодежда Узбекистан",
-    "iş kıyafeti",
-    "BlackPhoenix спецодежда",
-    "корпоративная одежда",
-    "рабочая одежда",
     "рабочая форма",
-"защитная одежда",
-"спец одежда узбекистан"
+    "сигнальная одежда",
+    "защитная одежда",
+    "корпоративная одежда",
+    "спецодежда оптом",
   ],
   authors: [{ name: "Black Phoenix", url: SITE_URL }],
   creator: "Black Phoenix",
@@ -77,10 +72,10 @@ export const metadata: Metadata = {
       "Надежный производитель спецодежды в Узбекистане. Быстрая доставка.",
     images: [
       {
-        url: `${SITE_URL}/og-image.jpg`,
+        url: `${SITE_URL}/og-image.svg`,
         width: 1200,
         height: 630,
-        alt: "Black Phoenix — Спецодежда",
+        alt: "Black Phoenix — Спецодежда и средства защиты",
       },
     ],
   },
@@ -89,15 +84,14 @@ export const metadata: Metadata = {
     title: "Black Phoenix — Спецодежда Ташкент",
     description:
       "Надежная спецодежда и средства защиты в Узбекистане.",
-    images: [`${SITE_URL}/og-image.jpg`],
+    images: [`${SITE_URL}/og-image.svg`],
   },
   alternates: {
     canonical: SITE_URL,
   },
   icons: {
-    icon: "/favicon.ico", // Brauzer tab
-    apple: "/apple-touch-icon.png", // iOS
-    
+    icon: "/favicon.ico",
+    apple: "/clothing.svg",
   },
   manifest: "/site.webmanifest",
 };
@@ -119,10 +113,10 @@ const organizationJsonLd = {
   "@type": "Organization",
   name: "Black Phoenix",
   url: SITE_URL,
-  logo: `${SITE_URL}/logo.png`,
+  logo: `${SITE_URL}/clothing.svg`,
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+998-XX-XXX-XX-XX",
+    telephone: "+998901234567",
     contactType: "customer service",
     areaServed: "UZ",
     availableLanguage: ["Uzbek", "Russian"],
@@ -132,7 +126,10 @@ const organizationJsonLd = {
     addressCountry: "UZ",
     addressLocality: "Ташкент",
   },
-  sameAs: [],
+  sameAs: [
+    "https://instagram.com/blackphoenix.uz",
+    "https://t.me/blackphoenix_uz",
+  ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -159,15 +156,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               border: "1px solid var(--toast-border)",
               fontFamily: "var(--font-primary)",
             },
-            success: { iconTheme: { primary: "#F59E0B", secondary: "#0F0F0F" } },
+            success: { iconTheme: { primary: "#FACC15", secondary: "#0F0F0F" } },
             error: { iconTheme: { primary: "#EF4444", secondary: "#F8F8F6" } },
           }}
         />
-        <Header />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
+        <LanguageProvider>
+          <Header />
+          <main id="main-content" tabIndex={-1}>
+            {children}
+          </main>
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

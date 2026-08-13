@@ -46,7 +46,7 @@ cp .env.example .env.local
 `.env.local` contents:
 
 ```env
-NEXT_PUBLIC_API_URL=https://black-phoenixx-backend.onrender.com
+NEXT_PUBLIC_API_URL=https://black-phoenix-backend.onrender.com
 NEXT_PUBLIC_SITE_URL=https://blackphoenix.uz
 ```
 

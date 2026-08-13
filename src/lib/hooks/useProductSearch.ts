@@ -8,10 +8,14 @@ const DEBOUNCE_MS = 350;
 
 interface UseProductSearchOptions {
   initialProducts: Product[];
+  initialQuery?: string;
 }
 
-export function useProductSearch({ initialProducts }: UseProductSearchOptions) {
-  const [query, setQuery] = useState("");
+export function useProductSearch({
+  initialProducts,
+  initialQuery = "",
+}: UseProductSearchOptions) {
+  const [query, setQuery] = useState(initialQuery);
   const [sort, setSort] = useState<SortOption>("default");
   const [onlyInStock, setOnlyInStock] = useState(false);
 
@@ -20,6 +24,10 @@ export function useProductSearch({ initialProducts }: UseProductSearchOptions) {
   const [error, setError] = useState<string | null>(null);
 
   const isFiltering = Boolean(query.trim()) || sort !== "default" || onlyInStock;
+
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
 
   useEffect(() => {
     if (!isFiltering) {

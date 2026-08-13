@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
+  devIndicators: false,
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
@@ -12,14 +13,22 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
-        port: "",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "blackphoenix.uz",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.blackphoenix.uz",
         pathname: "/**",
       },
       {
         protocol: "http",
-        hostname: "**",
-        port: "",
+        hostname: "localhost",
         pathname: "/**",
       },
     ],
@@ -35,6 +44,14 @@ const nextConfig = {
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-XSS-Protection", value: "1; mode=block" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
         ],
       },
     ];

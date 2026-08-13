@@ -70,7 +70,7 @@ export default async function ProductDetailPage({ params }: Props) {
       priceCurrency: "UZS",
       price: product.price,
       availability:
-        product.status === "out_of_stock"
+        product.status === "out_of_stock" || product.status === "inactive"
           ? "https://schema.org/OutOfStock"
           : "https://schema.org/InStock",
       seller: {

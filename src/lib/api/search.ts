@@ -26,6 +26,7 @@ export async function searchProducts(
   if (params.q?.trim()) qs.set("q", params.q.trim());
   if (params.sort && params.sort !== "default") qs.set("sort", params.sort);
   if (params.inStock) qs.set("inStock", "1");
+  qs.set("limit", "50");
 
   const res = await fetch(`/api/search?${qs}`, { signal });
   if (!res.ok) throw new Error("Ошибка поиска");

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { getProducts } from "@/lib/api/products";
 import ProductsClient from "./ProductsClient";
 
@@ -15,5 +16,9 @@ export const revalidate = 60;
 
 export default async function ProductsPage() {
   const products = await getProducts();
-  return <ProductsClient initialProducts={products} />;
+  return (
+    <Suspense fallback={null}>
+      <ProductsClient initialProducts={products} />
+    </Suspense>
+  );
 }

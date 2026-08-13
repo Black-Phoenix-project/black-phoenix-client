@@ -65,7 +65,7 @@ export default async function HomePage() {
           priceCurrency: "UZS",
           price: p.price,
           availability:
-            p.status === "out_of_stock"
+            p.status === "out_of_stock" || p.status === "inactive"
               ? "https://schema.org/OutOfStock"
               : "https://schema.org/InStock",
         },
@@ -88,7 +88,7 @@ export default async function HomePage() {
       <HeroSwiper slides={slides} />
 
       {/* Product section */}
-      <ProductGrid products={featuredProducts} title="Популярные товары" />
+      <ProductGrid products={featuredProducts} titleKey="productGrid.popular" />
 
       {/* About */}
       <AboutSection />

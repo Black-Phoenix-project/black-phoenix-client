@@ -4,11 +4,13 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Phone, Lock, Loader2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { authApi } from "@/lib/api/auth";
 import { useAuthStore } from "@/store/authStore";
 import toast from "react-hot-toast";
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
@@ -28,10 +30,10 @@ export default function LoginPage() {
         password,
       });
       setAuth(result.user, result.token);
-      toast.success("Вы успешно вошли!");
+      toast.success(t("auth.loginSuccess"));
       router.push("/");
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Не удалось войти";
+      const msg = err instanceof Error ? err.message : t("auth.loginFailed");
       toast.error(msg);
     } finally {
       setLoading(false);
@@ -47,14 +49,14 @@ export default function LoginPage() {
             href="/"
             className="inline-block font-display font-bold text-2xl mb-6 min-h-0 min-w-0"
           >
-            <span className="text-warning">BLACK</span>
-            <span className="text-white">PHOENIX</span>
+            <span className="text-primary">BLACK</span>
+            <span className="text-base-content">PHOENIX</span>
           </Link>
-          <h1 className="font-display text-2xl font-bold text-white mb-1">
-            Вход
+          <h1 className="font-display text-2xl font-bold text-base-content mb-1">
+            {t("auth.login")}
           </h1>
-          <p className="text-white/40 text-sm">
-            Войдите в свой аккаунт
+          <p className="text-base-content/40 text-sm">
+            {t("auth.loginTitle")}
           </p>
         </div>
 
@@ -63,20 +65,20 @@ export default function LoginPage() {
           onSubmit={handleSubmit}
           className="glass-card rounded-2xl p-6 sm:p-8 space-y-4"
           noValidate
-          aria-label="Форма входа"
+          aria-label={t("auth.login")}
         >
           {/* Phone */}
           <div>
             <label
               htmlFor="login-phone"
-              className="block text-sm font-medium text-white/70 mb-1.5"
+              className="block text-sm font-medium text-base-content/70 mb-1.5"
             >
-              Номер телефона
+              {t("auth.phone")}
             </label>
             <div className="relative">
               <Phone
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/30 pointer-events-none"
                 aria-hidden="true"
               />
               <input
@@ -89,7 +91,7 @@ export default function LoginPage() {
                 required
                 aria-required="true"
                 autoComplete="tel"
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-warning/50 transition-all min-h-[48px]"
+                className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-4 py-3 text-sm text-gray-900 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-[48px]"
               />
             </div>
           </div>
@@ -98,14 +100,14 @@ export default function LoginPage() {
           <div>
             <label
               htmlFor="login-password"
-              className="block text-sm font-medium text-white/70 mb-1.5"
+              className="block text-sm font-medium text-base-content/70 mb-1.5"
             >
-              Пароль
+              {t("auth.password")}
             </label>
             <div className="relative">
               <Lock
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-base-content/30 pointer-events-none"
                 aria-hidden="true"
               />
               <input
@@ -113,17 +115,17 @@ export default function LoginPage() {
                 type={showPass ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Ваш пароль"
+                placeholder={t("auth.passwordPlaceholder")}
                 required
                 aria-required="true"
                 autoComplete="current-password"
-                className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-10 py-3 text-sm text-white placeholder-white/25 focus:outline-none focus:border-warning/50 transition-all min-h-[48px]"
+                className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-10 py-3 text-sm text-gray-900 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-[48px]"
               />
               <button
                 type="button"
                 onClick={() => setShowPass(!showPass)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors min-h-0 min-w-0 p-1"
-                aria-label={showPass ? "Скрыть пароль" : "Показать пароль"}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/30 hover:text-base-content transition-colors min-h-0 min-w-0 p-1"
+                aria-label={showPass ? t("auth.hidePassword") : t("auth.showPassword")}
               >
                 {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -135,26 +137,26 @@ export default function LoginPage() {
             type="submit"
             disabled={loading || !phone.trim() || !password.trim()}
             className="w-full flex items-center justify-center gap-2 bg-warning text-black font-bold py-3 rounded-xl hover:bg-warning/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px] text-sm"
-            aria-label="Войти"
+            aria-label={t("auth.submit")}
           >
             {loading ? (
               <>
                 <Loader2 size={18} className="animate-spin" aria-hidden="true" />
-                Загрузка...
+                {t("common.loading")}
               </>
             ) : (
-              "Войти"
+              t("auth.submit")
             )}
           </button>
         </form>
 
-        <p className="text-center text-sm text-white/40 mt-4">
-          Нет аккаунта?{" "}
+        <p className="text-center text-sm text-base-content/40 mt-4">
+          {t("auth.noAccount")}{" "}
           <Link
             href="/auth/register"
-            className="text-warning hover:underline min-h-0 min-w-0"
+            className="text-primary hover:underline min-h-0 min-w-0"
           >
-            Зарегистрируйтесь
+            {t("auth.createOne")}
           </Link>
         </p>
       </div>

@@ -4,23 +4,27 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const SearchBar = dynamic(() => import("@/components/ui/SearchBar"), {
   ssr: false,
   loading: () => (
-    <div className="w-full max-w-md h-10 rounded-lg border border-white/10 bg-white/5" aria-hidden="true" />
+    <div className="w-full max-w-md h-10 rounded-lg bg-gray-100 border border-gray-200" aria-hidden="true" />
   ),
 });
 import { ShoppingCart, Heart, User, Menu, X, LogOut } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
+import LanguageSwitcher from "@/components/i18n/LanguageSwitcher";
+import { useTranslation } from "react-i18next";
 import clsx from "clsx";
 
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -64,27 +68,46 @@ export default function Navbar() {
   }, [mounted, isAuthenticated, user?.id, syncFavorites]);
 
   const navLinks = [
-    { href: "/", label: "Главная" },
-    { href: "/products", label: "Товары" },
-    { href: "#about", label: "О нас" },
+    { href: "/", label: t("nav.home") },
+    { href: "/products", label: t("nav.products") },
+    { href: "#about", label: t("nav.about") },
   ];
+
+  const handleAbout = () => {
+    const scrollToAbout = () => {
+      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    if (pathname === "/") {
+      scrollToAbout();
+      return;
+    }
+
+    router.push("/");
+    let attempts = 0;
+    const id = window.setInterval(() => {
+      attempts++;
+      scrollToAbout();
+      if (attempts >= 20) window.clearInterval(id);
+    }, 150);
+  };
 
   return (
     <nav
       className={clsx(
         "relative z-50 transition-all duration-300",
         scrolled
-          ? "bg-brand-dark/95 backdrop-blur-xl border-b border-white/8"
-          : "bg-brand-dark/80 backdrop-blur-md border-b border-white/5"
+          ? "bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm"
+          : "bg-white/90 backdrop-blur-md border-b border-gray-100"
       )}
-      aria-label="Навигация"
+      aria-label={t("nav.mobileNav")}
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center gap-3 h-16">
           <Link
             href="/"
             className="flex-shrink-0 font-display font-bold text-xl tracking-tight min-h-0 min-w-0 inline-flex items-center gap-2"
-            aria-label="Black Phoenix - Главная"
+            aria-label={t("nav.aria.home")}
           >
             <Image
               src="/clothing.svg"
@@ -93,8 +116,8 @@ export default function Navbar() {
               height={24}
               priority={false}
             />
-            <span className="text-warning">BLACK</span>
-            <span className="text-white">PHOENIX</span>
+            <span className="text-primary">BLACK</span>
+            <span className="text-base-content">PHOENIX</span>
           </Link>
 
 
@@ -106,10 +129,10 @@ export default function Navbar() {
             <Link
               href="/favorites"
               className={clsx(
-                "btn-icon-sm relative rounded-lg hover:bg-white/5 transition-colors text-white/70 hover:text-white",
-                pathname === "/favorites" && "text-warning"
+                "btn-icon-sm relative rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content",
+                pathname === "/favorites" && "text-primary"
               )}
-              aria-label="Избранное"
+              aria-label={t("nav.aria.favorites")}
             >
               <Heart size={20} />
               {favCount > 0 && (
@@ -125,10 +148,10 @@ export default function Navbar() {
             <Link
               href="/basket"
               className={clsx(
-                "btn-icon-sm relative rounded-lg hover:bg-white/5 transition-colors text-white/70 hover:text-white",
-                pathname === "/basket" && "text-warning"
+                "btn-icon-sm relative rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content",
+                pathname === "/basket" && "text-primary"
               )}
-              aria-label="Корзина"
+              aria-label={t("nav.aria.cart")}
             >
               <ShoppingCart size={20} />
               {cartCount > 0 && (
@@ -145,11 +168,11 @@ export default function Navbar() {
               <div className="dropdown dropdown-end">
                 <button
                   tabIndex={0}
-                  className="btn-icon-sm flex items-center gap-1.5 px-2 rounded-lg hover:bg-white/5 transition-colors text-sm text-white/70 hover:text-white"
-                  aria-label="Меню пользователя"
+                  className="btn-icon-sm flex items-center gap-1.5 px-2 rounded-lg hover:bg-base-200 transition-colors text-sm text-base-content/70 hover:text-base-content"
+                  aria-label={t("nav.userMenu")}
                   aria-haspopup="menu"
                 >
-                  <User size={18} className="text-warning flex-shrink-0" />
+                  <User size={18} className="text-primary flex-shrink-0" />
                   <span className="hidden sm:block text-xs font-medium max-w-[80px] truncate">
                     {user.phoneNumber}
                   </span>
@@ -157,20 +180,20 @@ export default function Navbar() {
                 <ul
                   tabIndex={0}
                   role="menu"
-                  className="dropdown-content z-50 menu menu-sm shadow-2xl bg-brand-dark-2 border border-white/10 rounded-xl w-48 p-2 mt-1"
+                  className="dropdown-content z-50 menu menu-sm shadow-2xl bg-base-200 border border-base-300 rounded-xl w-48 p-2 mt-1"
                 >
-                  <li className="px-3 py-2 border-b border-white/5 mb-1">
-                    <p className="text-xs text-white/40">Телефон</p>
-                    <p className="text-sm font-medium text-white">{user.phoneNumber}</p>
+                  <li className="px-3 py-2 border-b border-base-300 mb-1">
+                    <p className="text-xs text-base-content/40">{t("nav.phone")}</p>
+                    <p className="text-sm font-medium text-base-content">{user.phoneNumber}</p>
                   </li>
                   <li>
                     <button
                       role="menuitem"
                       onClick={() => logout()}
-                      className="flex items-center gap-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 rounded-lg px-3 py-2 w-full text-left min-h-0"
+                      className="flex items-center gap-2 text-sm text-error hover:text-red-300 hover:bg-red-400/10 rounded-lg px-3 py-2 w-full text-left min-h-0"
                     >
                       <LogOut size={14} />
-                      Выйти
+                      {t("common.logout")}
                     </button>
                   </li>
                 </ul>
@@ -179,23 +202,25 @@ export default function Navbar() {
               <div className="hidden sm:flex items-center gap-1.5 ml-1">
                 <Link
                   href="/auth/login"
-                  className="text-sm text-white/70 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-white/5 min-h-[44px] flex items-center"
+                  className="text-sm text-base-content/70 hover:text-base-content transition-colors px-3 py-2 rounded-lg hover:bg-base-200 min-h-[44px] flex items-center"
                 >
-                  Войти
+                  {t("common.login")}
                 </Link>
                 <Link
                   href="/auth/register"
                   className="text-sm bg-warning text-black font-semibold px-3 py-2 rounded-lg hover:bg-warning/90 transition-colors min-h-[44px] flex items-center"
                 >
-                  Регистрация
+                  {t("common.register")}
                 </Link>
               </div>
             ) : null}
 
+            <LanguageSwitcher />
+
             <button
-              className="btn-icon-sm rounded-lg hover:bg-white/5 transition-colors text-white/70 hover:text-white md:hidden ml-1"
+              className="btn-icon-sm rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content md:hidden ml-1"
               onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label={mobileOpen ? "Закрыть меню" : "Открыть меню"}
+              aria-label={mobileOpen ? t("nav.closeMenu") : t("nav.openMenu")}
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
             >
@@ -213,38 +238,52 @@ export default function Navbar() {
       <div
         id="mobile-menu"
         role="navigation"
-        aria-label="Мобильная навигация"
+        aria-label={t("nav.mobileNav")}
         className={clsx(
-          "md:hidden border-t border-white/5 bg-brand-dark-2 transition-all duration-300 overflow-hidden",
+          "md:hidden border-t border-base-300 bg-base-200 transition-all duration-300 overflow-hidden",
           mobileOpen ? "max-h-screen pb-4" : "max-h-0"
         )}
       >
         <ul className="px-4 pt-2 space-y-1">
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className={clsx(
-                  "block px-3 py-3 rounded-lg text-sm transition-colors",
-                  pathname === link.href
-                    ? "bg-warning/10 text-warning font-medium"
-                    : "text-white/70 hover:text-white hover:bg-white/5"
-                )}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
+          {navLinks.map((link) =>
+            link.href.startsWith("#") ? (
+              <li key={link.href}>
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    handleAbout();
+                  }}
+                  className="block w-full text-left px-3 py-3 rounded-lg text-sm transition-colors text-base-content/70 hover:text-base-content hover:bg-base-200"
+                >
+                  {link.label}
+                </button>
+              </li>
+            ) : (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={clsx(
+                    "block px-3 py-3 rounded-lg text-sm transition-colors",
+                    pathname === link.href
+                      ? "bg-primary/10 text-primary font-medium"
+                      : "text-base-content/70 hover:text-base-content hover:bg-base-200"
+                  )}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            )
+          )}
           {mounted && !isAuthenticated && (
             <>
-              <li className="pt-2 border-t border-white/5">
+              <li className="pt-2 border-t border-base-300">
                 <Link
                   href="/auth/login"
                   onClick={() => setMobileOpen(false)}
-                  className="block px-3 py-3 rounded-lg text-sm text-white/70 hover:text-white hover:bg-white/5 transition-colors"
+                  className="block px-3 py-3 rounded-lg text-sm text-base-content/70 hover:text-base-content hover:bg-base-200 transition-colors"
                 >
-                  Войти
+                  {t("common.login")}
                 </Link>
               </li>
               <li>
@@ -253,7 +292,7 @@ export default function Navbar() {
                   onClick={() => setMobileOpen(false)}
                   className="block px-3 py-3 rounded-lg text-sm bg-warning text-black font-semibold hover:bg-warning/90 transition-colors text-center"
                 >
-                  Регистрация
+                  {t("common.register")}
                 </Link>
               </li>
             </>
