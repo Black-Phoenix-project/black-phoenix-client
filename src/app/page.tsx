@@ -4,6 +4,7 @@ import { getSwiperSlides } from "@/lib/api/swiper";
 import HeroSwiper from "@/components/sections/HeroSwiper";
 import ProductGrid from "@/components/sections/ProductGrid";
 import AboutSection from "@/components/sections/AboutSection";
+import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 
 const SITE_URL =
@@ -92,6 +93,8 @@ export default async function HomePage() {
 
       {/* About */}
       <AboutSection />
+
+      <ApplyLanguage />
     </>
   );
 }

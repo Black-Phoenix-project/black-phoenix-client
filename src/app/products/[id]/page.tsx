@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getProduct, getProducts } from "@/lib/api/products";
 import ProductDetailClient from "./ProductDetailClient";
+import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -88,6 +89,8 @@ export default async function ProductDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ProductDetailClient product={product} />
+
+      <ApplyLanguage />
     </>
   );
 }

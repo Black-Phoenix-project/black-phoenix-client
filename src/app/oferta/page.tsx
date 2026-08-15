@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import OfertaContent from "@/components/legal/OfertaContent";
+import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 export const metadata: Metadata = {
   title: "Публичная оферта — Black Phoenix",
 };
 
 export default function OfertaPage() {
-  return <OfertaContent />;
+  return (
+    <>
+      <OfertaContent />
+      <ApplyLanguage />
+    </>
+  );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { getProducts } from "@/lib/api/products";
 import ProductsClient from "./ProductsClient";
+import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 export const metadata: Metadata = {
   title: "Все товары — Спецодежда Black Phoenix",
@@ -17,8 +18,11 @@ export const revalidate = 300;
 export default async function ProductsPage() {
   const products = await getProducts();
   return (
-    <Suspense fallback={null}>
-      <ProductsClient initialProducts={products} />
-    </Suspense>
+    <>
+      <Suspense fallback={null}>
+        <ProductsClient initialProducts={products} />
+      </Suspense>
+      <ApplyLanguage />
+    </>
   );
 }

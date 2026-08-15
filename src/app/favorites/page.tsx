@@ -6,6 +6,7 @@ import { Heart, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import ProductCard from "@/components/ui/ProductCard";
+import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 export default function FavoritesPage() {
   const { t } = useTranslation();
@@ -21,6 +22,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      <ApplyLanguage />
       <div className="mb-8">
         <p className="text-xs text-primary/60 uppercase tracking-widest font-medium mb-1">
           {t("favorites.my")}

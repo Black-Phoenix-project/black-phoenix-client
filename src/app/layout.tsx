@@ -4,7 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import LanguageProvider from "@/components/i18n/LanguageProvider";
+import I18nInit from "@/components/i18n/I18nInit";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://blackphoenix.uz";
@@ -160,13 +160,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             error: { iconTheme: { primary: "#EF4444", secondary: "#F8F8F6" } },
           }}
         />
-        <LanguageProvider>
-          <Header />
-          <main id="main-content" tabIndex={-1}>
-            {children}
-          </main>
-          <Footer />
-        </LanguageProvider>
+        <I18nInit />
+        <Header />
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

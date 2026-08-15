@@ -18,6 +18,7 @@ import { useAuthStore } from "@/store/authStore";
 import { ordersApi } from "@/lib/api/orders";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 export default function BasketPage() {
   const { t } = useTranslation();
@@ -124,6 +125,7 @@ export default function BasketPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+        <ApplyLanguage />
         <ShoppingCart
           size={64}
           className="mx-auto mb-4 text-yellow-300"
@@ -144,6 +146,7 @@ export default function BasketPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      <ApplyLanguage />
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900">{t("basket.title")}</h1>
         <p className="text-gray-500 text-sm mt-1">{count} {t("basket.items")}</p>

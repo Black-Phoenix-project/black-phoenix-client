@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { ArrowLeft, Search } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 export default function NotFound() {
   const { t } = useTranslation();
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center px-4 text-center">
+      <ApplyLanguage />
       <div>
         <p className="text-8xl font-display font-bold text-primary/20 mb-4 leading-none">
           404

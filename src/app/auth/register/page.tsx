@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { authApi } from "@/lib/api/auth";
 import { useAuthStore } from "@/store/authStore";
 import toast from "react-hot-toast";
+import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 export default function RegisterPage() {
   const { t } = useTranslation();
@@ -62,6 +63,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-[calc(100vh-200px)] flex items-center justify-center px-4 py-12">
+      <ApplyLanguage />
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link
