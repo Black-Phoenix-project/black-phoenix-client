@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Zap } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { cloudinaryUrl, cloudinarySrcSet } from "@/lib/imageUrl";
 import type { SwiperSlide as SwiperSlideType } from "@/types";
 
 interface HeroSwiperProps {
@@ -41,14 +41,14 @@ function HeroStatic({ slides }: { slides: SwiperSlideType[] }) {
               aria-roledescription="slide"
               aria-label={`1 / ${slides.length}: ${first.title || t("hero.banner")}`}
             >
-              <Image
-                src={first.image}
-                alt={first.title || "Black Phoenix banner"}
-                fill
+              <img
+                src={cloudinaryUrl(first.image, { w: 900 })}
+                srcSet={cloudinarySrcSet(first.image)}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 900px"
-                className="object-cover"
-                priority
-                quality={70}
+                alt={first.title || "Black Phoenix banner"}
+                fetchPriority="high"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
               <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
@@ -153,14 +153,15 @@ function HeroSwiperClient({ slides }: { slides: SwiperSlideType[] }) {
                     aria-roledescription="slide"
                     aria-label={`${i + 1} / ${slides.length}: ${slide.title || t("hero.banner")}`}
                   >
-                    <Image
-                      src={slide.image}
-                      alt={slide.title || "Black Phoenix banner"}
-                      fill
+                    <img
+                      src={cloudinaryUrl(slide.image, { w: 900 })}
+                      srcSet={cloudinarySrcSet(slide.image)}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 900px"
-                      className="object-cover"
-                      priority={i === 0}
-                      quality={70}
+                      alt={slide.title || "Black Phoenix banner"}
+                      fetchPriority={i === 0 ? "high" : "auto"}
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
                     <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">

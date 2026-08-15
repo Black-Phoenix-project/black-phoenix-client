@@ -255,6 +255,7 @@ export const en: Ru = {
     addedToFavorites: "Added to favorites",
     removedFromFavorites: "Removed from favorites",
     addedToCart: "pcs added to cart",
+    zoomHint: "Zoom",
   },
 
   basket: {

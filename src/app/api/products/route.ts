@@ -7,7 +7,7 @@ import { SERVER_API_URL } from "@/lib/api/baseUrl";
 export async function GET() {
   try {
     const res = await fetch(`${SERVER_API_URL}/api/product`, {
-      next: { revalidate: 60 },
+      next: { revalidate: 300 },
     });
 
     if (!res.ok) {

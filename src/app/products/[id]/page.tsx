@@ -43,7 +43,7 @@ export async function generateStaticParams() {
   }
 }
 
-export const revalidate = 120;
+export const revalidate = 300;
 
 export default async function ProductDetailPage({ params }: Props) {
   const { id } = await params;

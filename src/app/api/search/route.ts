@@ -29,7 +29,7 @@ async function tryBackendSearch(searchParams: URLSearchParams) {
 
 async function fetchAllProducts(): Promise<Product[]> {
   const res = await fetch(`${BACKEND_URL}/api/product`, {
-    next: { revalidate: 60 },
+    next: { revalidate: 300 },
   });
   if (!res.ok) return [];
   const data = await res.json();

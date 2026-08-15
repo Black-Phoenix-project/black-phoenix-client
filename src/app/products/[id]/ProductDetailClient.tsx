@@ -25,6 +25,8 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const [activeImg, setActiveImg] = useState(0);
   const [qty, setQty] = useState(1);
   const [mounted, setMounted] = useState(false);
+  const [zoom, setZoom] = useState(false);
+  const [origin, setOrigin] = useState({ x: 50, y: 50 });
   const { user, isAuthenticated } = useAuthStore();
   const { addItem } = useCartStore();
   const { toggleFavorite, isFavorited, isPending } = useFavoritesStore();
@@ -53,6 +55,15 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const handleAddToCart = () => {
     for (let i = 0; i < qty; i++) addItem(product);
     toast.success(`${product.name} — ${qty} ${t("productDetail.addedToCart")}`);
+  };
+
+  const handleZoomEnter = () => setZoom(true);
+  const handleZoomLeave = () => setZoom(false);
+  const handleZoomMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setOrigin({ x, y });
   };
 
   return (
@@ -90,8 +101,11 @@ export default function ProductDetailClient({ product }: { product: Product }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-12">
         <div>
           <div
-            className="relative aspect-square bg-base-200 rounded-2xl overflow-hidden mb-3"
+            className="relative aspect-square bg-base-200 rounded-2xl overflow-hidden mb-3 cursor-zoom-in select-none"
             aria-label={t("productDetail.productImageAria")}
+            onMouseEnter={handleZoomEnter}
+            onMouseLeave={handleZoomLeave}
+            onMouseMove={handleZoomMove}
           >
             {product.image?.[activeImg] ? (
               <Image
@@ -99,13 +113,22 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 alt={`${product.name} - ${t("productDetail.imageAria")} ${activeImg + 1}`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
+                className={clsx(
+                  "object-contain transition-transform duration-300 ease-out",
+                  zoom && "scale-[2]"
+                )}
+                style={{ transformOrigin: `${origin.x}% ${origin.y}%` }}
                 priority
                 quality={90}
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
                 <Package size={80} className="text-base-content/20" aria-hidden="true" />
+              </div>
+            )}
+            {zoom && product.image?.[activeImg] && (
+              <div className="absolute bottom-3 right-3 z-10 pointer-events-none text-[10px] font-medium bg-black/55 text-white px-2.5 py-1 rounded-full backdrop-blur-sm">
+                {t("productDetail.zoomHint")}
               </div>
             )}
           </div>
@@ -119,7 +142,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   aria-label={`${t("productDetail.imageAria")} ${i + 1}`}
                   aria-pressed={activeImg === i}
                   className={clsx(
-                    "relative w-16 h-16 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0",
+                    "relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all flex-shrink-0",
                     activeImg === i
                       ? "border-primary"
                       : "border-base-300 hover:border-base-content/30"
@@ -129,7 +152,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                     src={img}
                     alt={`${product.name} ${i + 1}`}
                     fill
-                    sizes="64px"
+                    sizes="80px"
                     className="object-cover"
                   />
                 </button>

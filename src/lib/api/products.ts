@@ -5,7 +5,7 @@ import { SERVER_API_URL } from "./baseUrl";
 export async function getProducts(): Promise<Product[]> {
   try {
     const res = await fetch(`${SERVER_API_URL}/api/product`, {
-      next: { revalidate: 60 },
+      next: { revalidate: 300 },
     });
     if (!res.ok) return [];
     const data = await res.json();
@@ -22,7 +22,7 @@ export async function getProducts(): Promise<Product[]> {
 export async function getProduct(id: string): Promise<Product | null> {
   try {
     const res = await fetch(`${SERVER_API_URL}/api/product/${id}`, {
-      next: { revalidate: 120 },
+      next: { revalidate: 300 },
     });
     if (!res.ok) return null;
     const data = await res.json();

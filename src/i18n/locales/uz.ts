@@ -255,6 +255,7 @@ export const uz: Ru = {
     addedToFavorites: "Saralanganlarga qo'shildi",
     removedFromFavorites: "Saralanganlardan olib tashlandi",
     addedToCart: "dona savatga qo'shildi",
+    zoomHint: "Kattalashtirish",
   },
 
   basket: {

@@ -253,6 +253,7 @@ export const ru = {
     addedToFavorites: "Добавлено в избранное",
     removedFromFavorites: "Удалено из избранного",
     addedToCart: "шт. добавлено в корзину",
+    zoomHint: "Увеличить",
   },
 
   basket: {

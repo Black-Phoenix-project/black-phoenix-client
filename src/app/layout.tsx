@@ -72,7 +72,7 @@ export const metadata: Metadata = {
       "Надежный производитель спецодежды в Узбекистане. Быстрая доставка.",
     images: [
       {
-        url: `${SITE_URL}/og-image.svg`,
+        url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
         alt: "Black Phoenix — Спецодежда и средства защиты",
@@ -84,7 +84,7 @@ export const metadata: Metadata = {
     title: "Black Phoenix — Спецодежда Ташкент",
     description:
       "Надежная спецодежда и средства защиты в Узбекистане.",
-    images: [`${SITE_URL}/og-image.svg`],
+    images: [`${SITE_URL}/og-image.png`],
   },
   alternates: {
     canonical: SITE_URL,
@@ -134,7 +134,7 @@ const organizationJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uz" data-theme="blackphoenixlight" suppressHydrationWarning>
+    <html lang="ru" data-theme="blackphoenixlight" suppressHydrationWarning>
       <head>
         {/* JSON-LD */}
         <script
