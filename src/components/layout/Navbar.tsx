@@ -115,9 +115,10 @@ export default function Navbar() {
               width={24}
               height={24}
               priority={false}
+              className="hidden sm:block"
             />
             <span className="text-primary">BLACK</span>
-            <span className="text-base-content">PHOENIX</span>
+            <span className="text-base-content hidden min-[400px]:inline">PHOENIX</span>
           </Link>
 
 
@@ -125,7 +126,7 @@ export default function Navbar() {
             <SearchBar />
           </div>
 
-          <div className="flex items-center gap-1 ml-auto">
+          <div className="flex items-center gap-0.5 sm:gap-1 ml-auto">
             <Link
               href="/favorites"
               className={clsx(
@@ -218,7 +219,7 @@ export default function Navbar() {
             <LanguageSwitcher />
 
             <button
-              className="btn-icon-sm rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content md:hidden ml-1"
+              className="btn-icon-sm rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content md:hidden ml-0 sm:ml-1"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? t("nav.closeMenu") : t("nav.openMenu")}
               aria-expanded={mobileOpen}

@@ -93,7 +93,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <Link
         href={`/products/${product._id}`}
-        className="block relative aspect-[4/3] bg-gray-100 overflow-hidden min-h-0 min-w-0"
+        className="block relative aspect-[3/4] sm:aspect-[4/3] bg-gray-100 overflow-hidden min-h-0 min-w-0"
         aria-label={product.name}
         tabIndex={0}
       >
@@ -132,9 +132,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.description ?? ""}
         </p>
 
-        <div className="flex items-center justify-between gap-2 pt-2 border-t border-base-300">
-          <div>
-            <p className="text-base sm:text-lg font-bold text-success price-tag">
+        <div className="flex items-center justify-between gap-1.5 pt-2 border-t border-base-300">
+          <div className="min-w-0">
+            <p className="text-xs min-[360px]:text-sm lg:text-lg font-bold text-success price-tag">
               {formatPrice(product.price)}
             </p>
             <p className="text-[10px] text-base-content/30">{t("common.sum")}</p>
