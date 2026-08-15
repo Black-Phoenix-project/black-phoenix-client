@@ -85,18 +85,12 @@ function HeroSwiperClient({ slides }: { slides: SwiperSlideType[] }) {
   const [modules, setModules] = useState<any[]>([]);
 
   useEffect(() => {
-    type IdleWindow = Window &
-      typeof globalThis & {
-        requestIdleCallback?: (
-          callback: IdleRequestCallback,
-          options?: IdleRequestOptions
-        ) => number;
-        cancelIdleCallback?: (id: number) => void;
-      };
-
-    const browser = globalThis as IdleWindow;
+    let done = false;
 
     const load = () => {
+      if (done) return;
+      done = true;
+      detach();
       Promise.all([import("swiper/react"), import("swiper/modules")]).then(
         ([swiperReact, swiperModules]) => {
           setSwiperComp(() => swiperReact.Swiper);
@@ -112,15 +106,26 @@ function HeroSwiperClient({ slides }: { slides: SwiperSlideType[] }) {
       import("swiper/css/pagination");
     };
 
-    if (typeof browser.requestIdleCallback === "function") {
-      const id = browser.requestIdleCallback(load, { timeout: 350 });
-      return () => {
-        browser.cancelIdleCallback?.(id);
-      };
+    // Swiper (~160KB) is only loaded once the user actually interacts, so its
+    // parse/eval cost never blocks the initial render or the TBT window. A
+    // late hard cap guarantees the carousel still boots for passive visitors.
+    const events: (keyof WindowEventMap)[] = [
+      "pointerdown",
+      "touchstart",
+      "wheel",
+      "scroll",
+      "keydown",
+    ];
+    const opts: AddEventListenerOptions = { passive: true };
+    events.forEach((ev) => window.addEventListener(ev, load, opts));
+    const cap = window.setTimeout(load, 20000);
+
+    function detach() {
+      events.forEach((ev) => window.removeEventListener(ev, load, opts));
+      window.clearTimeout(cap);
     }
 
-    const t = setTimeout(load, 120);
-    return () => clearTimeout(t);
+    return detach;
   }, []);
 
   if (!SwiperComp || !SwiperSlideComp || modules.length === 0) {

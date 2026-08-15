@@ -5,6 +5,7 @@ import HeroSwiper from "@/components/sections/HeroSwiper";
 import ProductGrid from "@/components/sections/ProductGrid";
 import AboutSection from "@/components/sections/AboutSection";
 import ApplyLanguage from "@/components/i18n/ApplyLanguage";
+import { cloudinaryUrl, cloudinarySrcSet } from "@/lib/imageUrl";
 
 
 const SITE_URL =
@@ -76,6 +77,16 @@ export default async function HomePage() {
 
   return (
     <>
+      {slides[0] && (
+        <link
+          rel="preload"
+          as="image"
+          href={cloudinaryUrl(slides[0].image, { w: 900 })}
+          imageSrcSet={cloudinarySrcSet(slides[0].image)}
+          imageSizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 900px"
+          fetchPriority="high"
+        />
+      )}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
