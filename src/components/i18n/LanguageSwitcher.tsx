@@ -27,7 +27,7 @@ export default function LanguageSwitcher() {
   }, []);
 
   const select = (code: LangCode) => {
-    changeLanguage(code);
+    void changeLanguage(code);
     setCurrent(code);
     setOpen(false);
   };

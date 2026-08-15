@@ -2,9 +2,8 @@
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import type { Ru } from "./locales/ru";
 import { ru } from "./locales/ru";
-import { uz } from "./locales/uz";
-import { en } from "./locales/en";
 
 export const LANGS = [
   { code: "ru", label: "Русский" },
@@ -29,8 +28,6 @@ export const getInitialLang = (): LangCode => {
 i18n.use(initReactI18next).init({
   resources: {
     ru: { translation: ru },
-    uz: { translation: uz },
-    en: { translation: en },
   },
   lng: "ru",
   fallbackLng: "ru",
@@ -41,7 +38,24 @@ i18n.use(initReactI18next).init({
   returnNull: false,
 });
 
-export function changeLanguage(lng: LangCode) {
+// Only the default language ships in the initial bundle. uz/en are fetched
+// on demand (dynamic chunks) and merged in via addResourceBundle, so a page
+// never parses translations for languages the visitor isn't using.
+const loadedLangs = new Set<LangCode>(["ru"]);
+
+async function ensureLangResources(lng: LangCode) {
+  if (loadedLangs.has(lng)) return;
+  const mod =
+    lng === "uz"
+      ? await import("./locales/uz")
+      : await import("./locales/en");
+  const resources = (mod as Record<string, Ru>)[lng];
+  i18n.addResourceBundle(lng, "translation", resources);
+  loadedLangs.add(lng);
+}
+
+export async function changeLanguage(lng: LangCode) {
+  await ensureLangResources(lng);
   i18n.changeLanguage(lng);
   if (typeof window !== "undefined") {
     window.localStorage.setItem(STORAGE_KEY, lng);

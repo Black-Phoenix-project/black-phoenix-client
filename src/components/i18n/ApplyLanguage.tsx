@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import i18n, { getInitialLang } from "@/i18n";
+import i18n, { changeLanguage, getInitialLang } from "@/i18n";
 
 // Must be rendered INSIDE the page segment (not the layout/shell). Its effect
 // only fires after the page segment has fully hydrated, so switching the
@@ -9,10 +9,10 @@ import i18n, { getInitialLang } from "@/i18n";
 export default function ApplyLanguage() {
   useEffect(() => {
     const lang = getInitialLang();
-    if (lang !== i18n.resolvedLanguage) {
-      i18n.changeLanguage(lang);
-    }
     document.documentElement.lang = lang;
+    if (lang !== i18n.resolvedLanguage) {
+      void changeLanguage(lang);
+    }
   }, []);
 
   return null;
