@@ -7,7 +7,7 @@ import { Eye, EyeOff, Phone, Lock, User, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { authApi } from "@/lib/api/auth";
 import { useAuthStore } from "@/store/authStore";
-import toast from "react-hot-toast";
+import toast from "@/lib/toast";
 import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 export default function RegisterPage() {
@@ -81,7 +81,7 @@ export default function RegisterPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="glass-card rounded-2xl p-6 sm:p-8 space-y-4"
+          className="bg-base-100 border border-base-300 shadow-sm rounded-2xl p-6 sm:p-8 space-y-4"
           noValidate
           aria-label={t("auth.register")}
         >
@@ -106,7 +106,7 @@ export default function RegisterPage() {
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder={t("auth.namePlaceholder")}
                 autoComplete="name"
-                className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-4 py-3 text-sm text-gray-900 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-[48px]"
+                className="w-full bg-base-100 border border-base-300 rounded-xl pl-9 pr-4 py-3 text-sm text-base-content placeholder:text-base-content/40 shadow-sm focus:outline-none focus:border-warning focus:ring-2 focus:ring-warning/20 transition-all min-h-[48px]"
               />
             </div>
           </div>
@@ -135,7 +135,7 @@ export default function RegisterPage() {
                 required
                 aria-required="true"
                 autoComplete="tel"
-                className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-4 py-3 text-sm text-gray-900 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-[48px]"
+                className="w-full bg-base-100 border border-base-300 rounded-xl pl-9 pr-4 py-3 text-sm text-base-content placeholder:text-base-content/40 shadow-sm focus:outline-none focus:border-warning focus:ring-2 focus:ring-warning/20 transition-all min-h-[48px]"
               />
             </div>
             <p className="text-[10px] text-primary/60 mt-1">
@@ -167,7 +167,7 @@ export default function RegisterPage() {
                 aria-required="true"
                 autoComplete="new-password"
                 minLength={6}
-                className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-10 py-3 text-sm text-gray-900 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-[48px]"
+                className="w-full bg-base-100 border border-base-300 rounded-xl pl-9 pr-10 py-3 text-sm text-base-content placeholder:text-base-content/40 shadow-sm focus:outline-none focus:border-warning focus:ring-2 focus:ring-warning/20 transition-all min-h-[48px]"
               />
               <button
                 type="button"

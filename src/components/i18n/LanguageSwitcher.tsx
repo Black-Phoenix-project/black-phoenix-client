@@ -40,7 +40,7 @@ export default function LanguageSwitcher() {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-label={`${current.toUpperCase()} - ${t("language.choose")}`}
-        className="btn-icon-sm flex items-center gap-1.5 px-2.5 rounded-lg hover:bg-base-200 transition-colors text-sm font-semibold uppercase text-base-content/70 hover:text-base-content min-h-0"
+        className="min-h-[44px] min-w-[44px] inline-flex items-center gap-1.5 px-2.5 rounded-lg hover:bg-base-200 transition-colors text-sm font-semibold uppercase text-base-content/70 hover:text-base-content"
       >
         <Languages size={16} className="text-primary flex-shrink-0" aria-hidden="true" />
         <span className="hidden sm:inline">{current.toUpperCase()}</span>
@@ -58,7 +58,7 @@ export default function LanguageSwitcher() {
         <ul
           role="menu"
           aria-label={t("language.switcher")}
-          className="absolute right-0 top-full mt-1 z-50 menu menu-sm bg-white border border-base-300 rounded-xl shadow-2xl w-44 p-2"
+          className="absolute right-0 top-full mt-1 z-50 menu menu-sm bg-base-100 border border-base-300 rounded-xl shadow-2xl w-44 p-2"
         >
           {LANGS.map((lang) => (
             <li key={lang.code}>

@@ -109,6 +109,7 @@ export interface CreateOrderPayload {
 export interface CartItem {
   product: Product;
   quantity: number;
+  price?: number;
 }
 
 export interface CartState {

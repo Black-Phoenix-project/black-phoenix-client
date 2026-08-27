@@ -8,16 +8,19 @@ import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import type { Product } from "@/types";
+import type { Discount } from "@/lib/api/discounts";
+import { applyDiscount } from "@/lib/api/discounts";
 import { useTranslation } from "react-i18next";
-import toast from "react-hot-toast";
+import toast from "@/lib/toast";
 import clsx from "clsx";
 import { formatPrice } from "@/lib/formatPrice";
 
 interface ProductCardProps {
   product: Product;
+  discount?: Discount | null;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, discount }: ProductCardProps) {
   const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
   const { user, isAuthenticated } = useAuthStore();
@@ -48,7 +51,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addItem(product);
+    addItem(product, 1, applyDiscount(product.price, discount));
     toast.success(`${product.name} ${t("productCard.addedToCart")}`);
   };
 
@@ -59,18 +62,18 @@ export default function ProductCard({ product }: ProductCardProps) {
   const primaryImage = product.image?.[0];
 
   return (
-    <article className="product-card group relative bg-white border border-gray-200/80 shadow-sm hover:border-yellow-300 rounded-2xl overflow-hidden flex flex-col">
+    <article className="group relative bg-base-100 border border-base-300 shadow-sm hover:border-warning/40 rounded-2xl overflow-hidden flex flex-col transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:ring-1 hover:ring-warning/35">
       <button
         onClick={handleLike}
         disabled={liking}
         aria-label={liked ? t("productCard.removeFromFavorites") : t("productCard.addToFavorites")}
         aria-pressed={liked}
         className={clsx(
-          "btn-icon-sm absolute top-3 right-3 z-10 rounded-full border transition-all shadow-lg",
+          "min-h-[44px] min-w-[44px] inline-flex items-center justify-center absolute top-3 right-3 z-10 rounded-full border transition-all shadow-lg",
           liking && "opacity-60 cursor-not-allowed",
           liked
             ? "bg-red-500/10 border-red-500/40 text-error hover:bg-red-500/20"
-            : "bg-base-2000 backdrop-blur-sm border-gray-200 text-gray-500 hover:text-error hover:border-red-400/40 hover:bg-white"
+            : "bg-base-200 backdrop-blur-sm border-base-300 text-base-content/50 hover:text-error hover:border-red-400/40 hover:bg-white"
         )}
       >
         <Heart
@@ -93,7 +96,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <Link
         href={`/products/${product._id}`}
-        className="block relative aspect-[3/4] sm:aspect-[4/3] bg-gray-100 overflow-hidden min-h-0 min-w-0"
+        className="block relative aspect-[3/4] sm:aspect-[4/3] bg-base-200 overflow-hidden min-h-0 min-w-0"
         aria-label={product.name}
         tabIndex={0}
       >
@@ -109,10 +112,17 @@ export default function ProductCard({ product }: ProductCardProps) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <Package size={40} className="text-gray-300" aria-hidden="true" />
+            <Package size={40} className="text-base-content/30" aria-hidden="true" />
           </div>
         )}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
+        {discount && (
+          <div className="absolute bottom-3 left-3 z-10 bg-warning text-black text-[10px] font-bold px-2 py-1 rounded-full shadow-sm">
+            {discount.type === "percent"
+              ? `-${discount.value}%`
+              : `-${discount.value} so'm`}
+          </div>
+        )}
       </Link>
 
       <div className="flex flex-col flex-1 p-4 gap-2">
@@ -132,20 +142,25 @@ export default function ProductCard({ product }: ProductCardProps) {
           {product.description ?? ""}
         </p>
 
-        <div className="flex items-center justify-between gap-1.5 pt-2 border-t border-base-300">
-          <div className="min-w-0">
-            <p className="text-xs min-[360px]:text-sm lg:text-lg font-bold text-success price-tag">
-              {formatPrice(product.price)}
-            </p>
-            <p className="text-[10px] text-base-content/30">{t("common.sum")}</p>
-          </div>
+         <div className="flex items-center justify-between gap-1.5 pt-2 border-t border-base-300">
+           <div className="min-w-0">
+             <p className="text-xs min-[360px]:text-sm lg:text-lg font-bold text-success tabular-nums">
+               {formatPrice(applyDiscount(product.price, discount))}
+             </p>
+             {discount && (
+               <p className="text-[10px] text-base-content/30 line-through">
+                 {formatPrice(product.price)}
+               </p>
+             )}
+             <p className="text-[10px] text-base-content/30">{t("common.sum")}</p>
+           </div>
 
           <button
             onClick={handleAddToCart}
             disabled={isOutOfStock}
             aria-label={`${t("common.addToCart")} - ${product.name}`}
             className={clsx(
-              "btn-icon-sm flex items-center gap-1.5 px-3 rounded-lg text-xs font-semibold transition-all",
+              "min-h-[44px] min-w-[44px] inline-flex items-center gap-1.5 px-3 rounded-lg text-xs font-semibold transition-all",
               isOutOfStock
                 ? "bg-base-200 text-base-content/20 cursor-not-allowed"
                 : "bg-primary/10 text-primary border border-primary/20 hover:bg-warning hover:text-black"

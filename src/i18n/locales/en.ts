@@ -131,6 +131,12 @@ export const en: Ru = {
     next: "Next banner",
     fallbackTitle: "Workwear and protective equipment for industry, service and safety.",
     viewProducts: "View products",
+    customTitle: "We also make workwear to your specs",
+    customSubtitle: "Can't find what you need? We tailor workwear to your exact requirements.",
+    contactTelegram: "Message on Telegram",
+    contactPhone: "Call us",
+    customTelegramMsg:
+      "Hi! I came from blackphoenix.uz and would like to order workwear made to my requirements.\n\nMy requirements:",
   },
 
   productCard: {
@@ -313,6 +319,8 @@ export const en: Ru = {
     invalidPhone: "Invalid phone number format",
     shortPassword: "Password must be at least 6 characters",
     phoneNote: "Admins will call this number regarding your order",
+    loginBrandTitle: "Welcome back to Black Phoenix",
+    loginBrandSub: "Sign in to your account to manage orders and track your purchases.",
   },
 
   notFound: {

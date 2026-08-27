@@ -131,6 +131,12 @@ export const uz: Ru = {
     next: "Keyingi banner",
     fallbackTitle: "Sanoat, xizmat va xavfsizlik uchun ish kiyimi va himoya vositalari.",
     viewProducts: "Mahsulotlarni ko'rish",
+    customTitle: "Sizga kerakli ish kiyimni ham talabingizga moslab tikib beramiz",
+    customSubtitle: "Kerakli kiyimni topa olmadingizmi? Ish kiyimni aynan sizning talabingizga qarab tikamiz.",
+    contactTelegram: "Telegram'da yozish",
+    contactPhone: "Qo'ng'iroq qilish",
+    customTelegramMsg:
+      "Salom! Men blackphoenix.uz veb-saytidan keldim va o'zimning ish kiyimim talabini aytib, kiyim buyurtma qilmoqchi edim.\n\nTalabim:",
   },
 
   productCard: {
@@ -313,6 +319,8 @@ export const uz: Ru = {
     invalidPhone: "Telefon raqami formati noto'g'ri",
     shortPassword: "Parol kamida 6 belgidan iborat bo'lishi kerak",
     phoneNote: "Administratorlar buyurtma bo'yicha shu raqamga qo'ng'iroq qilishadi",
+    loginBrandTitle: "Black Phoenix ga xush kelibsiz",
+    loginBrandSub: "Hisobingizga kiring va buyurtmalaringizni boshqaring.",
   },
 
   notFound: {

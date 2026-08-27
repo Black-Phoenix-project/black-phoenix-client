@@ -7,7 +7,7 @@ export default function PrivacyContent() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="font-display text-3xl font-bold text-base-content mb-6">
+      <h1 className="text-3xl font-bold text-base-content mb-6">
         {t("privacy.title")}
       </h1>
       <div className="prose prose-sm space-y-4 text-base-content/60">

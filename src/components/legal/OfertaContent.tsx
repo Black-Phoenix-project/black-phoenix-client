@@ -7,7 +7,7 @@ export default function OfertaContent() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
-      <h1 className="font-display text-3xl font-bold text-base-content mb-6">
+      <h1 className="text-3xl font-bold text-base-content mb-6">
         {t("oferta.title")}
       </h1>
       <div className="space-y-4 text-base-content/60 text-sm leading-relaxed">

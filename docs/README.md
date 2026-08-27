@@ -205,10 +205,12 @@ pm2 start npm --name "bp-client" -- start
 
 ## Notes
 
-- All text content in Uzbek (with Russian SEO keywords for спецодежда)
+- All text content in Uzbek (with Russian SEO keywords for спецодежда) 
 - Warning (#F59E0B) is primary accent color — matches admin dashboard
 - DaisyUI theme: `blackphoenix` (dark)
 - Mobile-first design, no horizontal overflow
 - Touch targets ≥ 44px throughout
 - Cart and favorites persist via `localStorage` (Zustand persist)
 - Favorites sync with backend when user is authenticated
+- Do not use css in the project and try to be careful to use the static pixels
+- Do not use static colours so you need to use daisy colours which are so modern and flexible ! Also it is thrilling

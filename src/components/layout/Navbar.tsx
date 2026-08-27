@@ -9,7 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 const SearchBar = dynamic(() => import("@/components/ui/SearchBar"), {
   ssr: false,
   loading: () => (
-    <div className="w-full max-w-md h-10 rounded-lg bg-gray-100 border border-gray-200" aria-hidden="true" />
+    <div className="w-full max-w-md h-10 rounded-lg bg-base-200 border border-base-300" aria-hidden="true" />
   ),
 });
 import { ShoppingCart, Heart, User, Menu, X, LogOut } from "lucide-react";
@@ -97,8 +97,8 @@ export default function Navbar() {
       className={clsx(
         "relative z-50 transition-all duration-300",
         scrolled
-          ? "bg-white/95 backdrop-blur-xl border-b border-gray-200 shadow-sm"
-          : "bg-white/90 backdrop-blur-md border-b border-gray-100"
+          ? "bg-white/95 backdrop-blur-xl border-b border-base-300 shadow-sm"
+          : "bg-white/90 backdrop-blur-md border-b border-base-200"
       )}
       aria-label={t("nav.mobileNav")}
     >
@@ -130,7 +130,7 @@ export default function Navbar() {
             <Link
               href="/favorites"
               className={clsx(
-                "btn-icon-sm relative rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content",
+                "min-h-[44px] min-w-[44px] inline-flex items-center justify-center relative rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content",
                 pathname === "/favorites" && "text-primary"
               )}
               aria-label={t("nav.aria.favorites")}
@@ -149,7 +149,7 @@ export default function Navbar() {
             <Link
               href="/basket"
               className={clsx(
-                "btn-icon-sm relative rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content",
+                "min-h-[44px] min-w-[44px] inline-flex items-center justify-center relative rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content",
                 pathname === "/basket" && "text-primary"
               )}
               aria-label={t("nav.aria.cart")}
@@ -169,7 +169,7 @@ export default function Navbar() {
               <div className="dropdown dropdown-end">
                 <button
                   tabIndex={0}
-                  className="btn-icon-sm flex items-center gap-1.5 px-2 rounded-lg hover:bg-base-200 transition-colors text-sm text-base-content/70 hover:text-base-content"
+                  className="min-h-[44px] min-w-[44px] inline-flex items-center gap-1.5 px-2 rounded-lg hover:bg-base-200 transition-colors text-sm text-base-content/70 hover:text-base-content"
                   aria-label={t("nav.userMenu")}
                   aria-haspopup="menu"
                 >
@@ -219,7 +219,7 @@ export default function Navbar() {
             <LanguageSwitcher />
 
             <button
-              className="btn-icon-sm rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content md:hidden ml-0 sm:ml-1"
+              className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-lg hover:bg-base-200 transition-colors text-base-content/70 hover:text-base-content md:hidden ml-0 sm:ml-1"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? t("nav.closeMenu") : t("nav.openMenu")}
               aria-expanded={mobileOpen}

@@ -51,7 +51,7 @@ export default function ProductsClient({
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Page header */}
       <div className="mb-8">
-        <h1 className="font-display text-3xl sm:text-4xl font-bold text-base-content">
+        <h1 className="text-3xl sm:text-4xl font-bold text-base-content">
           <span className="inline-flex items-center gap-2">
             <Image
               src="/clothing.svg"
@@ -83,7 +83,7 @@ export default function ProductsClient({
             className={`px-4 py-2 rounded-full text-xs font-semibold border transition-all min-h-0 min-w-0 ${
               category === cat.value
                 ? "bg-warning text-black border-primary shadow-sm"
-                : "bg-white border-gray-200 text-gray-600 hover:border-yellow-400 hover:text-warning"
+                : "bg-base-100 border-base-300 text-base-content/60 hover:border-warning hover:text-warning"
             }`}
           >
             {cat.label}
@@ -109,7 +109,7 @@ export default function ProductsClient({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t("productsPage.searchPlaceholder")}
-            className="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-9 py-2.5 text-sm text-gray-900 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-[44px]"
+            className="w-full bg-base-100 border border-base-300 rounded-xl pl-9 pr-9 py-2.5 text-sm text-base-content placeholder:text-base-content/40 shadow-sm focus:outline-none focus:border-warning focus:ring-2 focus:ring-warning/20 transition-all min-h-[44px]"
             aria-label={t("productsPage.searchLabel")}
           />
           <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
@@ -118,7 +118,7 @@ export default function ProductsClient({
             ) : query ? (
               <button
                 onClick={() => setQuery("")}
-                className="text-gray-400 hover:text-gray-700 transition-colors p-1"
+                className="text-base-content/30 hover:text-base-content/70 transition-colors p-1"
                 aria-label={t("productsPage.clearSearch")}
               >
                 <X size={14} />
@@ -140,7 +140,7 @@ export default function ProductsClient({
             id="sort-select"
             value={sort}
             onChange={(e) => setSort(e.target.value as SortOption)}
-            className="w-full sm:w-auto bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-900 shadow-sm focus:outline-none focus:border-yellow-400 min-h-[44px] appearance-none cursor-pointer"
+            className="w-full sm:w-auto bg-base-100 border border-base-300 rounded-xl px-3 py-2.5 text-sm text-base-content shadow-sm focus:outline-none focus:border-warning min-h-[44px] appearance-none cursor-pointer"
             aria-label={t("productsPage.sort")}
           >
             <option value="default">{t("productsPage.sortDefault")}</option>
@@ -151,7 +151,7 @@ export default function ProductsClient({
         </div>
 
         {/* In-stock toggle */}
-        <label className="flex items-center gap-2 cursor-pointer min-h-[44px] px-3 bg-white border border-gray-200 rounded-xl shadow-sm hover:border-yellow-400 transition-colors">
+        <label className="flex items-center gap-2 cursor-pointer min-h-[44px] px-3 bg-base-100 border border-base-300 rounded-xl shadow-sm hover:border-warning transition-colors">
           <input
             type="checkbox"
             checked={onlyInStock}
@@ -159,7 +159,7 @@ export default function ProductsClient({
             className="checkbox checkbox-warning checkbox-sm"
             aria-label={t("productsPage.inStockOnly")}
           />
-          <span className="text-sm text-gray-700 whitespace-nowrap">
+          <span className="text-sm text-base-content/70 whitespace-nowrap">
             {t("productsPage.inStock")}
           </span>
         </label>

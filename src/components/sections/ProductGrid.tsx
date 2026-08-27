@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import ProductCard from "@/components/ui/ProductCard";
 import type { Product } from "@/types";
+import { discountsApi, type Discount } from "@/lib/api/discounts";
 
 interface ProductGridProps {
   products: Product[];
@@ -20,6 +22,24 @@ export default function ProductGrid({
   showViewAll = true,
 }: ProductGridProps) {
   const { t } = useTranslation();
+  const [discounts, setDiscounts] = useState<Discount[]>([]);
+
+  useEffect(() => {
+    discountsApi
+      .listActive()
+      .then(setDiscounts)
+      .catch(() => {});
+  }, []);
+
+  const discountFor = (p: Product): Discount | null => {
+    if (!discounts.length) return null;
+    const productDiscount = discounts.find(
+      (d) => d.scope === "product" && d.productId === p._id
+    );
+    if (productDiscount) return productDiscount;
+    return discounts.find((d) => d.scope === "global") || null;
+  };
+
   const resolvedTitle = title ?? (titleKey ? t(titleKey) : t("productGrid.title"));
 
   if (products.length === 0) {
@@ -44,7 +64,7 @@ export default function ProductGrid({
           <p className="text-xs text-primary uppercase tracking-widest font-semibold mb-1">
             {t("productGrid.assortment")}
           </p>
-          <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900">
+          <h2 className="text-2xl sm:text-3xl font-bold text-base-content">
             {resolvedTitle}
           </h2>
           <div className="w-12 h-1 bg-warning rounded-full mt-2" aria-hidden="true" />
@@ -73,7 +93,7 @@ export default function ProductGrid({
       >
         {products.map((product) => (
           <div key={product._id} role="listitem">
-            <ProductCard product={product} />
+            <ProductCard product={product} discount={discountFor(product)} />
           </div>
         ))}
       </div>

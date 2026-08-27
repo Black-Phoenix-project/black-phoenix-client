@@ -3,6 +3,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { User } from "@/types";
+import { useFavoritesStore } from "@/store/favoritesStore";
 
 interface AuthStore {
   user: User | null;
@@ -48,6 +49,7 @@ export const useAuthStore = create<AuthStore>()(
           localStorage.removeItem("token");
           localStorage.removeItem("user");
         }
+        useFavoritesStore.getState().clearAll();
         set({ user: null, token: null, isAuthenticated: false });
       },
     }),

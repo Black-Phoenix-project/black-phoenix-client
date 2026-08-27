@@ -17,7 +17,7 @@ import { formatPrice } from "@/lib/formatPrice";
 import { useAuthStore } from "@/store/authStore";
 import { ordersApi } from "@/lib/api/orders";
 import { useTranslation } from "react-i18next";
-import toast from "react-hot-toast";
+import toast from "@/lib/toast";
 import ApplyLanguage from "@/components/i18n/ApplyLanguage";
 
 export default function BasketPage() {
@@ -67,7 +67,7 @@ export default function BasketPage() {
             product: {
               productId: i.product._id,
               productName: i.product.name,
-              price: i.product.price,
+              price: i.price ?? i.product.price,
               quantity: i.quantity,
               image: i.product.image?.[0],
             },
@@ -128,11 +128,11 @@ export default function BasketPage() {
         <ApplyLanguage />
         <ShoppingCart
           size={64}
-          className="mx-auto mb-4 text-yellow-300"
+          className="mx-auto mb-4 text-warning/40"
           aria-hidden="true"
         />
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">{t("basket.emptyTitle")}</h1>
-        <p className="text-gray-500 mb-6">{t("basket.emptyDesc")}</p>
+        <h1 className="text-2xl font-bold text-base-content mb-2">{t("basket.emptyTitle")}</h1>
+        <p className="text-base-content/40 mb-6">{t("basket.emptyDesc")}</p>
         <Link
           href="/products"
           className="inline-flex items-center gap-2 bg-warning text-black font-bold px-6 py-3 rounded-xl hover:bg-warning/90 transition"
@@ -148,16 +148,16 @@ export default function BasketPage() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <ApplyLanguage />
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">{t("basket.title")}</h1>
-        <p className="text-gray-500 text-sm mt-1">{count} {t("basket.items")}</p>
+        <h1 className="text-3xl font-bold text-base-content">{t("basket.title")}</h1>
+        <p className="text-base-content/40 text-sm mt-1">{count} {t("basket.items")}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-3">
-          {items.map(({ product, quantity }) => (
+          {items.map(({ product, quantity, price }) => (
             <div
               key={product._id}
-              className="bg-white border border-gray-200/80 shadow-sm rounded-2xl p-4 flex gap-4 hover:border-yellow-300 transition-colors"
+              className="bg-base-100 border border-base-300/80 shadow-sm rounded-2xl p-4 flex gap-4 hover:border-warning/40 transition-colors"
             >
               <Link
                 href={`/products/${product._id}`}
@@ -178,29 +178,29 @@ export default function BasketPage() {
               </Link>
 
               <div className="flex-1">
-                <h3 className="text-gray-900 font-medium">{product.name}</h3>
+                <h3 className="text-base-content font-medium">{product.name}</h3>
                 <p className="text-success font-bold mt-1">
-                  {formatPrice(product.price * quantity)} {t("common.sum")}
+                  {formatPrice((price ?? product.price) * quantity)} {t("common.sum")}
                 </p>
-                <p className="text-xs text-gray-500">
-                  {formatPrice(product.price)} x {quantity}
+                <p className="text-xs text-base-content/40">
+                  {formatPrice(price ?? product.price)} x {quantity}
                 </p>
               </div>
 
               <div className="flex flex-col items-end gap-2">
-                <div className="flex border border-gray-200 rounded-lg overflow-hidden">
+                <div className="flex border border-base-300 rounded-lg overflow-hidden">
                   <button
                     onClick={() => updateQuantity(product._id, quantity - 1)}
-                    className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-yellow-50 hover:text-gray-900"
+                    className="w-8 h-8 flex items-center justify-center text-base-content/40 hover:bg-warning/10 hover:text-base-content"
                   >
                     <Minus size={12} />
                   </button>
-                  <span className="w-8 flex items-center justify-center text-gray-900">
+                  <span className="w-8 flex items-center justify-center text-base-content">
                     {quantity}
                   </span>
                   <button
                     onClick={() => updateQuantity(product._id, quantity + 1)}
-                    className="w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-yellow-50 hover:text-gray-900"
+                    className="w-8 h-8 flex items-center justify-center text-base-content/40 hover:bg-warning/10 hover:text-base-content"
                   >
                     <Plus size={12} />
                   </button>
@@ -216,14 +216,14 @@ export default function BasketPage() {
           ))}
         </div>
 
-        <div className="bg-white border border-gray-200/80 shadow-md rounded-2xl p-5 h-fit sticky top-20">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">{t("basket.order")}</h2>
+        <div className="bg-base-100 border border-base-300/80 shadow-md rounded-2xl p-5 h-fit sticky top-20">
+          <h2 className="text-xl font-bold text-base-content mb-4">{t("basket.order")}</h2>
 
           {isLoggedIn ? (
-            <div className="space-y-2 rounded-xl bg-yellow-50 border border-yellow-200 p-3 mb-1">
-              <p className="text-xs text-gray-500">{t("basket.orderFromAccount")}</p>
-              <p className="text-sm font-medium text-gray-900">{resolvedName}</p>
-              <p className="text-sm text-gray-600">{resolvedPhone}</p>
+            <div className="space-y-2 rounded-xl bg-warning/10 border border-warning/20 p-3 mb-1">
+              <p className="text-xs text-base-content/40">{t("basket.orderFromAccount")}</p>
+              <p className="text-sm font-medium text-base-content">{resolvedName}</p>
+              <p className="text-sm text-base-content/60">{resolvedPhone}</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -232,28 +232,28 @@ export default function BasketPage() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder={t("basket.phonePlaceholder")}
-                className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-gray-900 placeholder-muted focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100"
+                className="w-full bg-base-100 border border-base-300 rounded-xl px-3 py-2 text-base-content placeholder:text-base-content/40 focus:outline-none focus:border-warning focus:ring-2 focus:ring-warning/20"
               />
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder={t("basket.namePlaceholder")}
-                className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2 text-gray-900 placeholder-muted focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100"
+                className="w-full bg-base-100 border border-base-300 rounded-xl px-3 py-2 text-base-content placeholder:text-base-content/40 focus:outline-none focus:border-warning focus:ring-2 focus:ring-warning/20"
               />
             </div>
           )}
 
-          <div className="border-t border-gray-100 mt-4 pt-4 space-y-2">
-            <div className="flex justify-between text-gray-500">
+          <div className="border-t border-base-200 mt-4 pt-4 space-y-2">
+            <div className="flex justify-between text-base-content/40">
               <span>{count} {t("basket.items")}</span>
               <span>{formatPrice(totalAmount)} {t("common.sum")}</span>
             </div>
-            <div className="flex justify-between text-gray-500">
+            <div className="flex justify-between text-base-content/40">
               <span>{t("basket.delivery")}</span>
               <span className="text-success">{t("basket.free")}</span>
             </div>
-            <div className="flex justify-between text-gray-900 font-bold">
+            <div className="flex justify-between text-base-content font-bold">
               <span>{t("basket.total")}</span>
               <span className="text-success font-bold">
                 {formatPrice(totalAmount)} {t("common.sum")}

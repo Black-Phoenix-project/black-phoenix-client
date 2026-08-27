@@ -28,7 +28,7 @@ export default function FavoritesPage() {
           {t("favorites.my")}
         </p>
 
-        <h1 className="font-display text-3xl font-bold text-base-content flex items-center gap-3">
+        <h1 className="text-3xl font-bold text-base-content flex items-center gap-3">
           {t("favorites.title")}
           {items.length > 0 && (
             <span className="text-lg font-normal text-base-content/40">
@@ -45,7 +45,7 @@ export default function FavoritesPage() {
             <Heart size={36} className="text-base-content/20" />
           </div>
 
-          <h2 className="font-display text-xl font-bold text-base-content mb-2">
+          <h2 className="text-xl font-bold text-base-content mb-2">
             {t("favorites.emptyTitle")}
           </h2>
 

@@ -129,6 +129,12 @@ export const ru = {
     next: "Следующий баннер",
     fallbackTitle: "Спецодежда и средства защиты для промышленности, сервиса и безопасности.",
     viewProducts: "Смотреть товары",
+    customTitle: "Также шьём спецодежду по вашему запросу",
+    customSubtitle: "Не нашли нужное? Изготовим рабочую одежду под ваши требования.",
+    contactTelegram: "Написать в Telegram",
+    contactPhone: "Позвонить",
+    customTelegramMsg:
+      "Salom! Men blackphoenix.uz websaytidan keldim va o'zimning ish kiyimim talabini aytib, kiyim buyurtma qilmoqchi edim.\n\nTalabim:",
   },
 
   productCard: {
@@ -311,6 +317,8 @@ export const ru = {
     invalidPhone: "Неверный формат номера телефона",
     shortPassword: "Пароль должен быть не короче 6 символов",
     phoneNote: "Администраторы позвонят на этот номер по заказу",
+    loginBrandTitle: "С возвращением в Black Phoenix",
+    loginBrandSub: "Войдите в аккаунт, чтобы управлять заказами и отслеживать историю покупок.",
   },
 
   notFound: {

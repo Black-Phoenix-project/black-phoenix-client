@@ -131,7 +131,7 @@ export default function SearchBar() {
       <div className="relative flex items-center">
         <Search
           size={16}
-          className="absolute left-3 text-gray-400 pointer-events-none"
+          className="absolute left-3 text-base-content/30 pointer-events-none"
           aria-hidden="true"
         />
         <input
@@ -149,12 +149,12 @@ export default function SearchBar() {
           autoComplete="off"
           aria-label={t("search.label")}
           aria-autocomplete="list"
-          className="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-9 py-2 text-sm text-gray-800 placeholder-muted shadow-sm focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-100 transition-all min-h-0"
+          className="w-full bg-base-100 border border-base-300 rounded-lg pl-9 pr-9 py-2 text-sm text-base-content placeholder:text-base-content/40 shadow-sm focus:outline-none focus:border-warning focus:ring-2 focus:ring-warning/20 transition-all min-h-0"
         />
         {isLoading && (
           <Loader2
             size={14}
-            className="absolute right-3 text-gray-400 animate-spin"
+            className="absolute right-3 text-base-content/30 animate-spin"
             aria-hidden="true"
           />
         )}
@@ -165,7 +165,7 @@ export default function SearchBar() {
               setIsOpen(false);
               inputRef.current?.focus();
             }}
-            className="absolute right-2 p-1 text-gray-400 hover:text-gray-700 transition-colors rounded min-h-0 min-w-0"
+            className="absolute right-2 p-1 text-base-content/30 hover:text-base-content/70 transition-colors rounded min-h-0 min-w-0"
             aria-label={t("search.clear")}
           >
             <X size={14} />
@@ -178,7 +178,7 @@ export default function SearchBar() {
         <div
           role="listbox"
           aria-label={t("search.results")}
-          className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl shadow-2xl z-50 overflow-hidden animate-slide-up"
+          className="absolute top-full left-0 right-0 mt-2 bg-base-100 border border-base-300 rounded-xl shadow-2xl z-50 overflow-hidden animate-slide-up"
         >
           {results.length > 0 ? (
             <>
@@ -188,9 +188,9 @@ export default function SearchBar() {
                   role="option"
                   aria-selected="false"
                   onClick={() => handleSelect(product)}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-yellow-50 transition-colors text-left min-h-0 min-w-0"
+                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-warning/10 transition-colors text-left min-h-0 min-w-0"
                 >
-                  <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                  <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-base-200 flex-shrink-0">
                     {product.image?.[0] ? (
                       <Image
                         src={product.image[0]}
@@ -200,20 +200,20 @@ export default function SearchBar() {
                         className="object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full bg-gray-100" />
+                      <div className="w-full h-full bg-base-200" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-800 truncate">
+                    <p className="text-sm font-medium text-base-content truncate">
                       {product.name}
                     </p>
-                    <p className="text-xs text-success font-semibold price-tag">
+                    <p className="text-xs text-success font-semibold tabular-nums">
                       {formatPrice(product.price)} {t("common.sum")}
                     </p>
                   </div>
                 </button>
               ))}
-              <div className="px-3 py-2 border-t border-gray-100">
+              <div className="px-3 py-2 border-t border-base-200">
                 <button
                   onClick={() => {
                     router.push(`/products?q=${encodeURIComponent(query)}`);
@@ -226,8 +226,8 @@ export default function SearchBar() {
               </div>
             </>
           ) : (
-            <div className="px-4 py-6 text-center text-sm text-gray-500">
-              <Search size={24} className="mx-auto mb-2 text-yellow-300" />
+            <div className="px-4 py-6 text-center text-sm text-base-content/40">
+              <Search size={24} className="mx-auto mb-2 text-warning/40" />
               <p>{t("search.notFound")}</p>
             </div>
           )}

@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
+import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import I18nInit from "@/components/i18n/I18nInit";
+import FloatingContactButtons from "@/components/FloatingContactButtons";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://blackphoenix.uz";
@@ -145,23 +147,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body
-        className={`${fontPrimary.variable} ${fontDisplay.variable} min-h-screen bg-[#fafafa] text-[#111827] antialiased`}
+        className={`${fontPrimary.variable} ${fontDisplay.variable} min-h-screen bg-base-100 text-base-content antialiased`}
       >
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            style: {
-              background: "var(--toast-bg)",
-              color: "var(--toast-text)",
-              border: "1px solid var(--toast-border)",
-              fontFamily: "var(--font-primary)",
-            },
-            success: { iconTheme: { primary: "#FACC15", secondary: "#0F0F0F" } },
-            error: { iconTheme: { primary: "#EF4444", secondary: "#F8F8F6" } },
-          }}
+        <ToastContainer
+          position="top-center"
+          autoClose={2500}
+          newestOnTop
+          closeOnClick
+          pauseOnFocusLoss
+          pauseOnHover
+          hideProgressBar
         />
         <I18nInit />
         <Header />
+        <FloatingContactButtons />
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>

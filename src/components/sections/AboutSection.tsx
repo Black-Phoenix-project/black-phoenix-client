@@ -1,10 +1,20 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Truck, UserCheck, ShieldCheck, Package2, PhoneCall } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { settingsApi, type CompanySettings } from "@/lib/api/settings";
 
 export default function AboutSection() {
   const { t } = useTranslation();
+  const [settings, setSettings] = useState<CompanySettings | null>(null);
+
+  useEffect(() => {
+    settingsApi
+      .get()
+      .then(setSettings)
+      .catch(() => {});
+  }, []);
 
   const advantages = [
     { icon: Truck, titleKey: "about.advantagesList.deliveryTitle", descKey: "about.advantagesList.deliveryDesc" },
@@ -41,7 +51,7 @@ export default function AboutSection() {
           </p>
           <h2
             id="about-heading"
-            className="font-display text-3xl sm:text-4xl font-bold text-base-content"
+            className="text-3xl sm:text-4xl font-bold text-base-content"
           >
             {t("about.title")}
           </h2>
@@ -49,12 +59,12 @@ export default function AboutSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-14">
           <div>
-            <div className="glass-card rounded-2xl p-6 sm:p-8 h-full">
+            <div className="bg-base-100 border border-base-300 shadow-sm rounded-2xl p-6 sm:p-8 h-full">
               <p className="text-base-content/70 leading-relaxed text-base mb-6">
                 <span className="text-primary font-semibold">
-                  &ldquo;Blackphoenix&rdquo;
+                  &ldquo;{settings?.companyName || "Blackphoenix"}&rdquo;
                 </span>{" "}
-                {t("about.intro")}
+                {settings?.aboutText || t("about.intro")}
               </p>
               <h3 className="text-base-content font-semibold text-sm uppercase tracking-wider mb-3">
                 {t("about.services")}
@@ -74,7 +84,7 @@ export default function AboutSection() {
           </div>
 
           <div>
-            <div className="glass-card rounded-2xl p-6 sm:p-8 h-full">
+            <div className="bg-base-100 border border-base-300 shadow-sm rounded-2xl p-6 sm:p-8 h-full">
               <h3 className="text-base-content font-semibold text-sm uppercase tracking-wider mb-1">
                 {t("about.assortmentTitle")}
               </h3>
@@ -100,7 +110,7 @@ export default function AboutSection() {
         </div>
 
         <div>
-          <h3 className="text-center font-display text-xl sm:text-2xl font-bold text-base-content mb-6">
+          <h3 className="text-center text-xl sm:text-2xl font-bold text-base-content mb-6">
             {t("about.advantages")}
           </h3>
           <div
@@ -112,7 +122,7 @@ export default function AboutSection() {
               <div
                 key={i}
                 role="listitem"
-                className="glass-card rounded-2xl p-5 border border-base-300 hover:border-primary/15 transition-colors group"
+                className="bg-base-100 border border-base-300 shadow-sm rounded-2xl p-5 hover:border-primary/15 transition-colors group"
               >
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-warning/20 transition-colors">
                   <adv.icon
@@ -132,7 +142,7 @@ export default function AboutSection() {
           </div>
         </div>
 
-        <div className="mt-12 glass-card rounded-2xl p-6 sm:p-8 border border-primary/10">
+        <div className="mt-12 bg-base-100 border border-primary/10 shadow-sm rounded-2xl p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
               <PhoneCall size={22} className="text-primary" aria-hidden="true" />
@@ -148,6 +158,11 @@ export default function AboutSection() {
                 <span className="w-1.5 h-1.5 rounded-full bg-warning inline-block" />
                 {t("about.orderNote")}
               </p>
+              {settings?.phone && (
+                <p className="text-sm font-semibold text-primary mt-2">
+                  {settings.phone}
+                </p>
+              )}
             </div>
           </div>
         </div>

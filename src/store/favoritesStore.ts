@@ -16,6 +16,7 @@ interface FavoritesStore {
   isFavorited: (productId: string) => boolean;
   isPending: (productId: string) => boolean;
   syncFromServer: (userId: string) => Promise<void>;
+  clearAll: () => void;
 }
 
 export const useFavoritesStore = create<FavoritesStore>()(
@@ -138,6 +139,15 @@ export const useFavoritesStore = create<FavoritesStore>()(
         } catch {
           // Silently fail — keep local state
         }
+      },
+
+      clearAll: () => {
+        set({
+          items: [],
+          likedIds: new Set<string>(),
+          pendingIds: new Set<string>(),
+          lastMutationAt: Date.now(),
+        });
       },
     }),
     {

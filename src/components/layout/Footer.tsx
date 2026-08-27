@@ -6,7 +6,7 @@ import { Phone, Mail, MapPin, Instagram, Send, LogOut, User } from "lucide-react
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import toast from "react-hot-toast";
+import toast from "@/lib/toast";
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -156,7 +156,7 @@ export default function Footer() {
             {t("footer.account")}
           </h3>
           <div
-            className="glass-card rounded-xl p-4"
+            className="bg-base-100 border border-base-300 rounded-xl p-4"
             aria-label={t("footer.account")}
           >
             {isAuthenticated && user ? (

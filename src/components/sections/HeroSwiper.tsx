@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Zap } from "lucide-react";
+import { ChevronLeft, ChevronRight, Zap, Send, Phone } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cloudinaryUrl, cloudinarySrcSet } from "@/lib/imageUrl";
 import type { SwiperSlide as SwiperSlideType } from "@/types";
@@ -35,34 +35,27 @@ function HeroStatic({ slides }: { slides: SwiperSlideType[] }) {
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex gap-4">
           <div className="flex-1 relative rounded-2xl overflow-hidden bg-base-200 min-h-[320px] sm:min-h-[400px] lg:min-h-[480px]">
-            <div
-              className="relative w-full min-h-[320px] sm:min-h-[400px] lg:min-h-[480px]"
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`1 / ${slides.length}: ${first.title || t("hero.banner")}`}
-            >
-              <img
-                src={cloudinaryUrl(first.image, { w: 900 })}
-                srcSet={cloudinarySrcSet(first.image)}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 900px"
-                alt={first.title || "Black Phoenix banner"}
-                fetchPriority="high"
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
-              <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
-                {first.title && (
-                  <h2 className="hero-swiper-title font-display text-2xl sm:text-4xl font-bold mb-2 leading-tight max-w-lg">
-                    {first.title}
-                  </h2>
-                )}
-                {first.description && (
-                  <p className="hero-swiper-description text-sm sm:text-base mb-4 max-w-md line-clamp-2">
-                    {first.description}
-                  </p>
-                )}
-              </div>
+            <img
+              src={cloudinaryUrl(first.image, { w: 900 })}
+              srcSet={cloudinarySrcSet(first.image)}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 900px"
+              alt={first.title || "Black Phoenix banner"}
+              fetchPriority="high"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+            <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
+              {first.title && (
+                <h2 className="hero-swiper-title font-display text-2xl sm:text-4xl font-bold mb-2 leading-tight max-w-lg">
+                  {first.title}
+                </h2>
+              )}
+              {first.description && (
+                <p className="hero-swiper-description text-sm sm:text-base mb-4 max-w-md line-clamp-2">
+                  {first.description}
+                </p>
+              )}
             </div>
             <div className="absolute bottom-4 right-4 hero-overlay-chip backdrop-blur-sm hero-overlay-text text-xs px-2.5 py-1 rounded-full z-10 pointer-events-none">
               1 / {slides.length}
@@ -153,7 +146,7 @@ function HeroSwiperClient({ slides }: { slides: SwiperSlideType[] }) {
               {slides.map((slide, i) => (
                 <SwiperSlide key={slide._id}>
                   <div
-                    className="relative w-full min-h-[320px] sm:min-h-[400px] lg:min-h-[480px]"
+                    className="relative h-full w-full"
                     role="group"
                     aria-roledescription="slide"
                     aria-label={`${i + 1} / ${slides.length}: ${slide.title || t("hero.banner")}`}
@@ -217,31 +210,58 @@ function HeroSwiperClient({ slides }: { slides: SwiperSlideType[] }) {
 
 function HeroSidebar() {
   const { t } = useTranslation();
+  const telegramMsg = t("hero.customTelegramMsg");
+  const telegramLink = `https://t.me/SardorXojimurodov?text=${encodeURIComponent(telegramMsg)}`;
 
   return (
     <div className="hidden lg:flex flex-col gap-3 w-[220px] xl:w-[260px] flex-shrink-0">
-      <div className="flex-1 glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center border border-primary/10 hover:border-primary/20 transition-colors">
-        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
-          <Zap size={22} className="text-primary" aria-hidden="true" />
+      <div className="flex-1 bg-info/10 border-2 border-info shadow-md rounded-2xl p-5 flex flex-col items-center justify-center text-center">
+        <div className="w-12 h-12 rounded-full bg-info/15 flex items-center justify-center mb-3">
+          <Zap size={22} className="text-info" aria-hidden="true" />
         </div>
-        <p className="text-xs text-base-content/30 uppercase tracking-wider mb-1">{t("hero.promotion")}</p>
-        <p className="font-display text-3xl font-bold text-primary leading-none mb-1">20%</p>
-        <p className="text-sm text-base-content font-medium">{t("hero.discount")}</p>
-        <p className="text-xs text-base-content/40 mt-2">{t("hero.firstOrder")}</p>
+        <p className="text-[10px] text-base-content/50 uppercase tracking-wider mb-1">{t("hero.promotion")}</p>
+        <p className="font-display text-4xl font-bold text-info leading-none mb-1">20%</p>
+        <p className="text-sm font-semibold text-base-content">{t("hero.discount")}</p>
+        <p className="text-[11px] text-base-content/50 mt-2">{t("hero.firstOrder")}</p>
       </div>
 
-      <div className="glass-card rounded-2xl p-5 flex flex-col items-center justify-center text-center border border-base-300">
-        <p className="text-xs text-base-content/30 uppercase tracking-wider mb-1">{t("hero.delivery")}</p>
-        <p className="font-display text-xl font-bold text-base-content leading-tight">{t("hero.deliveryDays")}</p>
-        <p className="text-xs text-base-content/40 mt-1">{t("hero.inTashkent")}</p>
-      </div>
+      <div className="flex-1 bg-success/10 border-2 border-success shadow-md rounded-2xl p-5 flex flex-col gap-3 justify-center">
+        <div className="w-11 h-11 rounded-full bg-success/15 flex items-center justify-center">
+          <Zap size={20} className="text-success" aria-hidden="true" />
+        </div>
+        <p className="font-display text-base font-bold text-base-content leading-snug">
+          {t("hero.customTitle")}
+        </p>
+        <p className="text-xs text-base-content/50 leading-relaxed">
+          {t("hero.customSubtitle")}
+        </p>
+        <div className="flex flex-col gap-2 mt-1">
+          <a
+            href={telegramLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-success btn-sm w-full rounded-xl font-semibold text-white"
+          >
+            <Send size={16} />
+            {t("hero.contactTelegram")}
+          </a>
+            <a
+              href="tel:+998770902226"
+              className="btn btn-outline btn-sm w-full rounded-xl border-success text-success hover:bg-success hover:text-white hover:border-success"
+            >
+              <Phone size={16} />
+              {t("hero.contactPhone")}
+            </a>
+          </div>
 
-      <div className="glass-card rounded-2xl p-5 border border-base-300">
-        <p className="text-xs text-base-content/30 uppercase tracking-wider mb-2">{t("hero.minOrder")}</p>
-        <p className="font-display text-xl font-bold text-primary">{t("hero.none")}</p>
-        <p className="text-xs text-base-content/40 mt-1">{t("hero.minOrderNote")}</p>
+          <Link
+            href="/custom-order"
+            className="btn btn-warning btn-sm w-full rounded-xl font-semibold text-black"
+          >
+            So'rov yuborish
+          </Link>
+        </div>
       </div>
-    </div>
   );
 }
 

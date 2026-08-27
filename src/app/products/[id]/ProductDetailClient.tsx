@@ -17,8 +17,9 @@ import { formatPrice } from "@/lib/formatPrice";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/types";
-import toast from "react-hot-toast";
+import toast from "@/lib/toast";
 import clsx from "clsx";
+import { discountsApi, pickDiscount, applyDiscount, type Discount } from "@/lib/api/discounts";
 
 export default function ProductDetailClient({ product }: { product: Product }) {
   const { t } = useTranslation();
@@ -32,10 +33,18 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const { toggleFavorite, isFavorited, isPending } = useFavoritesStore();
   const liked = mounted ? isFavorited(product._id) : false;
   const liking = mounted ? isPending(product._id) : false;
+  const [discounts, setDiscounts] = useState<Discount[]>([]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    discountsApi.listActive().then(setDiscounts).catch(() => {});
+  }, []);
+
+  const discount = pickDiscount(discounts, product._id);
+  const finalPrice = applyDiscount(product.price, discount);
 
   const isOutOfStock =
     product.status === "out_of_stock" ||
@@ -53,7 +62,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   };
 
   const handleAddToCart = () => {
-    for (let i = 0; i < qty; i++) addItem(product);
+    for (let i = 0; i < qty; i++) addItem(product, 1, finalPrice);
     toast.success(`${product.name} — ${qty} ${t("productDetail.addedToCart")}`);
   };
 
@@ -163,7 +172,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
         <div className="flex flex-col">
           <div className="flex items-start justify-between gap-4 mb-3">
-            <h1 className="font-display text-2xl sm:text-3xl font-bold text-base-content leading-tight">
+            <h1 className="text-2xl sm:text-3xl font-bold text-base-content leading-tight">
               {product.name}
             </h1>
             <button
@@ -172,7 +181,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               aria-label={liked ? t("productCard.removeFromFavorites") : t("productCard.addToFavorites")}
               aria-pressed={liked}
               className={clsx(
-                "btn-icon-sm rounded-xl border transition-all flex-shrink-0",
+                "min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-xl border transition-all flex-shrink-0",
                 liking && "opacity-60 cursor-not-allowed",
                 liked
                   ? "bg-red-500/15 border-red-500/30 text-error"
@@ -203,14 +212,19 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
           <div className="mb-5 pb-5 border-b border-base-300">
             <p
-              className="text-3xl sm:text-4xl font-bold text-success price-tag"
-              aria-label={`${formatPrice(product.price)} ${t("common.sum")}`}
+              className="text-3xl sm:text-4xl font-bold text-success tabular-nums"
+              aria-label={`${formatPrice(finalPrice)} ${t("common.sum")}`}
             >
-              {formatPrice(product.price)}
+              {formatPrice(finalPrice)}
               <span className="text-base font-normal text-base-content/40 ml-1">
                 {t("common.sum")}
               </span>
             </p>
+            {discount && (
+              <p className="text-sm text-base-content/40 line-through mt-1">
+                {formatPrice(product.price)}
+              </p>
+            )}
           </div>
 
           {product.description && (
@@ -227,7 +241,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               <div className="flex items-center border border-base-300 rounded-xl overflow-hidden">
                 <button
                   onClick={() => setQty(Math.max(1, qty - 1))}
-                  className="btn-icon-sm px-3 text-base-content/60 hover:text-base-content hover:bg-base-200 transition-colors"
+                  className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-3 text-base-content/60 hover:text-base-content hover:bg-base-200 transition-colors"
                   aria-label={t("productDetail.decrease")}
                 >
                   -
@@ -240,7 +254,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 </span>
                 <button
                   onClick={() => setQty(qty + 1)}
-                  className="btn-icon-sm px-3 text-base-content/60 hover:text-base-content hover:bg-base-200 transition-colors"
+                  className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center px-3 text-base-content/60 hover:text-base-content hover:bg-base-200 transition-colors"
                   aria-label={t("productDetail.increase")}
                 >
                   +
@@ -264,7 +278,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             </div>
           )}
 
-          <div className="glass-card rounded-xl p-4 text-xs text-base-content/40 space-y-1.5">
+           <div className="bg-base-200 border border-base-300 rounded-xl p-4 text-xs text-base-content/40 space-y-1.5">
             <p>{t("productDetail.delivery")}</p>
             <p>{t("productDetail.warranty")}</p>
             <p>{t("productDetail.noMinOrder")}</p>
