@@ -25,6 +25,14 @@ export const uz: Ru = {
     schedule: "Du-Shan: 09:00-18:00",
   },
 
+  floating: {
+    telegram: "Telegram",
+    phone: "Qo'ng'iroq",
+    confirmTitle: "Aloqa jarayonini davom ettirishni xohlaysizmi?",
+    confirmNo: "Yo'q",
+    confirmYes: "Ha",
+  },
+
   nav: {
     home: "Bosh sahifa",
     products: "Mahsulotlar",
@@ -135,8 +143,27 @@ export const uz: Ru = {
     customSubtitle: "Kerakli kiyimni topa olmadingizmi? Ish kiyimni aynan sizning talabingizga qarab tikamiz.",
     contactTelegram: "Telegram'da yozish",
     contactPhone: "Qo'ng'iroq qilish",
+    sendRequest: "So'rov yuborish",
     customTelegramMsg:
       "Salom! Men blackphoenix.uz veb-saytidan keldim va o'zimning ish kiyimim talabini aytib, kiyim buyurtma qilmoqchi edim.\n\nTalabim:",
+  },
+
+  customOrder: {
+    title: "O'z kiyimingizni buyurtma qilish",
+    subtitle: "Talabingizga mos ish kiyimini tikib beramiz",
+    name: "Ismingiz",
+    namePlaceholder: "Ismingiz",
+    phone: "Telefon",
+    phonePlaceholder: "+998 ...",
+    email: "Email (ixtiyoriy)",
+    category: "Kategoriya (ixtiyoriy)",
+    categoryPlaceholder: "Tanlang...",
+    requirements: "Talablaringiz",
+    requirementsPlaceholder: "Rang, o'lcham, material, miqdor va boshqa talablaringizni yozing...",
+    submit: "So'rov yuborish",
+    errorEmpty: "Ism, telefon va talablarni to'ldiring",
+    success: "So'rovingiz yuborildi! Tez orada bog'lanamiz.",
+    error: "Xatolik yuz berdi",
   },
 
   productCard: {

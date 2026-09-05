@@ -120,7 +120,7 @@ export default function ProductCard({ product, discount }: ProductCardProps) {
           <div className="absolute bottom-3 left-3 z-10 bg-warning text-black text-[10px] font-bold px-2 py-1 rounded-full shadow-sm">
             {discount.type === "percent"
               ? `-${discount.value}%`
-              : `-${discount.value} so'm`}
+              : `-${discount.value} ${t("common.sum")}`}
           </div>
         )}
       </Link>

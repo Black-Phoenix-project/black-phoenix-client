@@ -23,6 +23,14 @@ export const ru = {
     schedule: "Пн-Сб: 09:00-18:00",
   },
 
+  floating: {
+    telegram: "Telegram",
+    phone: "Звонок",
+    confirmTitle: "Хотите продолжить связь?",
+    confirmNo: "Нет",
+    confirmYes: "Да",
+  },
+
   nav: {
     home: "Главная",
     products: "Товары",
@@ -133,8 +141,27 @@ export const ru = {
     customSubtitle: "Не нашли нужное? Изготовим рабочую одежду под ваши требования.",
     contactTelegram: "Написать в Telegram",
     contactPhone: "Позвонить",
+    sendRequest: "Отправить запрос",
     customTelegramMsg:
       "Salom! Men blackphoenix.uz websaytidan keldim va o'zimning ish kiyimim talabini aytib, kiyim buyurtma qilmoqchi edim.\n\nTalabim:",
+  },
+
+  customOrder: {
+    title: "Заказать одежду по своему запросу",
+    subtitle: "Сошьём рабочую одежду по вашим требованиям",
+    name: "Ваше имя",
+    namePlaceholder: "Ваше имя",
+    phone: "Телефон",
+    phonePlaceholder: "+998 ...",
+    email: "Email (необязательно)",
+    category: "Категория (необязательно)",
+    categoryPlaceholder: "Выбрать...",
+    requirements: "Ваши требования",
+    requirementsPlaceholder: "Напишите цвет, размер, материал, количество и другие требования...",
+    submit: "Отправить запрос",
+    errorEmpty: "Заполните имя, телефон и требования",
+    success: "Ваш запрос отправлен! Мы скоро свяжемся с вами.",
+    error: "Произошла ошибка",
   },
 
   productCard: {

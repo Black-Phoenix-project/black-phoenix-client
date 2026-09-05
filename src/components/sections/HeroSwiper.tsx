@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ChevronLeft, ChevronRight, Zap, Send, Phone } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { cloudinaryUrl, cloudinarySrcSet } from "@/lib/imageUrl";
+import { discountsApi, type Discount } from "@/lib/api/discounts";
 import type { SwiperSlide as SwiperSlideType } from "@/types";
 
 interface HeroSwiperProps {
@@ -210,8 +211,25 @@ function HeroSwiperClient({ slides }: { slides: SwiperSlideType[] }) {
 
 function HeroSidebar() {
   const { t } = useTranslation();
+  const [discount, setDiscount] = useState<Discount | null>(null);
   const telegramMsg = t("hero.customTelegramMsg");
   const telegramLink = `https://t.me/SardorXojimurodov?text=${encodeURIComponent(telegramMsg)}`;
+
+  useEffect(() => {
+    discountsApi
+      .listActive()
+      .then((list) => {
+        const global = list.find((d) => d.scope === "global") || null;
+        setDiscount(global);
+      })
+      .catch(() => setDiscount(null));
+  }, []);
+
+  const discountLabel = discount
+    ? discount.type === "percent"
+      ? `-${discount.value}%`
+      : `-${discount.value} ${t("common.sum")}`
+    : "20%";
 
   return (
     <div className="hidden lg:flex flex-col gap-3 w-[220px] xl:w-[260px] flex-shrink-0">
@@ -220,7 +238,7 @@ function HeroSidebar() {
           <Zap size={22} className="text-info" aria-hidden="true" />
         </div>
         <p className="text-[10px] text-base-content/50 uppercase tracking-wider mb-1">{t("hero.promotion")}</p>
-        <p className="font-display text-4xl font-bold text-info leading-none mb-1">20%</p>
+        <p className="font-display text-4xl font-bold text-info leading-none mb-1">{discountLabel}</p>
         <p className="text-sm font-semibold text-base-content">{t("hero.discount")}</p>
         <p className="text-[11px] text-base-content/50 mt-2">{t("hero.firstOrder")}</p>
       </div>
@@ -258,7 +276,7 @@ function HeroSidebar() {
             href="/custom-order"
             className="btn btn-warning btn-sm w-full rounded-xl font-semibold text-black"
           >
-            So'rov yuborish
+            {t("hero.sendRequest")}
           </Link>
         </div>
       </div>

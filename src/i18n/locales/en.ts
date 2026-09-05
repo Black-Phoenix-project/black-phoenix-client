@@ -25,6 +25,14 @@ export const en: Ru = {
     schedule: "Mon-Sat: 09:00-18:00",
   },
 
+  floating: {
+    telegram: "Telegram",
+    phone: "Call",
+    confirmTitle: "Do you want to continue the conversation?",
+    confirmNo: "No",
+    confirmYes: "Yes",
+  },
+
   nav: {
     home: "Home",
     products: "Products",
@@ -135,8 +143,27 @@ export const en: Ru = {
     customSubtitle: "Can't find what you need? We tailor workwear to your exact requirements.",
     contactTelegram: "Message on Telegram",
     contactPhone: "Call us",
+    sendRequest: "Send request",
     customTelegramMsg:
       "Hi! I came from blackphoenix.uz and would like to order workwear made to my requirements.\n\nMy requirements:",
+  },
+
+  customOrder: {
+    title: "Order custom clothing",
+    subtitle: "We tailor workwear to your exact requirements",
+    name: "Your name",
+    namePlaceholder: "Your name",
+    phone: "Phone",
+    phonePlaceholder: "+998 ...",
+    email: "Email (optional)",
+    category: "Category (optional)",
+    categoryPlaceholder: "Select...",
+    requirements: "Your requirements",
+    requirementsPlaceholder: "Write color, size, material, quantity and other requirements...",
+    submit: "Send request",
+    errorEmpty: "Please fill in name, phone and requirements",
+    success: "Your request has been sent! We will contact you soon.",
+    error: "Something went wrong",
   },
 
   productCard: {

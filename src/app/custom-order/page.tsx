@@ -37,7 +37,7 @@ export default function CustomOrderPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name.trim() || !form.phone.trim() || !form.requirements.trim()) {
-      toast.error("Ism, telefon va talablarni to'ldiring");
+      toast.error(t("customOrder.errorEmpty"));
       return;
     }
     setSubmitting(true);
@@ -49,10 +49,10 @@ export default function CustomOrderPage() {
         category: form.category || undefined,
         requirements: form.requirements,
       });
-      toast.success("So'rovingiz yuborildi! Tez orada bog'lanamiz.");
+      toast.success(t("customOrder.success"));
       setForm({ name: "", phone: "", email: "", category: "", requirements: "" });
     } catch (err: any) {
-      toast.error(err?.message || "Xatolik yuz berdi");
+      toast.error(err?.message || t("customOrder.error"));
     } finally {
       setSubmitting(false);
     }
@@ -76,10 +76,10 @@ export default function CustomOrderPage() {
             </div>
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-base-content">
-                O'z kiyimingizni buyurtma qilish
+                {t("customOrder.title")}
               </h1>
               <p className="text-sm text-base-content/50 mt-0.5">
-                Talabingizga mos ish kiyimini tikib beramiz
+                {t("customOrder.subtitle")}
               </p>
             </div>
           </div>
@@ -88,25 +88,25 @@ export default function CustomOrderPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">
                 <label className="text-xs font-semibold text-base-content/60 uppercase tracking-wider">
-                  Ismingiz
+                  {t("customOrder.name")}
                 </label>
                 <input
                   name="name"
                   value={form.name}
                   onChange={onChange}
-                  placeholder="Ismingiz"
+                  placeholder={t("customOrder.namePlaceholder")}
                   className="input w-full bg-base-200 border-base-300 focus:border-warning focus:outline-none rounded-xl"
                 />
               </div>
               <div className="flex flex-col gap-1">
                 <label className="text-xs font-semibold text-base-content/60 uppercase tracking-wider">
-                  Telefon
+                  {t("customOrder.phone")}
                 </label>
                 <input
                   name="phone"
                   value={form.phone}
                   onChange={onChange}
-                  placeholder="+998 ..."
+                  placeholder={t("customOrder.phonePlaceholder")}
                   className="input w-full bg-base-200 border-base-300 focus:border-warning focus:outline-none rounded-xl"
                 />
               </div>
@@ -115,7 +115,7 @@ export default function CustomOrderPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex flex-col gap-1">
                 <label className="text-xs font-semibold text-base-content/60 uppercase tracking-wider">
-                  Email (ixtiyoriy)
+                  {t("customOrder.email")}
                 </label>
                 <input
                   name="email"
@@ -127,7 +127,7 @@ export default function CustomOrderPage() {
               </div>
               <div className="flex flex-col gap-1">
                 <label className="text-xs font-semibold text-base-content/60 uppercase tracking-wider">
-                  Kategoriya (ixtiyoriy)
+                  {t("customOrder.category")}
                 </label>
                 <select
                   name="category"
@@ -135,7 +135,7 @@ export default function CustomOrderPage() {
                   onChange={onChange}
                   className="select w-full bg-base-200 border-base-300 focus:border-warning focus:outline-none rounded-xl"
                 >
-                  <option value="">Tanlang...</option>
+                  <option value="">{t("customOrder.categoryPlaceholder")}</option>
                   {categories.map((c) => (
                     <option key={c._id} value={c.slug}>
                       {c.name}
@@ -147,14 +147,14 @@ export default function CustomOrderPage() {
 
             <div className="flex flex-col gap-1">
               <label className="text-xs font-semibold text-base-content/60 uppercase tracking-wider">
-                Talablaringiz
+                {t("customOrder.requirements")}
               </label>
               <textarea
                 name="requirements"
                 value={form.requirements}
                 onChange={onChange}
                 rows={5}
-                placeholder="Rang, o'lcham, material, miqdor va boshqa talablaringizni yozing..."
+                placeholder={t("customOrder.requirementsPlaceholder")}
                 className="textarea w-full bg-base-200 border-base-300 focus:border-warning focus:outline-none resize-none rounded-xl"
               />
             </div>
@@ -169,7 +169,7 @@ export default function CustomOrderPage() {
               ) : (
                 <>
                   <Send size={16} />
-                  So'rov yuborish
+                  {t("customOrder.submit")}
                 </>
               )}
             </button>

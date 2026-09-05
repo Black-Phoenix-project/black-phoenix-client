@@ -163,7 +163,7 @@ export default function CategoryBar() {
                               : "text-base-content/70 hover:bg-base-200"
                           }`}
                         >
-                          <span>{cat.label}</span>
+                          <span>{t(`catalog.categories.${cat.slug}`)}</span>
                           <ChevronRight
                             size={14}
                             className={hoveredCat === i ? "text-warning" : "text-base-content/30"}
@@ -175,7 +175,7 @@ export default function CategoryBar() {
 
                   <div className="flex-1 p-5">
                     <h3 className="text-sm font-bold text-warning mb-3 uppercase tracking-wide">
-                      {list[hoveredCat]?.label}
+                      {t(`catalog.categories.${list[hoveredCat]?.slug}`)}
                     </h3>
                     {list[hoveredCat]?.sub.length > 0 ? (
                       <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5">
@@ -185,7 +185,7 @@ export default function CategoryBar() {
                               onClick={() => goToCategory(list[hoveredCat].slug)}
                               className="text-sm text-base-content/60 hover:text-warning transition-colors text-left w-full"
                             >
-                              {item}
+                              {t(`catalog.sub.${item}`)}
                             </button>
                           </li>
                         ))}
@@ -212,7 +212,7 @@ export default function CategoryBar() {
                   onClick={() => goToCategory(link.slug)}
                   className="flex-shrink-0 h-full flex items-center px-3.5 text-sm font-medium text-base-content/70 hover:text-warning hover:bg-warning/10 transition-colors whitespace-nowrap border-r border-base-200 last:border-r-0"
                 >
-                  {link.label}
+                  {t(`catalog.categories.${link.slug}`)}
                 </button>
               ))}
             </nav>
@@ -253,7 +253,7 @@ export default function CategoryBar() {
                       setMobileExpanded(mobileExpanded === cat.slug ? null : cat.slug)
                     }
                   >
-                    <span>{cat.label}</span>
+                    <span>{t(`catalog.categories.${cat.slug}`)}</span>
                     <ChevronRight
                       size={14}
                       className={`transition-transform text-base-content/30 ${
@@ -275,7 +275,7 @@ export default function CategoryBar() {
                           onClick={() => goToCategory(cat.slug)}
                           className="block w-full text-left px-6 py-1.5 text-sm text-base-content/60 hover:text-warning"
                         >
-                          {item}
+                          {t(`catalog.sub.${item}`)}
                         </button>
                       ))}
                     </div>
