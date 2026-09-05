@@ -229,7 +229,7 @@ function HeroSidebar() {
     ? discount.type === "percent"
       ? `-${discount.value}%`
       : `-${discount.value} ${t("common.sum")}`
-    : "20%";
+    : null;
 
   return (
     <div className="hidden lg:flex flex-col gap-3 w-[220px] xl:w-[260px] flex-shrink-0">

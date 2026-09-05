@@ -166,7 +166,7 @@ export default function Navbar() {
             </Link>
 
             {mounted && isAuthenticated && user ? (
-              <div className="dropdown dropdown-end">
+              <div className="dropdown">
                 <button
                   tabIndex={0}
                   className="min-h-[44px] min-w-[44px] inline-flex items-center gap-1.5 px-2 rounded-lg hover:bg-base-200 transition-colors text-sm text-base-content/70 hover:text-base-content"

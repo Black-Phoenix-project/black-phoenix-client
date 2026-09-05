@@ -64,8 +64,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "uz_UZ",
-    alternateLocale: ["ru_RU"],
+    // locale removed - will be set dynamically per page or based on browser language
+    alternateLocale: ["ru", "en"],
     url: SITE_URL,
     siteName: "Black Phoenix",
     title:

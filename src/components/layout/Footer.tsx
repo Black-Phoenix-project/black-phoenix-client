@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Instagram, Send, LogOut, User } from "lucide-react";
@@ -12,6 +13,11 @@ export default function Footer() {
   const { t } = useTranslation();
   const { user, isAuthenticated, logout } = useAuthStore();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -159,7 +165,7 @@ export default function Footer() {
             className="bg-base-100 border border-base-300 rounded-xl p-4"
             aria-label={t("footer.account")}
           >
-            {isAuthenticated && user ? (
+            {mounted && isAuthenticated && user ? (
               <div className="space-y-3">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">

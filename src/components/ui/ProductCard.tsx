@@ -134,7 +134,7 @@ export default function ProductCard({ product, discount }: ProductCardProps) {
 
         {product.category && (
           <span className="inline-block text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 font-medium w-fit">
-            {t(`catalog.categories.${product.category}`)}
+            {t(`catalog.categories.${product.category}`, {defaultValue: product.category})}
           </span>
         )}
 

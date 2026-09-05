@@ -29,9 +29,14 @@ apiClient.interceptors.response.use(
       error.response?.status === 401 &&
       typeof window !== "undefined"
     ) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      useAuthStore.getState().logout();
+      const isAuthEndpoint =
+        window.location.pathname.startsWith("/login") ||
+        window.location.pathname.startsWith("/register");
+      if (!isAuthEndpoint) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        useAuthStore.getState().logout();
+      }
     }
     const message =
       error.response?.data?.message ||
